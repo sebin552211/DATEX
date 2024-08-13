@@ -1,0 +1,28 @@
+<div class="graph_dashboard">
+  <div class="card card_half card_1">
+    <div class="card-header">
+      <h3>Overall Feedback</h3>
+      <input type="checkbox" (change)="togglePieChart(1)" /> Pie Chart
+    </div>
+    <p-chart *ngIf="!showPieChart1" type="bar" [data]="barData1" [options]="barOptions1"></p-chart>
+    <p-chart *ngIf="showPieChart1" type="pie" [data]="pieData1" [options]="pieOptions"></p-chart>
+  </div>
+<br>
+  <div class="card card_quarter card_2">
+    <div class="card-header">
+      <h3>Feedback-Parameter Wise</h3>
+      <input type="checkbox" (change)="togglePieChart(2)" /> Pie Chart
+    </div>
+    <p-chart *ngIf="!showPieChart2" type="bar" [data]="barData2" [options]="barOptions2"></p-chart>
+    <p-chart *ngIf="showPieChart2" type="pie" [data]="pieData2" [options]="pieOptions"></p-chart>
+  </div>
+
+  <div class="card card_quarter card_3">
+    <div class="card-header">
+      <h3>Engage Experion Services in Future</h3>
+      <input type="checkbox" (change)="togglePieChart(3)" /> Pie Chart
+    </div>
+    <p-chart *ngIf="!showPieChart3" type="bar" [data]="barData3" [options]="barOptions3"></p-chart>
+    <p-chart *ngIf="showPieChart3" type="pie" [data]="pieData3" [options]="pieOptions"></p-chart>
+  </div>
+</div>
