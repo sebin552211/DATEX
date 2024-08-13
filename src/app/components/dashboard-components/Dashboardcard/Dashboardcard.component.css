@@ -16,18 +16,18 @@
      font-size: 50px; 
      height: 53px;
      width: 53px;
-     /* background-color: #18dc5d; */
      color: white;
      border-radius: 10px;
 }
 
 .body{
-    margin-left: 250px;
+    margin-left: 6.5cm;
     height: 240px;
-    margin-top: -12cm;
+    margin-top: 80px;
     background-color: #FFFFFF;
     border-radius: 20px;
-    box-shadow: 2px 2px 15px;
+    box-shadow: 2px 2px 5px;
+    margin-bottom: 30px;
     width: 25cm;
 }
 .heading{
@@ -82,8 +82,8 @@
 .numbertext3{
     font-size:80px; 
     text-align: right;
-    margin-top: -10px;
-    margin-right: 70px;
+    margin-top: -75px;
+    margin-right: 30px;
 }
 .template{
     margin-left: 250px;
