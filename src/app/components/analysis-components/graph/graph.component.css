@@ -1,0 +1,54 @@
+.graph_dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns layout */
+  grid-template-rows: auto; /* Adjust rows based on content */
+  gap: 20px; /* Space between cards */
+  margin-left: 6.5cm;
+}
+
+.card {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card_half {
+  grid-column: span 1; /* Takes up one column, half the row */
+}
+.card-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.card-header input[type="checkbox"] {
+  margin-left: 60px;
+  cursor: pointer;
+}
+
+.card_quarter {
+  grid-column: span 1; /* Takes up one column */
+}
+
+/* Ensure charts are responsive and fit within the card */
+p-chart {
+  width: 100%;
+  height: 300px; /* Set a fixed height for consistency */
+}
+
+.card p-chart[type="bar"] {
+
+  max-height: 250px;
+}
+
+.card p-chart[type="pie"] {
+  width: 80%; /* Adjust size of pie chart to fit within the card */
+  max-width: 300px; /* Limit max width of pie chart */
+  height: auto;
+  max-height: 300px; /* Adjust max height if needed */
+}
