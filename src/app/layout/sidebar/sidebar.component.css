@@ -1,7 +1,8 @@
 .sidenavbar{
     background-color: #DC123C;
     width: 6cm;
-    height: 15cm;
+    position: fixed;
+    height: 17cm;
     margin-top: -3.1cm;
 }
 .sideheading{

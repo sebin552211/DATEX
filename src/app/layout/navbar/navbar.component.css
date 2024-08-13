@@ -4,8 +4,12 @@
     flex-wrap: wrap;
     background-color: #FFFFFF;
     margin-left: 227px;
-    box-shadow: 2px 2px 20px;
+    position: fixed;
+    margin-top: -2.2cm;
+    box-shadow: 2px 2px 5px;
     height: 1.8cm;
+    width: 26cm;
+    z-index: 1;
 }
 
 img{
