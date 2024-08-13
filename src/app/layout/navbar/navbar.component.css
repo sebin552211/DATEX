@@ -1,0 +1,36 @@
+
+.header{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+    margin-left: 227px;
+    box-shadow: 2px 2px 20px;
+    height: 1.8cm;
+}
+
+img{
+    margin-top: -10px;
+    position: absolute;
+    right: 0;
+    height: 50px;
+    width: 200px;
+    margin-right: 0.5cm;
+    margin-top: -1.5cm;
+}
+
+.fa-user:hover{
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.fa-arrow-down-wide-short:hover{
+    box-shadow: 2px 2px 5px;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+}
+
