@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { GraphComponent1 } from "../../components/analysis-components/graph/graph.component";
+import { AnalysisCardComponent } from '../../components/analysis-components/Analysiscard/Analysiscard.component';
+
 
 @Component({
   selector: 'app-voc-analysis',
   standalone: true,
-  imports: [GraphComponent1],
+  imports: [AnalysisCardComponent],
   templateUrl: './voc-analysis.component.html',
   styleUrl: './voc-analysis.component.css'
 })

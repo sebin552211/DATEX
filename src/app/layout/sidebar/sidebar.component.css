@@ -1,0 +1,60 @@
+.sidenavbar{
+    background-color: #DC123C;
+    width: 6cm;
+    height: 15cm;
+    margin-top: -3.1cm;
+}
+.sideheading{
+    text-align: center;
+    font-size: 50px;
+    color: white;
+}
+.sidetext{
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    margin-top: 1cm;
+}
+.dashboard{
+    color: white;
+    height: 0.75cm; 
+    width: 5.5cm;
+    margin-left: 8px;
+    font-size: bold 50ch;
+    margin-bottom: 1.5cm;
+}
+.dashboard:hover{
+    background-color: white;
+    color: #DC123C;
+    margin-top: px;
+    border-radius: 10px;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+.status{
+    margin-bottom: 1.5cm;
+    width: 5.5cm;
+    margin-left: 8px;
+}
+
+.status:hover{
+    background-color: white;
+    color: #DC123C;
+    border-radius: 10px;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+.analysis{
+    width: 5.5cm;
+    margin-left: 8px;
+}
+.analysis:hover{
+    background-color: white;
+    color: #DC123C;
+    border-radius: 10px;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
