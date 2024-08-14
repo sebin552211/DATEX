@@ -1,13 +1,16 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GraphComponent } from './components/dashboard-components/graph/graph.component';
-import { GraphComponent1 } from "./components/analysis-components/graph/graph.component";
-import { GraphComponent2 } from "./components/status-components/graph/graph.component";
+
+import { AnalysisCardComponent } from './components/analysis-components/Analysiscard/Analysiscard.component';
+
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { DashboardcardComponent } from './components/dashboard-components/Dashboardcard/Dashboardcard.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, GraphComponent, GraphComponent1, GraphComponent2],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
