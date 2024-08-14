@@ -1,15 +1,4 @@
-// import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-table',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './table.component.html',
-//   styleUrl: './table.component.css'
-// })
-//  {
-
-// }
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';

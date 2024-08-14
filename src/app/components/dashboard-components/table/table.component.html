@@ -1,6 +1,6 @@
 <div class="card">
     <div class="header">
-      <h2 style=" font-family: 'Poppins', sans-serif">Project Details</h2>
+      <h2 style="font-family: 'Poppins', sans-serif">Project Details</h2>
       <div class="search-container">
         <input type="text" placeholder="Search Project Name" class="search-input" />
         <i class="fa fa-search search-icon"></i>
@@ -22,15 +22,20 @@
         <thead>
           <tr class="custom-header">
             <th class="fixed-column project-code">Project Code</th>
-            <th class="fixed-column project-name"  style="border-right:2px solid #EDF2F6; ">Project Name</th>
+            <th class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">Project Name</th>
             <th *ngFor="let col of selectedColumns">{{ col.header }}</th>
           </tr>
         </thead>
         <tbody>
           <tr class="custom-row" *ngFor="let project of projects">
             <td class="fixed-column project-code">{{ project.projectCode }}</td>
-            <td class="fixed-column project-name"  style="border-right:2px solid #EDF2F6; ">{{ project.projectName }}</td>
-            <td *ngFor="let col of selectedColumns">{{ project[col.field] }}</td>
+            <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">{{ project.projectName }}</td>
+            <td *ngFor="let col of selectedColumns" [ngClass]="{
+              'green-background': project[col.field] === 'Mail Initiated' || project[col.field] === 'Received',
+              'red-background': project[col.field] !== 'Mail Initiated' && project[col.field] !== 'Received'
+            }">
+              {{ project[col.field] }}
+            </td>
           </tr>
         </tbody>
       </table>
