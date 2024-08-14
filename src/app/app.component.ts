@@ -7,11 +7,14 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { DashboardcardComponent } from './components/dashboard-components/Dashboardcard/Dashboardcard.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+import { TableComponent } from './components/dashboard-components/table/table.component';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, SidebarComponent, DashboardcardComponent, AnalysisCardComponent, DashboardComponent],
+  imports: [RouterOutlet, AnalysisCardComponent, DashboardcardComponent, SidebarComponent, NavbarComponent, DashboardComponent, TableComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -3,6 +3,7 @@ import { AnalysisCardComponent } from '../../components/analysis-components/Anal
 import { GraphComponent1 } from "../../components/analysis-components/graph/graph.component";
 
 
+
 @Component({
   selector: 'app-voc-analysis',
   standalone: true,

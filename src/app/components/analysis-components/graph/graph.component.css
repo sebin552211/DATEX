@@ -4,6 +4,7 @@
   grid-template-rows: auto; /* Adjust rows based on content */
   gap: 20px; /* Space between cards */
   margin-left: 6.5cm;
+  margin-top: 2.2cm;
 }
 
 .card {

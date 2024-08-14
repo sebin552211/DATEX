@@ -1,14 +1,29 @@
 <div class="sidenavbar">
-    <p class="sideheading">DATEX</p>
+  <p class="sideheading">DATEX</p>
   <div class="sidetext">
     <div>
-    <p class="dashboard"><i class="fa-sharp-duotone fa-solid fa-chart-pie" style="margin-right: 10px;"></i>Dashboard</p>
+      <a routerLink="/" class="side-link">
+        <p class="dashboard">
+          <i class="fa-sharp-duotone fa-solid fa-chart-pie" style="margin-right: 10px"></i>
+          Dashboard
+        </p>
+      </a>
+    </div>
+    <div>
+      <a routerLink="/voc-status" class="side-link">
+        <p class="status">
+          <i class="fa-solid fa-chart-simple"></i>
+          VOC Status
+        </p>
+      </a>
+    </div>
+    <div>
+      <a routerLink="/voc-analysis" class="side-link">
+        <p class="analysis">
+          <i class="fa-solid fa-chart-line" style="margin-right: 10px"></i>
+          VOC Analysis
+        </p>
+      </a>
+    </div>
   </div>
-  <div>
-    <p  class="status"><i class="fa-solid fa-chart-simple"></i>VOC Status</p>
-  </div>
-  <div > 
-    <p class="analysis"><i class="fa-solid fa-chart-line" style="margin-right: 10px;"></i>VOC Analysis</p>
-  </div>
-</div>
 </div>
