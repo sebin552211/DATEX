@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
+<<<<<<<<< Temporary merge branch 1
 import { AnalysisCardComponent } from './components/analysis-components/Analysiscard/Analysiscard.component';
 
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
