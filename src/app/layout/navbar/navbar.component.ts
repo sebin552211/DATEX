@@ -9,5 +9,6 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   username="ACE Team";
+
 }
 

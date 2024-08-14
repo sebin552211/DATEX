@@ -1,61 +1,62 @@
-.sidenavbar{
-    background-color: #DC123C;
-    width: 6cm;
-    position: fixed;
-    height: 17cm;
-    margin-top: -3.1cm;
-}
-.sideheading{
-    text-align: center;
-    font-size: 50px;
-    color: white;
-}
-.sidetext{
-    text-align: center;
-    font-size: 20px;
-    color: white;
-    margin-top: 1cm;
-}
-.dashboard{
-    color: white;
-    height: 0.75cm; 
-    width: 5.5cm;
-    margin-left: 8px;
-    font-size: bold 50ch;
-    margin-bottom: 1.5cm;
-}
-.dashboard:hover{
-    background-color: white;
-    color: #DC123C;
-    margin-top: px;
-    border-radius: 10px;
-    transform: translateY(-2px);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-.status{
-    margin-bottom: 1.5cm;
-    width: 5.5cm;
-    margin-left: 8px;
+/* Sidebar Styling */
+.sidenavbar {
+  background-color: #DC123C;
+  width: 6cm;
+  position: fixed; /* Fixed sidebar */
+  height: 100vh; /* Full viewport height */
+  top: 0; /* Align to top */
+  left: 0; /* Align to left */
+  z-index: 2; /* Ensure it is above other content */
+  overflow-y: auto; /* Enable scrolling if content exceeds height */
 }
 
-.status:hover{
-    background-color: white;
-    color: #DC123C;
-    border-radius: 10px;
-    transform: translateY(-2px);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+/* Sidebar Heading Styling */
+.sideheading {
+  text-align: center;
+  font-size: 50px;
+  color: white;
+  padding-top: 1cm; /* Add padding for spacing */
 }
-.analysis{
-    width: 5.5cm;
-    margin-left: 8px;
+
+/* Sidebar Links Container Styling */
+.sidetext {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  margin-top: 1cm; /* Spacing from the heading */
 }
-.analysis:hover{
-    background-color: white;
-    color: #DC123C;
-    border-radius: 10px;
-    transform: translateY(-2px);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+
+/* Link Styling */
+.side-link {
+  text-decoration: none; /* Removes underline from links */
+  color: white; /* Default link color */
+  display: block; /* Makes the link fill the container */
+  margin-bottom: 1cm; /* Space between items */
+}
+
+/* Item Styling */
+.dashboard, .status, .analysis {
+  color: white;
+  height: 0.75cm;
+  width: 5.5cm;
+  margin: 0 auto 1cm; /* Center the items and add bottom margin */
+  font-size: 20px; /* Adjust font size for better readability */
+  line-height: 0.75cm; /* Align text vertically */
+  padding: 0.5cm; /* Add padding for click area */
+}
+
+/* Hover Effect Styling */
+.dashboard:hover, .status:hover, .analysis:hover {
+  background-color: white;
+  color: #DC123C;
+  border-radius: 10px;
+  transform: translateY(-2px);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+/* Optional: Additional Hover Styling for Accessibility */
+.dashboard:hover, .status:hover, .analysis:hover {
+  outline: 2px solid #DC123C; /* Outline to improve focus visibility */
+  outline-offset: -2px; /* Adjust outline position */
 }
