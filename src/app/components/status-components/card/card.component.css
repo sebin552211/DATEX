@@ -1,0 +1,76 @@
+
+/* Main content styles */
+.body {
+  margin-left: 6.5cm; /* Match sidebar width */
+  padding: 20px; /* Add padding */
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+  width: calc(100% - 6.5cm); /* Adjust width */
+  height: auto; /* Let height adjust to content */
+  margin-top: 2.2cm; /* Ensure content is below the header */
+  margin-bottom: 30px;
+}
+
+.maincard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Add space between cards */
+}
+
+.maincard1, .maincard2, .maincard3 {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  width: 280px;
+  height: 150px;
+  font-size: 20px;
+  margin-top: 10px; /* Adjusted spacing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px; /* Add padding for content */
+}
+
+.maincard1 {
+  background-color: #FFE2E5;
+}
+
+.maincard2 {
+  background-color: #FFF4DE;
+}
+
+.maincard3 {
+  background-color: #DCFCE7;
+}
+
+.cardtext {
+  font-weight: bold;
+  color: #4079ED;
+  margin-top: -10px; /* Adjusted to fit the design */
+}
+
+.numbertext1, .numbertext2, .numbertext3 {
+  font-size: 80px;
+  text-align: right;
+  margin: 0; /* Reset margins */
+}
+
+.numbertext1 {
+  margin-right: 10px; /* Adjusted spacing */
+}
+
+.numbertext2 {
+  margin-right: 50px; /* Adjusted spacing */
+}
+
+.numbertext3 {
+  margin-right: 90px; /* Adjusted spacing */
+}
+
+/* Additional styles for template area */
+.template {
+  margin-left: 6.5cm; /* Match sidebar width */
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px; /* Add padding */
+}

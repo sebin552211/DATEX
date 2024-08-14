@@ -12,8 +12,8 @@
 }
 
 .fa-note-sticky{
-     margin-top:10px; 
-     font-size: 50px; 
+     margin-top:10px;
+     font-size: 50px;
      height: 53px;
      width: 53px;
      color: white;
@@ -29,13 +29,14 @@
     box-shadow: 2px 2px 5px;
     margin-bottom: 30px;
     width: 25cm;
+    margin-bottom: 30px;
 }
 .heading{
     margin-left: 30px;
     font-size: 25px;
     font-weight: bold;
 }
-.maincard1{   
+.maincard1{
     background-color: #FFE2E5;
     border-radius: 20px;
     width: 280px;
@@ -69,21 +70,25 @@
     margin-top: -80px;
 }
 .numbertext1{
-    font-size:80px; 
+    font-size:80px;
     text-align: right;
     margin-top: -10px;
 }
 .numbertext2{
-    font-size:80px; 
+    font-size:80px;
     text-align: right;
     margin-top: -10px;
     margin-right: 40px;
 }
 .numbertext3{
-    font-size:80px; 
+    font-size:80px;
     text-align: right;
     margin-top: -75px;
     margin-right: 30px;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 29d76ec4f98e9db252726bd60522207f9223ee5e
 }
 .template{
     margin-left: 250px;
