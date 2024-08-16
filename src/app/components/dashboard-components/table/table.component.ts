@@ -1,15 +1,4 @@
-// import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-table',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './table.component.html',
-//   styleUrl: './table.component.css'
-// })
-//  {
-
-// }
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -142,8 +131,11 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {}
   
   @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    if (!this.eRef.nativeElement.contains(event.target)) {
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    const isClickInside = targetElement.closest('.dropdown');
+
+    if (!isClickInside) {
       this.dropdownVisible = false;
     }
   }
