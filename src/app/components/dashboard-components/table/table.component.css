@@ -109,7 +109,7 @@
      background-color: #FFFFFF;
     border-collapse: separate;
     border-spacing: 0;
-    width: 50%;
+    width: 40%;
     font-family: "Arial", sans-serif;
     font-size: 14px;
     color: #333333;
@@ -118,7 +118,7 @@
   }
   
   .custom-table th, .custom-table td {
-    min-width: 200px;
+    min-width: 150px;
     vertical-align: middle;
     text-align: center;
 
@@ -151,10 +151,10 @@
   }
   
   .fixed-column:nth-child(2) {
-    left: 200px;
+    left: 150px;
   }
   .fixed-column:nth-child(3) {
-    left: 400px;
+    left: 300px;
   }
   
   .custom-table-container {

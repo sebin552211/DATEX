@@ -128,8 +128,11 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {}
 
   @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    if (!this.eRef.nativeElement.contains(event.target)) {
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    const isClickInside = targetElement.closest('.dropdown');
+
+    if (!isClickInside) {
       this.dropdownVisible = false;
     }
   }
