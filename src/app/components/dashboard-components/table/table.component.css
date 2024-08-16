@@ -305,28 +305,18 @@
   }
   
 /* Target the entire .dropdown-item when the checkbox inside it is checked */
-.dropdown-item input[type="checkbox"]:checked + span {
-    background-color: #D8163B; /* Red background for the span */
-    color: #ffffff; /* Change text color to white for better contrast */
-}
+
 
 /* Ensure the background color is applied to the entire .dropdown-item */
-.dropdown-item input[type="checkbox"]:checked {
+/* .dropdown-item input[type="checkbox"]:checked {
     background-color: #D8163B;
-}
+} */
+.selected-item {
+    background-color: #D8163B; /* Change this to your preferred color */
+    color: #ffffff;
+  }
+  
 
-.dropdown-item input[type="checkbox"]:checked + label.dropdown-item {
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 4px;
-    margin-right: 10px; /* Match the margin of the .dropdown-item */
-    background-color:#D8163B; /* Inherit the background color from the parent */
-    color: #ffffff; /* Change text color to white for better contrast */
-}
 
   
   .dropdown-item:last-child {
