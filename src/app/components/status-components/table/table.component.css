@@ -131,7 +131,8 @@
   }
   
   .custom-table th, .custom-table td {
-    min-width: 200px;
+    min-width: 150px;
+    width: 150px; 
     vertical-align: middle;
     text-align: center;
 
@@ -160,14 +161,14 @@
     left: 0;
     background-color: rgba(255, 255, 255, 1);
     z-index: 1;
-    
+    width: 150px;
   }
   
   .fixed-column:nth-child(2) {
-    left: 200px;
+    left: 150px;
   }
   .fixed-column:nth-child(3) {
-    left: 400px;
+    left: 300px;
   }
   
   .custom-table-container {
@@ -219,6 +220,28 @@
   .custom-table tr {
     height: 80px; /* Adjust the height value to increase column height */
   }
+  .status-cell {
+    padding: 0;
+    text-align: center;
+}
+
+.status-cell span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.green-background {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.red-background {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+
   /* Pagination styling */
   .pagination-container {
 

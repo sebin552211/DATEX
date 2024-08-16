@@ -108,8 +108,7 @@ export class TableComponent implements OnInit {
   selectedColumns: { field: keyof Project; header: string }[] = [];
 
   allColumns: { field: keyof Project; header: string }[] = [
-    { field: 'projectCode', header: 'Project Code' },
-    { field: 'projectName', header: 'Project Name' },
+    
     { field: 'deliveryUnit', header: 'Delivery Unit' },
     { field: 'deliveryHead', header: 'Delivery Head' },
     { field: 'startDate', header: 'Start Date' },
