@@ -29,22 +29,8 @@ export class TableComponent implements OnInit {
   searchQuery: any;
   totalPages: any;
   currentPage: any;
-
-  nextPage() {
-    throw new Error('Method not implemented.');
-  }
-
-  previousPage() {
-    throw new Error('Method not implemented.');
-  }
-
-  onExport() {
-    throw new Error('Method not implemented.');
-  }
-
-  onSearch($event: Event) {
-    throw new Error('Method not implemented.');
-  }
+  dropdownVisible: boolean = false;
+  selectedColumns: { field: keyof Project; header: string }[] = [];
 
   projects: Project[] = [
     {
@@ -105,10 +91,7 @@ export class TableComponent implements OnInit {
     },
   ];
 
-  selectedColumns: { field: keyof Project; header: string }[] = [];
-
   allColumns: { field: keyof Project; header: string }[] = [
-    
     { field: 'deliveryUnit', header: 'Delivery Unit' },
     { field: 'deliveryHead', header: 'Delivery Head' },
     { field: 'startDate', header: 'Start Date' },
@@ -119,9 +102,8 @@ export class TableComponent implements OnInit {
     { field: 'projectType', header: 'Project Type' },
     { field: 'mailStatus', header: 'Mail Status' },
     { field: 'feedbackStatus', header: 'Feedback Status' },
-  ];
 
-  dropdownVisible: any;
+  ];
 
   constructor(private eRef: ElementRef, private renderer: Renderer2) {}
 
@@ -135,6 +117,10 @@ export class TableComponent implements OnInit {
     if (!isClickInside) {
       this.dropdownVisible = false;
     }
+  }
+
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
   }
 
   onCheckboxChange(event: Event, column: { field: keyof Project; header: string }) {
@@ -158,7 +144,19 @@ export class TableComponent implements OnInit {
     );
   }
 
-  toggleDropdown() {
-    this.dropdownVisible = !this.dropdownVisible;
+  nextPage() {
+    // Implement pagination logic here
+  }
+
+  previousPage() {
+    // Implement pagination logic here
+  }
+
+  onExport() {
+    // Implement export logic here
+  }
+
+  onSearch(event: Event) {
+    // Implement search logic here
   }
 }
