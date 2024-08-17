@@ -1,1 +1,78 @@
-<p>table works!</p>
+<div class="card">
+    <div class="header">
+      <h2 style="font-family: 'Poppins', sans-serif">Project Details</h2>
+      <div class="search-container">
+        <input type="text" placeholder="Search Project Name" class="search-input" />
+        <i class="fa fa-search search-icon"></i>
+      </div>
+      <div class="pagination-container">
+        <a href="#" class="pagination-button">&lt;</a>
+        <a href="#" class="pagination-number">1</a>
+        <a href="#" class="pagination-number">2</a>
+        <a href="#" class="pagination-number">3</a>
+        <a href="#" class="pagination-number">4</a>
+        <span class="pagination-ellipsis">...</span>
+        <a href="#" class="pagination-number">40</a>
+        <a href="#" class="pagination-button">&gt;</a>
+      </div>
+    </div>
+  
+    <div class="table-wrapper">
+      <table class="custom-table">
+        <thead>
+          <tr class="custom-header">
+            <th class="fixed-column project-code">Project Code</th>
+            <th class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">Project Name</th>
+            <th *ngFor="let col of selectedColumns">{{ col.header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="custom-row" *ngFor="let project of projects">
+            <td class="fixed-column project-code">{{ project.projectCode }}</td>
+            <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">{{ project.projectName }}</td>
+            <td *ngFor="let col of selectedColumns">
+                <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
+                      [ngClass]="{
+                        'green-background': project[col.field] === 'Mail Initiated' || project[col.field] === 'Received',
+                        'red-background': project[col.field] !== 'Mail Initiated' && project[col.field] !== 'Received'
+                      }">
+                  {{ project[col.field] }}
+                </span>
+                <span *ngIf="col.field !== 'mailStatus' && col.field !== 'feedbackStatus'">
+                  {{ project[col.field] }}
+                </span>
+              </td>
+              
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="controls">
+      <div class="multi-select-container">
+        <div class="dropdown">
+          <div class="placeholder" (click)="toggleDropdown()">Columns</div>
+          <div class="dropdown-list" *ngIf="dropdownVisible">
+            <label
+              class="dropdown-item"
+              *ngFor="let column of allColumns"
+              [ngClass]="{ 'selected-item': isSelected(column) }"
+            >
+              <input
+                type="checkbox"
+                [value]="column"
+                (change)="onCheckboxChange($event, column)"
+                [checked]="isSelected(column)"
+              />
+              <span>{{ column.header }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+  
+      <button class="export-button">
+        <i class="fa fa-download"></i> Export
+      </button>
+    </div>
+  </div>
+  
