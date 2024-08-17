@@ -36,6 +36,21 @@
   grid-column: span 1; /* Takes up one column */
 }
 
+.satisfactorycard{
+  background-color: #FFE2E5;
+}
+
+.cardtext{
+  font-size:45px;
+  font-weight: bold;
+  color:#4079ED;
+}
+
+.cardnumber{
+  margin-left: 200px;
+  font-size: 180px;
+}
+
 /* Ensure charts are responsive and fit within the card */
 p-chart {
   width: 100%;
@@ -43,7 +58,6 @@ p-chart {
 }
 
 .card p-chart[type="bar"] {
-
   max-height: 250px;
 }
 
