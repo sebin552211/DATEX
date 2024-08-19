@@ -15,8 +15,8 @@
 
 /* Image Styling */
 img {
-  height: 50px;
-  width: 200px;
+  height: 43px;
+  width: 150px;
   position: absolute;
   right: 0.5cm;
   top: 50%; /* Vertically center the image */
@@ -25,17 +25,17 @@ img {
 
 /* User Icon Hover Effect */
 .fa-user:hover {
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
-  transform: translateY(-2px); /* Lift effect */
-  transition: all 0.2s ease-in-out;
+ 
   cursor: pointer;
+  
 }
 
 /* Arrow Icon Hover Effect */
 .fa-arrow-down-wide-short:hover {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
-  transform: translateY(-2px); /* Lift effect */
-  transition: all 0.2s ease-in-out;
+ 
   cursor: pointer;
+}
+i{
+  font-size: large;
+
 }

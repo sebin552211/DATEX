@@ -130,8 +130,8 @@ export class GraphComponent implements OnInit {
 
     this.basicOptions1 = this.getBarChartOptions(textColor, textColorSecondary, surfaceBorder, 'Programming Languages', 'Count');
     this.basicOptions2 = this.getBarChartOptions(textColor, textColorSecondary, surfaceBorder, 'Project Categories', 'Count');
-    this.basicOptions3 = this.getBarChartOptions(textColor, textColorSecondary, surfaceBorder, 'Client Projects', 'Count');
-    this.basicOptions4 = this.getBarChartOptions(textColor, textColorSecondary, surfaceBorder, 'Client Support Projects', 'Count');
+    this.basicOptions3 = this.getBarChartOptions(textColor, textColorSecondary, surfaceBorder, 'Client Name', 'Count');
+    this.basicOptions4 = this.getBarChartOptions(textColor, textColorSecondary, surfaceBorder, 'Client Name', 'Count');
 
     this.pieData1 = this.getPieChartData(
       ['React', '.Net', 'Angular', 'Java', 'Python', 'PHP'],
