@@ -12,7 +12,10 @@
   
 }
 
-img{
+/* Image Styling */
+img {
+  height: 43px;
+  width: 150px;
   position: absolute;
   right: 0;
   height: 50px;
@@ -21,30 +24,20 @@ img{
   margin-top: -1.5cm;
 }
 
-.fa-user:hover{
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px;
-  transform: translateY(-2px);
-  transition: all 0.2s ease-in-out;
+/* User Icon Hover Effect */
+.fa-user:hover {
+ 
   cursor: pointer;
+  
 }
 
-.filter{ 
-  z-index: 1; 
-  background-color: #FFFFFF;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.right-align{
-  margin-left: 430px;
-}
-
-.fa-arrow-down-wide-short:hover{
-  box-shadow: 2px 2px 5px;
-  transform: translateY(-2px);
-  transition: all 0.2s ease-in-out;
+/* Arrow Icon Hover Effect */
+.fa-arrow-down-wide-short:hover {
+ 
   cursor: pointer;
 
 }
+i{
+  font-size: large;
 
+}
