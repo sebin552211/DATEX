@@ -1,9 +1,14 @@
 <div class="header">
     <div>
       <p style="margin-top: 20px; margin-left: 20px; font-size: 25px">
-        Hi, {{ username }}<i class="fa-solid fa-user" style="margin-left: 11cm;"></i><i class="fa-solid fa-arrow-down-wide-short" style="margin-left: 2cm;"></i>
+        Hi, {{ username }}<i class="fa-solid fa-user" style="margin-left: 11cm;"></i>
+        <i class="fa-solid fa-arrow-down-wide-short filter-toggle-button" 
+      style="margin-left: 1cm;"(click)="toggleFilters()"></i>
       </p>
       <img src="img/exp.png" alt="loading..">
+    </div>
+    <div *ngIf="isDivVisible" class="filter right-align">
+      <app-filter></app-filter>
     </div>
   </div>
   

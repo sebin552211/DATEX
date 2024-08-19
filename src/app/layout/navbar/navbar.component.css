@@ -1,41 +1,50 @@
-/* Header Styling */
-.header {
+
+.header{
   display: flex;
-  align-items: center; /* Center align items vertically */
+  flex-wrap: wrap;
   background-color: #FFFFFF;
-  margin-left: 227px;
-  position: fixed;
-  top: 0; /* Align to the top of the viewport */
-  left: 0; /* Align to the left edge */
-  width: calc(100% - 227px); /* Full width minus the sidebar */
+  margin-left: 230px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 5px;
   height: 1.8cm;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index: 1; /* Ensure it is above other content */
+  width: 25.7cm;
+  z-index: 1;
+  
 }
 
-/* Image Styling */
-img {
-  height: 50px;
-  width: 200px;
+img{
   position: absolute;
-  right: 0.5cm;
-  top: 50%; /* Vertically center the image */
-  transform: translateY(-50%); /* Adjust for vertical centering */
+  right: 0;
+  height: 50px;
+  width: 250px;
+  margin-right: 0.5cm;
+  margin-top: -1.5cm;
 }
 
-/* User Icon Hover Effect */
-.fa-user:hover {
+.fa-user:hover{
   border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
-  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 2px 2px 5px;
+  transform: translateY(-2px);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
-/* Arrow Icon Hover Effect */
-.fa-arrow-down-wide-short:hover {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
-  transform: translateY(-2px); /* Lift effect */
+.filter{ 
+  z-index: 1; 
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-align{
+  margin-left: 430px;
+}
+
+.fa-arrow-down-wide-short:hover{
+  box-shadow: 2px 2px 5px;
+  transform: translateY(-2px);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+
 }
+
