@@ -28,7 +28,10 @@
       </thead>
       <tbody>
         <tr class="custom-row" *ngFor="let project of projects">
-          <td class="fixed-column project-code">{{ project.projectCode }}</td>
+          <td class="fixed-column project-code">
+            <i class="fa-solid fa-pen custom-icon" (click)="openModal(project)"></i>
+            {{ project.projectCode }}
+          </td>
           <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">{{ project.projectName }}</td>
           <td *ngFor="let col of selectedColumns" [ngClass]="{
             'green-background': project[col.field] === 'Mail Initiated' || project[col.field] === 'Received',
@@ -40,7 +43,37 @@
       </tbody>
     </table>
   </div>
-
+  <div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal">
+      <h3>Edit Project</h3>
+      <div class="modal-content">
+        <div *ngFor="let col of editableColumns">
+          <label>
+            {{ col.header }}:
+            <ng-container *ngIf="col.type === 'select'; else defaultInput">
+              <select
+                [ngModel]="getEditableProjectField(col.field)"
+                (ngModelChange)="setEditableProjectField(col.field, $event)"
+              >
+                <option *ngFor="let option of col.options" [value]="option">{{ option }}</option>
+              </select>
+            </ng-container>
+            <ng-template #defaultInput>
+              <input
+                [type]="col.field.includes('Date') ? 'date' : 'text'"
+                [ngModel]="getEditableProjectField(col.field)"
+                (ngModelChange)="setEditableProjectField(col.field, $event)"
+              />
+            </ng-template>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="saveChanges()">Save</button>
+        <button (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
   <div class="controls">
     <div class="multi-select-container">
       <div class="dropdown">
@@ -69,3 +102,12 @@
     </button>
   </div>
 </div>
+
+
+
+<!-- Modal Structure -->
+
+
+
+
+
