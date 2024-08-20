@@ -11,21 +11,18 @@ import { Component } from '@angular/core';
 export class CardComponent {
   cards = [
     {
-      imgSrc: '',
       numberText: '150',
-      cardText: 'Active Projects',
+      cardText: 'VOC Eligible Projects',
       checkboxes: Array(7).fill(false)
     },
     {
-      imgSrc: '',
       numberText: '100',
-      cardText: 'Active FP Projects',
+      cardText: 'VOC Initiated',
       checkboxes: Array(7).fill(false)
     },
     {
-      imgSrc: '',
       numberText: '50',
-      cardText: 'Active T&M Projects',
+      cardText: 'VOC Received',
       checkboxes: Array(7).fill(false)
     }
   ];

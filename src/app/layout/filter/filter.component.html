@@ -1,0 +1,392 @@
+<div class="filter-container scroll">
+  <div class="filter-group"> 
+    <h4 (click)="toggleDropdown('projectStatus')" class="filter-heading">
+      Project Status
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-chevron-down': !showProjectStatus,
+          'fa-chevron-up': showProjectStatus
+        }"
+      ></i>
+    </h4>
+    <div *ngIf="showProjectStatus" class="filtercomponents filter-options">
+      <div
+        *ngFor="let option of projectStatusOptions; let i = index"
+        class="filter-option"
+        style="width: 7cm; border-radius: 20px"
+      >
+        <input
+          style="margin-left: 20px"
+          type="checkbox" 
+          id="projectStatus-{{ i }}" 
+          [(ngModel)]="filters.projectStatus[option]" 
+          (change)="toggleCheckbox()"
+        />
+        <label 
+          [ngClass]="{ 'checked-label': filters.projectStatus[option] }"
+          style="margin-left: 10px; font-size: 10px"
+          for="projectStatus-{{ i }}"
+        >
+          {{ option }}
+        </label>
+      </div>
+    </div>
+  </div>
+  
+    <hr>
+
+    <div class="filter-group">
+      <h4 (click)="toggleDropdown('projectContractType')" class="filter-heading">
+        Project Contract Type
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showProjectContractType,
+            'fa-chevron-up': showProjectContractType
+          }"
+        ></i>
+      </h4>
+      <div
+        *ngIf="showProjectContractType"
+        class="filtercomponents filter-options"
+      >
+        <div
+          class="comps"
+          *ngFor="let option of projectContractTypeOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="projectContractType-{{ i }}"
+            [(ngModel)]="filters.projectContractType[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="projectContractType-{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr>
+  
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('duAndDuHead')" class="filter-heading">
+        DU & DU Head
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showDuAndDuHead,
+            'fa-chevron-up': showDuAndDuHead
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showDuAndDuHead" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of duAndDuHeadOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 10px"
+        >
+          <input
+            style="margin-left: 10px"
+            type="checkbox"
+            id="duAndDuHead-{{ i }}"
+            [(ngModel)]="filters.duAndDuHead[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="duAndDuHead-{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+  
+    <hr>
+
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('region')" class="filter-heading">
+        Region
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showRegion,
+            'fa-chevron-up': showRegion
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showRegion" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of regionOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="region-{{ i }}"
+            [(ngModel)]="filters.region[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="region-{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+  
+    <hr>
+
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('date')" class="filter-heading">
+        Project Date
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showDate,
+            'fa-chevron-up': showDate
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showDate" class="filtercomponents filter-options">
+        <div class="dates">
+          <div>
+            <h5 style="font-size: 10px; margin-left: 12px">Start date</h5>
+            <input style="margin-left: 10px; font-size: 10px" type="date" />
+          </div>
+          <div>
+            <h5 style="font-size: 10px; margin-left: 12px">End date</h5>
+            <input style="margin-left: 10px; font-size: 10px" type="date" />
+          </div>
+          <div>
+            <h5 style="font-size: 10px; margin-left: 12px">
+              Forecasted End date
+            </h5>
+            <input style="margin-left: 10px; font-size: 10px" type="date" />
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <hr>
+
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('resource')" class="filter-heading">
+        Resources
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showResource,
+            'fa-chevron-up': showResource
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showResource" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of resourceOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="resource-{{ i }}"
+            [(ngModel)]="filters.resource[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="resource-{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('projectType')" class="filter-heading">
+        Project Type
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showProjectType,
+            'fa-chevron-up': showProjectType
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showProjectType" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of projectTypeOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="projectType{{ i }}"
+            [(ngModel)]="filters.projectType[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="projectType{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+  
+    <hr>    
+
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('domain')" class="filter-heading">
+        Domain
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showDomain,
+            'fa-chevron-up': showDomain
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showDomain" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of domainOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="domain{{ i }}"
+            [(ngModel)]="filters.domain[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="domain{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr>
+  
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('technology')" class="filter-heading">
+        Technology
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showTechnology,
+            'fa-chevron-up': showTechnology
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showTechnology" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of technologyOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="technology{{ i }}"
+            [(ngModel)]="filters.technology[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="technology{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr>
+  
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('databaseUsed')" class="filter-heading">
+        Database Used
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showDatabaseUsed,
+            'fa-chevron-up': showDatabaseUsed
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showDatabaseUsed" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of databaseUsedOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input 
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="databaseUsed{{ i }}"
+            [(ngModel)]="filters.databaseUsed[option]"
+          />
+          <label  
+            style="margin-left: 10px; font-size: 10px"
+            for="databaseUsed{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr>
+  
+    <div class="filter-group filter-section">
+      <h4 (click)="toggleDropdown('cloudUsed')" class="filter-heading">
+        Cloud Used
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-chevron-down': !showCloudUsed,
+            'fa-chevron-up': showCloudUsed
+          }"
+        ></i>
+      </h4>
+      <div *ngIf="showCloudUsed" class="filtercomponents filter-options">
+        <div
+          class="comps"
+          *ngFor="let option of cloudUsedOptions; let i = index"
+          class="filter-option"
+          style="width: 7cm; border-radius: 20px"
+        >
+          <input
+            style="margin-left: 10px; font-size: 20px"
+            type="checkbox"
+            id="cloudUsed{{ i }}"
+            [(ngModel)]="filters.cloudUsed[option]"
+          />
+          <label
+            style="margin-left: 10px; font-size: 10px"
+            for="cloudUsed{{ i }}"
+            >{{ option }}</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <button class="btn1" type="submit" (click)="ApplyFilters()"> Apply Filters </button>
+    <button class="btn2" type="reset"> Reset</button>
+  </div>
+  
+    
