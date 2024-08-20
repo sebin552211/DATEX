@@ -7,7 +7,11 @@
     <p-chart *ngIf="!showPieChart1" type="bar" [data]="barData1" [options]="barOptions1"></p-chart>
     <p-chart *ngIf="showPieChart1" type="pie" [data]="pieData1" [options]="pieOptions"></p-chart>
   </div>
-<br>
+   <div class="card satisfactorycard card_quarter card_2">
+       <div class="cardnumber">   {{satisfactory_score}}  </div>
+      <div class="cardtext"> Satisfactory Score</div>
+  </div> 
+
   <div class="card card_quarter card_2">
     <div class="card-header">
       <h3>Feedback-Parameter Wise</h3>

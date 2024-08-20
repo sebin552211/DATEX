@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 20px; /* Space between cards */
   margin-left: 6.5cm;
+
 }
 
 .card {
@@ -18,6 +19,7 @@
   overflow: hidden;
   max-width: 100%; /* Ensure cards fit within the row */
   height: auto; /* Adjusted to fit the content height */
+
 }
 
 .card-header{
@@ -25,20 +27,24 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+
 }
 .card-header input[type="checkbox"] {
   margin-left: 60px;
   cursor: pointer;
+
 }
 p-chart {
   width: 100%;
   max-width: 100%; /* Ensure charts do not overflow */
   height: auto;
+ 
 }
 
 /* Styling for bar charts */
 .card p-chart[type="bar"] {
   max-height: 300px; /* Adjust the max height as needed */
+
 }
 
 /* Styling for pie charts */
@@ -47,9 +53,11 @@ p-chart {
   max-width: 300px; /* Limit max width of pie chart */
   height: auto;
   max-height: 300px; /* Adjust max height if needed */
+ 
 }
 
 /* Styling for line charts */
 .card p-chart[type="line"] {
   max-height: 300px; /* Adjust the max height as needed */
+
 }
