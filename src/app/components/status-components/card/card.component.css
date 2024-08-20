@@ -1,0 +1,103 @@
+.body {
+  padding: 20px;
+  background-color: #FFFFFF;
+  margin-left: 6.5cm;
+  margin-top: 2.2cm;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 25.2cm;
+  margin-bottom: 12px;
+
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1b1f3b;
+  margin-bottom: 20px;
+
+}
+
+.maincard {
+  display: flex;
+  justify-content: space-between;
+
+ 
+}
+
+.maincard1, .maincard2, .maincard3 {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 30%;
+}
+
+.maincard1 {
+  background-color: #FFE2E5;
+}
+
+.maincard2 {
+  background-color: #FFF4DE;
+}
+
+.maincard3 {
+  background-color: #DCFCE7;
+}
+.maincard1:hover {
+  background-color: #fdb9b9;
+}
+.maincard2:hover {
+  background-color: #fddcad;
+}
+.maincard3:hover {
+  background-color: #ccffd1;
+}
+.ca {
+  display: flex;
+  align-items: center;
+}
+
+.ca i {
+  font-size: 35px;
+  color: #ffffff;
+  background-color: #ff6f6f;
+  border-radius: 50%;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.maincard1 > .ca i {
+  background-color: #FA5A7D;
+}
+.maincard2 > .ca i {
+  background-color: #FF947A;
+}
+
+.maincard3 > .ca i {
+  background-color: #3CD856;
+}
+
+.numbertext1, .numbertext2, .numbertext3 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #002147;
+  margin: 0;
+}
+
+.cardtext {
+  font-size: 16px;
+  color: #4079ED;
+  font-weight:700px;
+  font-family: 'Poppins', sans-serif;
+}
+.maincard1:hover, .maincard2:hover, .maincard3:hover
+{
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+}

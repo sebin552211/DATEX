@@ -198,4 +198,5 @@ export class GraphComponent1 implements OnInit {
       }
     };
   }
+  satisfactory_score=70;
 }
