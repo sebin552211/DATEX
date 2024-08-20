@@ -23,9 +23,10 @@ interface Filters {
   imports: [NgClass, NgFor, NgIf, FormsModule, NavbarComponent],
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
+  
 })
 export class FilterComponent implements OnInit {
-  
+  isChecked: boolean = false;
   showFilters = false;
 
   // Options for the filters
@@ -48,7 +49,7 @@ export class FilterComponent implements OnInit {
   cloudUsedOptions = ['Cloud Used'];
 
   // Dropdown visibility toggles
-  showProjectStatus = false;
+  showProjectStatus = true;
   showProjectContractType = false;
   showDuAndDuHead = false;
   showRegion = false;
@@ -73,8 +74,6 @@ export class FilterComponent implements OnInit {
     databaseUsed:{},
     cloudUsed:{},
   };
-
-  isDivVisible:boolean = false;
 
   ngOnInit() {
     this.initializeFilters();
@@ -139,4 +138,11 @@ toggleDropdown(section: string) {
     }
   } 
 
+  ApplyFilters(){
+
+  }
+
+  toggleCheckbox() {
+    this.isChecked = !this.isChecked;
+  }
 }

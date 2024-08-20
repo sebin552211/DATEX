@@ -1,13 +1,16 @@
 .filter-container.scroll {
     height: 12.5cm;
-    margin-top: 10px;
     overflow-x: hidden;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     text-align: center;
     padding: 20px;
     border: 1px solid white;
     width: 14cm;   
     box-shadow: 2px 2px 10px;
+    position: fixed;
+    top: 2cm;
+    right: 30px;
+    background-color: #FFFFFF;
     }
     
     .filter-group {
@@ -54,4 +57,49 @@
       display: flex;
       flex-wrap: wrap;
      }
+
+    button{
+      height: 40px;
+      width: 200px;
+      border-radius: 20px;
+    }
+
+    .btn1{
+      margin-right: 20px;
+      background-color: #000;
+      color: white;
+    }
+
+    .btn2{
+      margin-left: 20px;
+      background-color: #D4D4D4;
+      border-color:#D4D4D4 ;
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      border-radius: 20px;
+      transition: background-color 0.3s ease;
+    }
     
+    .filter-option input[type="checkbox"] {
+      width: 20px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* .filter-options input[type="checkbox"]:checked {
+      background-color: #DC123C;
+    } */
+    
+    .filter-option input[type="checkbox"]:checked + label {
+      color: white;
+    }
+    
+    .checked-label {
+      color: white;
+    }

@@ -1,37 +1,38 @@
 <div class="filter-container scroll">
-    <div class="filter-group">
-      <h4 (click)="toggleDropdown('projectStatus')" class="filter-heading">
-        Project Status
-        <i
-          class="fa"
-          [ngClass]="{
-            'fa-chevron-down': !showProjectStatus,
-            'fa-chevron-up': showProjectStatus
-          }"
-        ></i>
-      </h4>
-      <div *ngIf="showProjectStatus" class="filtercomponents filter-options">
-        <div
-          class="comps"
-          *ngFor="let option of projectStatusOptions; let i = index"
-          class="filter-option"
-          style="width: 7cm; border-radius: 20px"
+  <div class="filter-group"> 
+    <h4 (click)="toggleDropdown('projectStatus')" class="filter-heading">
+      Project Status
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-chevron-down': !showProjectStatus,
+          'fa-chevron-up': showProjectStatus
+        }"
+      ></i>
+    </h4>
+    <div *ngIf="showProjectStatus" class="filtercomponents filter-options">
+      <div
+        *ngFor="let option of projectStatusOptions; let i = index"
+        class="filter-option"
+        style="width: 7cm; border-radius: 20px"
+      >
+        <input
+          style="margin-left: 20px"
+          type="checkbox" 
+          id="projectStatus-{{ i }}" 
+          [(ngModel)]="filters.projectStatus[option]" 
+          (change)="toggleCheckbox()"
+        />
+        <label 
+          [ngClass]="{ 'checked-label': filters.projectStatus[option] }"
+          style="margin-left: 10px; font-size: 10px"
+          for="projectStatus-{{ i }}"
         >
-          <input id="checkbox"
-  
-            style="margin-left: 20px"
-            type="checkbox"
-            id="projectStatus-{{ i }}"
-            [(ngModel)]="filters.projectStatus[option]"
-          />
-          <label [ngClass]="{ 'checked-label': filters.projectStatus[option] }"
-            style="margin-left: 10px; font-size: 10px"
-            for="projectStatus-{{ i }}"
-            >{{ option }}</label
-          >
-        </div>
+          {{ option }}
+        </label>
       </div>
     </div>
+  </div>
   
     <hr>
 
@@ -383,6 +384,9 @@
         </div>
       </div>
     </div>
+
+    <button class="btn1" type="submit" (click)="ApplyFilters()"> Apply Filters </button>
+    <button class="btn2" type="reset"> Reset</button>
   </div>
   
     
