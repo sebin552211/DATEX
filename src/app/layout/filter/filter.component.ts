@@ -49,7 +49,7 @@ export class FilterComponent implements OnInit {
   cloudUsedOptions = ['Cloud Used'];
 
   // Dropdown visibility toggles
-  showProjectStatus = true;
+  showProjectStatus = false;
   showProjectContractType = false;
   showDuAndDuHead = false;
   showRegion = false;
