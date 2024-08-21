@@ -26,8 +26,9 @@ interface Filters {
   
 })
 export class FilterComponent implements OnInit {
-  isChecked: boolean = false;
   showFilters = false;
+
+  isDivVisible: boolean = true;
 
   // Options for the filters
   projectStatusOptions = ['Active', 'On Hold', 'Closed'];
@@ -49,7 +50,7 @@ export class FilterComponent implements OnInit {
   cloudUsedOptions = ['Cloud Used'];
 
   // Dropdown visibility toggles
-  showProjectStatus = true;
+  showProjectStatus = false;
   showProjectContractType = false;
   showDuAndDuHead = false;
   showRegion = false;
@@ -138,11 +139,43 @@ toggleDropdown(section: string) {
     }
   } 
 
-  ApplyFilters(){
-
+  resetFilters() {
+    Object.keys(this.filters.projectStatus).forEach(key => {
+      this.filters.projectStatus[key] = false;
+    });
+    Object.keys(this.filters.projectContractType).forEach(key => {
+      this.filters.projectContractType[key] = false;
+    });
+    Object.keys(this.filters.duAndDuHead).forEach(key => {
+      this.filters.duAndDuHead[key] = false;
+    });
+    Object.keys(this.filters.region).forEach(key => {
+      this.filters.region[key] = false;
+    });
+    Object.keys(this.filters.date).forEach(key => {
+      this.filters.date[key] = false;
+    });
+    Object.keys(this.filters.resource).forEach(key => {
+      this.filters.resource[key] = false;
+    });
+    Object.keys(this.filters.projectType).forEach(key => {
+      this.filters.projectType[key] = false;
+    });
+    Object.keys(this.filters.domain).forEach(key => {
+      this.filters.domain[key] = false;
+    });
+    Object.keys(this.filters.technology).forEach(key => {
+      this.filters.technology[key] = false;
+    });
+    Object.keys(this.filters.databaseUsed).forEach(key => {
+      this.filters.databaseUsed[key] = false;
+    });
+    Object.keys(this.filters.cloudUsed).forEach(key => {
+      this.filters.cloudUsed[key] = false;
+    });
   }
 
-  toggleCheckbox() {
-    this.isChecked = !this.isChecked;
+  ApplyFilters(){
+    return this.isDivVisible=false;
   }
 }

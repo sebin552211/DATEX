@@ -1,7 +1,8 @@
 <div class="sidenavbar">
   <p class="sideheading">DATEX</p>
   <div class="sidetext">
-    <div>
+    <div (click)="selectDashboard()"
+    [class.selected]="isDashboardSelected">
       <a routerLink="/" class="side-link">
         <p class="dashboard">
           <i class="fa-sharp-duotone fa-solid fa-chart-pie" style="margin-right: 10px"></i>
@@ -9,7 +10,8 @@
         </p>
       </a>
     </div>
-    <div>
+    <div (click)="selectVocStatus()"
+    [class.selected]="isVocStatusSelected">
       <a routerLink="/voc-status" class="side-link">
         <p class="status">
           <i class="fa-solid fa-chart-simple   " style="margin-right: 10px"></i>
@@ -17,7 +19,9 @@
         </p>
       </a>
     </div>
-    <div>
+    <div
+    (click)="selectVocAnalysis()"
+      [class.selected]="isVocAnalysisSelected">
       <a routerLink="/voc-analysis" class="side-link">
         <p class="analysis">
           <i class="fa-solid fa-chart-line" style="margin-right: 10px"></i>

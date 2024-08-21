@@ -49,8 +49,6 @@
   border-radius: 30px;
 }
 
-
-
 .side-link p i {
   font-size: 20px;
 }
@@ -59,9 +57,6 @@
   margin-right: 10px;
 }
 
-
-
-
 .dashboard:hover, .status:hover, .analysis:hover {
   background-color: white;
   color: #DC123C;
@@ -69,6 +64,25 @@
   transform: translateY(-2px);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+}
+
+.selected {
+  background-color: white;
+  color: #DC123C;
+  box-shadow: 2px 2px 5px;
+  border-radius: 30px;
+  width: 5cm;
+  height: 40px;
+  margin-bottom: 20px; 
+  transform: translateY(-2px);
+}
+
+.selected a {
+  color: #DC123C;
+}
+
+.selected i {
+  color: #DC123C;
 }
 
 
