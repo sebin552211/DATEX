@@ -2,15 +2,15 @@
     padding: 20px;
     background-color: #FFFFFF;
     margin-left: 6.5cm;
-    margin-top: 2cm;
+    margin-top: 2.2cm;
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 24.8cm;
     margin-bottom: 12px;
 
   }
-  
-  
+
+
   .heading {
     font-size: 24px;
     font-weight: bold;
@@ -18,14 +18,14 @@
     margin-bottom: 20px;
 
   }
-  
+
   .maincard {
     display: flex;
     justify-content: space-between;
-  
-   
+
+
   }
-  
+
   .maincard1, .maincard2, .maincard3 {
     display: flex;
     align-items: center;
@@ -34,15 +34,15 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     width: 30%;
   }
-  
+
   .maincard1 {
     background-color: #FFE2E5;
   }
-  
+
   .maincard2 {
     background-color: #FFF4DE;
   }
-  
+
   .maincard3 {
     background-color: #DCFCE7;
   }
@@ -59,7 +59,7 @@
     display: flex;
     align-items: center;
   }
-  
+
   .ca i {
     font-size: 35px;
     color: #ffffff;
@@ -75,7 +75,7 @@
 .maincard2 > .ca i {
     background-color: #FF947A;
 }
-  
+
   .maincard3 > .ca i {
     background-color: #3CD856;
 }
@@ -86,7 +86,7 @@
     color: #002147;
     margin: 0;
   }
-  
+
   .cardtext {
     font-size: 16px;
     color: #4079ED;
