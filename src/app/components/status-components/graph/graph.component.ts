@@ -41,8 +41,22 @@ export class GraphComponent2 implements OnInit {
               {
                   label: 'Projects',
                   data: [50, 27, 18, 75],
-                  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-                  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                  // backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                  // hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                  backgroundColor: [ 'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
+                  ],
+                  hoverBackgroundColor: [ 'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
+                  ]
               }
           ]
       };
@@ -98,8 +112,22 @@ export class GraphComponent2 implements OnInit {
           datasets: [
               {
                   data: [50, 27, 18, 75],
-                  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-                  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                  // backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                  // hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                  backgroundColor: [ 'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
+            ],
+                  hoverBackgroundColor: [ 'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
+                  ]
               }
           ]
       };
@@ -107,9 +135,12 @@ export class GraphComponent2 implements OnInit {
       this.pieChartOptions = {
           plugins: {
               legend: {
+                position:'right',
                   labels: {
                       usePointStyle: true,
-                      color: textColor
+                      color: textColor,
+                      boxWidth: 10,
+                      padding: 20
                   }
               }
           }
@@ -123,6 +154,7 @@ export class GraphComponent2 implements OnInit {
                   data: [0.26, 0.67, 0.67],
                   fill: false,
                   borderColor: '#36A2EB',
+                  //  borderColor: '#DC125E',
                   tension: 0.4
               }
           ]

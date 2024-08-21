@@ -1,11 +1,10 @@
 .graph_dashboard {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns layout */
+  grid-template-columns: 2fr 1fr; /* Two columns layout */
   grid-template-rows: auto; /* Adjust rows based on content */
   gap: 20px; /* Space between cards */
   margin-left: 6.5cm;
   margin-top: 2.2cm;
- 
 }
 
 .card {
@@ -13,40 +12,38 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 11cm;
- 
+  max-height: 7.5cm; /* Minimum height to ensure uniformity */
+  height: auto; /* Allow height to adjust based on content */
 }
 
-.card_half {
-  grid-column: span 1; 
-
+::ng-deep canvas {
+  width: 8cm;
+  height: auto;
+  max-height: 4.5cm; /* Adjust height to fit content */
 }
-.card-header{
+
+.card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
- 
 }
+
 .card-header input[type="checkbox"] {
   margin-left: 60px;
   cursor: pointer;
- 
 }
 
 .card_quarter {
-  grid-column: span 1; 
- 
+  grid-column: span 1;
 }
-
 
 p-chart {
   width: 100%;
-    
 }
 
 .card p-chart[type="bar"] {
@@ -54,30 +51,40 @@ p-chart {
 }
 
 .card p-chart[type="pie"] {
-  width: 80%; 
-  max-width: 300px; 
-  height: auto;
-  max-height: 9cm; 
+  width: 80%;
+  max-width: 300px;
+  height: auto; /* Adjust height to fit the chart content */
 }
 
-.cardnumber{
-  font-size: 150px;
-  font-size: bolder;
-  position: relative;
-  left: 90px;
-  top: 70px;
-}
-.card_half{
-  width:550px;
+.cardnumber {
+  font-size:95px;
+  font-weight: bold;
+  margin-right: 30px;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
-.satisfactorycard{
+.satisfactorycard {
   background-color: #FFE2E5;
 }
 
-.cardtext{
-font-size: 35px;
-color: #4079ED;
-position: absolute;
-bottom: 150px;
+.cardtext {
+  font-size: 30px;
+  color: #4079ED;
+  margin-top: 30px;
+}
+.score_icon{
+  display: flex;
+ gap:1px;
+
+}
+i {
+  font-size: 75px;
+  color: #ffffff;
+  background-color: #ff6f6f;
+  border-radius: 50%;
+  padding: 25px;
+  margin-left: 30px;
+  margin-top: 10px;
+
 }

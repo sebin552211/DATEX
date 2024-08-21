@@ -44,20 +44,20 @@ export class GraphComponent implements OnInit {
       ['React', '.Net', 'Angular', 'Java', 'Python', 'PHP'],
       [14, 12, 18, 11, 6, 22],
       [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
+     'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
       ],
       [
-        'rgba(59, 130, 246, 1)',
-        'rgba(168, 85, 247, 1)',
-        'rgba(34, 197, 94, 1)',
-        'rgba(249, 115, 28, 1)',
-        'rgba(225, 29, 72, 1)',
-        'rgba(16, 185, 129, 1)',
+    'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
       ],
       'Programming Languages'
     );
@@ -66,20 +66,19 @@ export class GraphComponent implements OnInit {
       ['Development', 'Staff Augmentation', 'R&D/Others', 'Production Support', 'Bug Fixing', 'Testing'],
       [14, 12, 10, 8, 5, 22],
       [
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(245, 158, 11, 0.5)', // Light Yellow
+       'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
       ],
-      [
-        'rgba(168, 85, 247, 1)',
-        'rgba(249, 115, 28, 1)',
-        'rgba(59, 130, 246, 1)',
-        'rgba(34, 197, 94, 1)',
-        'rgba(225, 29, 72, 1)',
-        'rgba(245, 158, 11, 1)',
+      [  'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
       ],
       'Project Categories'
     );
@@ -88,20 +87,20 @@ export class GraphComponent implements OnInit {
       ['Salesboost', 'MapHabit', 'Dars', 'QuVa Pharma Support', 'Protocol', 'Deltal'],
       [14, 15, 13, 9, 4, 23],
       [
-        'rgba(99, 102, 241, 0.5)', // Light Indigo
-        'rgba(245, 158, 11, 0.5)', // Light Yellow
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-        'rgba(225, 29, 72, 0.5)',  // Light Red
+      'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
       ],
       [
-        'rgba(99, 102, 241, 1)',
-        'rgba(245, 158, 11, 1)',
-        'rgba(168, 85, 247, 1)',
-        'rgba(249, 115, 28, 1)',
-        'rgba(16, 185, 129, 1)',
-        'rgba(225, 29, 72, 1)',
+      'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
       ],
       'Client Projects'
     );
@@ -110,20 +109,22 @@ export class GraphComponent implements OnInit {
       ['Salesboost', 'MapHabit', 'Dars', 'QuVa Pharma Support', 'Protocol', 'Deltal'],
       [14, 10, 7, 4, 3, 22],
       [
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-        'rgba(99, 102, 241, 0.5)', // Light Indigo
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(245, 158, 11, 0.5)', // Light Yellow
+      'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
+
       ],
       [
-        'rgba(225, 29, 72, 1)',
-        'rgba(16, 185, 129, 1)',
-        'rgba(99, 102, 241, 1)',
-        'rgba(168, 85, 247, 1)',
-        'rgba(249, 115, 28, 1)',
-        'rgba(245, 158, 11, 1)',
+     'rgba(59, 130, 246, 0.5)', // Light Blue
+            'rgba(168, 85, 247, 0.5)', // Light Purple
+            'rgba(34, 197, 94, 0.5)',  // Light Green
+            'rgba(249, 115, 28, 0.5)', // Light Orange
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)', // Light Teal
+
       ],
       'Client Support Projects'
     );
@@ -245,8 +246,11 @@ export class GraphComponent implements OnInit {
     return {
       plugins: {
         legend: {
+          position:'right',
           labels: {
             color: textColor,
+            boxWidth: 10,
+            padding: 20
           },
         },
       },
