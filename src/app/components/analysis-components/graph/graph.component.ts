@@ -15,28 +15,31 @@ export class GraphComponent1 implements OnInit {
   // Data for Bar Charts
   barData1: any;
   barData2: any;
-  barData3: any;
 
-  // Data for Pie Charts
+  // Data for Pie Chart
   pieData1: any;
-  pieData2: any;
-  pieData3: any;
 
-  // Options for Bar and Pie Charts
+  // Data for Donut Chart
+  donutData: any;
+
+  // Options for Bar Charts
   barOptions1: any;
   barOptions2: any;
-  barOptions3: any;
+
+  // Options for Pie and Donut Charts
   pieOptions: any;
+  donutOptions: any;
 
   // Toggle states
   showPieChart1: boolean = false;
-  showPieChart2: boolean = false;
-  showPieChart3: boolean = false;
 
   // Custom Colors and Borders
-  textColor: string = '#495057'; // Adjust these values as needed
+  textColor: string = '#495057';
   textColorSecondary: string = '#6c757d';
   surfaceBorder: string = '#dee2e6';
+
+  // Satisfactory Score
+  satisfactory_score: number = 70;
 
   ngOnInit() {
     // Overall Feedback - Bar Chart
@@ -45,7 +48,7 @@ export class GraphComponent1 implements OnInit {
       datasets: [
         {
           label: 'Feedback',
-          backgroundColor: '#42A5F5',
+          backgroundColor: 'rgba(225, 29, 72, 0.5)',
           data: [3, 2, 7, 4]
         }
       ]
@@ -57,35 +60,37 @@ export class GraphComponent1 implements OnInit {
       datasets: [
         {
           label: 'Very Satisfied',
-          backgroundColor: '#42A5F5',
+          backgroundColor: 'rgba(59, 130, 246, 0.5)',
           data: [78, 58, 70, 68, 71]
         },
         {
           label: 'Satisfied',
-          backgroundColor: '#66BB6A',
+          backgroundColor: 'rgba(168, 85, 247, 0.5)',
           data: [9, 12, 21, 22, 25]
         },
         {
           label: 'Neither Satisfied Nor Dissatisfied',
-          backgroundColor: '#FFA726',
-          data: [10, 0, 0, 0, 0]
+          backgroundColor: 'rgba(34, 197, 94, 0.5)',
+          data: [10, 0, 0, 0, 10]
         },
         {
           label: 'Dissatisfied',
-          backgroundColor: '#EF5350',
-          data: [0, 0, 0, 0, 0]
+          backgroundColor: 'rgba(249, 115, 28, 0.5)',
+          data: [10, 0, 0, 0, 0]
         }
       ]
     };
 
-    // Engage Experion Services in Future - Bar Chart
-    this.barData3 = {
+    // Donut Chart Data
+    this.donutData = {
       labels: ['Very Likely', 'Likely'],
       datasets: [
         {
-          label: 'Likelihood',
-          backgroundColor: ['#42A5F5', '#EF5350'],
-          data: [50, 30]
+          data: [50, 30],
+          backgroundColor: [
+            'rgba(225, 29, 72, 0.5)',  // Light Red
+            'rgba(16, 185, 129, 0.5)'  // Light Green
+          ]
         }
       ]
     };
@@ -95,38 +100,42 @@ export class GraphComponent1 implements OnInit {
       labels: ['Very Satisfied', 'Neither Satisfied Nor Dissatisfied', 'Very Dissatisfied', 'N/A'],
       datasets: [
         {
-          data: [63, 22, 7, 4],
-          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726', '#EF5350']
-        }
-      ]
-    };
-
-    this.pieData2 = {
-      labels: ['Customer Focus', 'Planning and Control', 'Quality', 'Communication', 'Knowledge'],
-      datasets: [
-        {
-          data: [78, 58, 70, 68, 71],
-          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726', '#EF5350', '#AB47BC']
-        }
-      ]
-    };
-
-    this.pieData3 = {
-      labels: ['Very Likely', 'Likely'],
-      datasets: [
-        {
-          data: [50, 30],
-          backgroundColor: ['#42A5F5', '#EF5350']
+          data: [3, 2, 7, 4],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)', // Light Pink
+            'rgba(54, 162, 235, 0.5)', // Light Blue
+            'rgba(255, 206, 86, 0.5)', // Light Yellow
+            'rgba(16, 185, 129, 0.5)'  // Light Green
+          ]
         }
       ]
     };
 
     // Chart Options
-    this.barOptions1 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Feedback', 'Count');
-    this.barOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Parameter Wise Feedback', 'Count');
-    this.barOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Likelihood', 'Count');
+    this.barOptions1 = this.getBarChartOptions(
+      this.textColor, this.textColorSecondary, this.surfaceBorder, 'Feedback', 'Count'
+    );
+    this.barOptions2 = this.getBarChartOptions(
+      this.textColor, this.textColorSecondary, this.surfaceBorder, 'Parameter Wise Feedback', 'Count'
+    );
 
     this.pieOptions = {
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: this.textColor,
+            boxWidth: 10,
+            padding: 20
+          }
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    };
+
+    this.donutOptions = {
+      cutout: '60%',
       plugins: {
         legend: {
           labels: {
@@ -137,19 +146,8 @@ export class GraphComponent1 implements OnInit {
     };
   }
 
-  // Toggle Functions for Pie Charts
-  togglePieChart(chartNumber: number) {
-    switch (chartNumber) {
-      case 1:
-        this.showPieChart1 = !this.showPieChart1;
-        break;
-      case 2:
-        this.showPieChart2 = !this.showPieChart2;
-        break;
-      case 3:
-        this.showPieChart3 = !this.showPieChart3;
-        break;
-    }
+  togglePieChart() {
+    this.showPieChart1 = !this.showPieChart1;
   }
 
   // Method to get bar chart options
@@ -177,13 +175,13 @@ export class GraphComponent1 implements OnInit {
           },
           ticks: {
             color: textColor,
-            font:{
-              size:8
+            font: {
+              size: 8
             },
-            autoSkip: false,  // Prevent skipping of labels
-            maxRotation: 0
+            autoSkip: false,
+            maxRotation: 0,
+            minRotation: 0
           }
-
         },
         y: {
           title: {
@@ -198,5 +196,4 @@ export class GraphComponent1 implements OnInit {
       }
     };
   }
-  satisfactory_score=70;
 }
