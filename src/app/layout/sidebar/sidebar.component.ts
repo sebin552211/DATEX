@@ -29,7 +29,7 @@ export class SidebarComponent {
     ];
   }
 
-  isDashboardSelected = false;
+  isDashboardSelected = true;
   isVocStatusSelected = false;
   isVocAnalysisSelected = false;
 

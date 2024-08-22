@@ -29,7 +29,7 @@
       <tbody>
         <tr class="custom-row" *ngFor="let project of projects">
           <td class="fixed-column project-code">
-            <i class="fa-solid fa-pen custom-icon" (click)="openEditModal(project)"></i>
+            <i class="fa-solid fa-pen custom-icon" (click)="openModal(project)"></i>
             {{ project.projectCode }}
           </td>
           <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">{{ project.projectName }}</td>
@@ -78,7 +78,7 @@
 <app-edit-modal  [isModalOpen]="isModalOpen"
 [editableProject]="editableProject"
 (close)="isModalOpen = false"
-(save)="saveProject()"></app-edit-modal>
+(save)="saveChanges()"></app-edit-modal>
 
 
 

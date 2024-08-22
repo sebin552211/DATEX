@@ -1,42 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DashboardTableService } from '../../../service/dashboard-table.service';
+import { DashboardTable } from '../../../interface/dashboard-table';
 
 
 
-interface EditableProject {
-  [key: string]: string | number | Date | undefined;
-  sqa?: string;
-  forecastedEndDate?: Date;
- 
-  projectType?: string;
-  domain?: string;
-  databaseUsed?: string;
-  cloudUsed?: string;
- 
-}
-interface Project {
-  projectCode: string;
-  projectName: string;
-  du: string;
-  js: string;
-  deliveryHead: string;
-  startDate: Date;
-  endDate: Date;
-  contractType: string;
-  numberOfResources: number;
-  region: string;
-  projectType: string;
-  technology: string;
-  status: string;
-  sqa: string;  // New column
-  forecastedEndDate: Date;  // New column
-  vocEligibilityDate: Date;  // New column
-  domain: string;  // New column
-  databaseUsed: string;  // New column
-  cloudUsed: string;  // New column
-  feedbackStatus: string;  // New column
-}
+
 @Component({
   selector: 'app-edit-modal',
   standalone: true,
@@ -47,145 +17,37 @@ interface Project {
 export class EditModalComponent {
 
   @Input() isModalOpen = false;
-  @Input() editableProject: Partial<Project> = {};
+  @Input() editableProject: Partial<DashboardTable> = {};
   
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
  
-  projects: Project[] = [
-    {
-      projectCode: 'DU6-254-SBP',
-      projectName: 'Salesboost - Development',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2017-11-13'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 7,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'John Doe',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Finance',
-      databaseUsed: 'SQL Server',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-140-MPH',
-      projectName: 'MapHabit',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2019-01-14'),
-      endDate: new Date('2024-09-30'),
-      contractType: 'T&M',
-      numberOfResources: 3,
-      region: 'US',
-      projectType: 'Development',
-      technology: 'React JS',
-      status: 'Active',
-      sqa: 'Jane Smith',
-      forecastedEndDate: new Date('2024-09-15'),
-      vocEligibilityDate: new Date('2024-07-15'),
-      domain: 'Healthcare',
-      databaseUsed: 'MySQL',
-      cloudUsed: 'AWS',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-286-DAR',
-      projectName: 'Neighbors',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-06-18'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 17,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Inactive',
-      sqa: 'Michael Brown',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Real Estate',
-      databaseUsed: 'PostgreSQL',
-      cloudUsed: 'GCP',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-284-PRT',
-      projectName: 'Proteus 2',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-07-09'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 22,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'Alice Johnson',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'E-commerce',
-      databaseUsed: 'Oracle',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-254-SBP',
-      projectName: 'Salesboost - Development',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2017-11-13'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 7,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'John Doe',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Finance',
-      databaseUsed: 'SQL Server',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-140-MPH',
-      projectName: 'MapHabit',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2019-01-14'),
-      endDate: new Date('2024-09-30'),
-      contractType: 'T&M',
-      numberOfResources: 3,
-      region: 'US',
-      projectType: 'Development',
-      technology: 'React JS',
-      status: 'Active',
-      sqa: 'Jane Smith',
-      forecastedEndDate: new Date('2024-09-15'),
-      vocEligibilityDate: new Date('2024-07-15'),
-      domain: 'Healthcare',
-      databaseUsed: 'MySQL',
-      cloudUsed: 'AWS',
-      feedbackStatus: 'Pending',
-    },  
+  projects: DashboardTable[] = []; // Array to hold the projects data
+ 
+  // Updated `allColumns` array to match the `DashboardTable` interface
+  allColumns: { field: keyof DashboardTable; header: string }[] = [
+    { field: 'du', header: 'DU' },
+    { field: 'duHead', header: 'DU Head' },
+    { field: 'projectStartDate', header: 'Start Date' },
+    { field: 'projectEndDate', header: 'End Date' },
+    { field: 'contractType', header: 'Contract Type' },
+    { field: 'numberOfResources', header: 'Number of Resources' },
+    { field: 'region', header: 'Region' },
+    { field: 'projectType', header: 'Project Type' },
+    { field: 'technology', header: 'Technology' },
+    { field: 'status', header: 'Status' },
+    { field: 'sqa', header: 'SQA' },
+    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
+    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+    { field: 'domain', header: 'Domain' },
+    { field: 'databaseUsed', header: 'Database Used' },
+    { field: 'cloudUsed', header: 'Cloud Used' },
+    { field: 'feedbackStatus', header: 'Feedback Status' },
   ];
+ 
+  // Updated `editableColumns` array to match the `DashboardTable` interface
+ 
+
   editableColumns = [
     { field: 'sqa', header: 'SQA' },
     { field: 'projectType', header: 'Project Type' },
@@ -198,11 +60,11 @@ export class EditModalComponent {
 
 
   getEditableProjectField(field: string): any {
-    return this.editableProject[field as keyof Project];
+    return this.editableProject[field as keyof DashboardTable];
   }
   
   setEditableProjectField(field: string, value: any): void {
-    this.editableProject[field as keyof Project] = value;
+    this.editableProject[field as keyof DashboardTable] = value;
   }
   
 
