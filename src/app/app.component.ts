@@ -8,14 +8,15 @@ import { DashboardcardComponent } from './components/dashboard-components/Dashbo
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { TableComponent } from './components/status-components/table/table.component';
-import { EditModalComponent } from "./components/dashboard-components/edit-modal/edit-modal.component";
+import { EditModalComponent } from "./components/dashboard-components/edit-modal/edit-modal.component";import { HttpClientModule } from '@angular/common/http';
+
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AnalysisCardComponent, DashboardcardComponent, SidebarComponent, NavbarComponent, DashboardComponent, TableComponent, EditModalComponent],
+  imports: [RouterOutlet, AnalysisCardComponent, DashboardcardComponent, SidebarComponent, NavbarComponent, DashboardComponent, TableComponent, EditModalComponent,HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

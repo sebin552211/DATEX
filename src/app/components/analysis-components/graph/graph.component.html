@@ -2,31 +2,34 @@
   <div class="card card_half card_1">
     <div class="card-header">
       <h3>Overall Feedback</h3>
-      <input type="checkbox" (change)="togglePieChart(1)" /> Pie Chart
+      <input type="checkbox" (change)="togglePieChart()" /> Pie Chart
     </div>
     <p-chart *ngIf="!showPieChart1" type="bar" [data]="barData1" [options]="barOptions1"></p-chart>
     <p-chart *ngIf="showPieChart1" type="pie" [data]="pieData1" [options]="pieOptions"></p-chart>
   </div>
-   <div class="card satisfactorycard card_quarter card_2">
-       <div class="cardnumber">   {{satisfactory_score}}  </div>
-      <div class="cardtext"> Satisfactory Score</div>
-  </div> 
+
+  <div class="card satisfactorycard card_quarter card_2">
+    <div class="score_icon">
+      <i class="fa-solid fa-note-sticky"></i>
+      <div class="cardnumber">{{satisfactory_score}}</div>
+    </div>
+    <div class="cardtext">Satisfactory Score</div>
+  </div>
+
 
   <div class="card card_quarter card_2">
     <div class="card-header">
       <h3>Feedback-Parameter Wise</h3>
-      <input type="checkbox" (change)="togglePieChart(2)" /> Pie Chart
+
     </div>
-    <p-chart *ngIf="!showPieChart2" type="bar" [data]="barData2" [options]="barOptions2"></p-chart>
-    <p-chart *ngIf="showPieChart2" type="pie" [data]="pieData2" [options]="pieOptions"></p-chart>
+    <p-chart  type="bar" [data]="barData2" [options]="barOptions2"></p-chart>
+
   </div>
 
-  <div class="card card_quarter card_3">
+  <div class="card card_3">
     <div class="card-header">
       <h3>Engage Experion Services in Future</h3>
-      <input type="checkbox" (change)="togglePieChart(3)" /> Pie Chart
     </div>
-    <p-chart *ngIf="!showPieChart3" type="bar" [data]="barData3" [options]="barOptions3"></p-chart>
-    <p-chart *ngIf="showPieChart3" type="pie" [data]="pieData3" [options]="pieOptions"></p-chart>
+    <p-chart type="doughnut" [data]="donutData" [options]="donutOptions"></p-chart>
   </div>
 </div>

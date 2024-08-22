@@ -28,4 +28,29 @@ export class SidebarComponent {
 
     ];
   }
+
+  isDashboardSelected = false;
+  isVocStatusSelected = false;
+  isVocAnalysisSelected = false;
+
+  selectDashboard() {
+    this.resetSelections();
+    this.isDashboardSelected = true;
+  }
+
+  selectVocStatus() {
+    this.resetSelections();
+    this.isVocStatusSelected = true;
+  }
+
+  selectVocAnalysis() {
+    this.resetSelections();
+    this.isVocAnalysisSelected = true;
+  }
+
+  resetSelections() {
+    this.isDashboardSelected = false;
+    this.isVocStatusSelected = false;
+    this.isVocAnalysisSelected = false;
+  }
 }
