@@ -1,7 +1,7 @@
 <div *ngIf="isDivVisible" class="filter-container scroll">
   <div class="filter-group">
     <h4 (click)="toggleDropdown('projectStatus')" class="filter-heading">
-      Project Status
+      Status
       <i
         class="fa"
         [ngClass]="{
@@ -277,6 +277,35 @@
 
             <hr />
 
+            <div class="filter-group">
+              <h4 (click)="toggleDropdown('SQA')" class="filter-heading">
+                SQA
+                <i
+                  class="fa"
+                  [ngClass]="{
+                    'fa-chevron-down': !showSQA,
+                    'fa-chevron-up': showSQA
+                  }"
+                ></i>
+              </h4>
+              <div *ngIf="showSQA" class="filter-components filter-options">
+                <div
+                  *ngFor="let option of SQAOptions; let i = index"
+                  class="filter-option"
+                  style="width: 7cm; border-radius: 20px;"
+                  [ngClass]="{ 'selected-item': filters.SQA[option] }"
+                >
+                  <label class="custom-checkbox-container">
+                    {{ option }}
+                    <input type="checkbox" [(ngModel)]="filters.SQA[option]" />
+                    <span class="custom-checkbox"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr/>
+
             <div class="filter-group filter-section">
               <h4
                 (click)="toggleDropdown('databaseUsed')"
@@ -354,6 +383,44 @@
                   </div>
                 </div>
               </div>
+              <hr/>
+
+              <div class="filter-group filter-section">
+                <h4
+                  (click)="toggleDropdown('feedbackStatus')"
+                  class="filter-heading"
+                >
+                  Feedback Status
+                  <i
+                    class="fa"
+                    [ngClass]="{
+                      'fa-chevron-down': !showFeedbackStatus,
+                      'fa-chevron-up': showFeedbackStatus
+                    }"
+                  ></i>
+                </h4>
+                <div
+                  *ngIf="showFeedbackStatus"
+                  class="filtercomponents filter-options"
+                >
+                  <div
+                      *ngFor="let option of feedbackStatusOptions; let i = index"
+                      class="filter-option"
+                      style="width: 7cm; border-radius: 20px"
+                      [ngClass]="{ 'selected-item': filters.feedbackStatus[option] }"
+                    >
+                      <label class="custom-checkbox-container">
+                        {{ option }}
+                        <input
+                          type="checkbox"
+                          [(ngModel)]="filters.feedbackStatus[option]"
+                        />
+                        <span class="custom-checkbox"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+               <hr/>
             </div>
           </div>
         </div>

@@ -13,8 +13,10 @@ interface Filters {
   projectType: { [key: string]: boolean };
   domain: { [key: string]: boolean };
   technology: { [key: string]: boolean };
+  SQA: { [key: string]: boolean };
   databaseUsed: { [key: string]: boolean };
   cloudUsed: { [key: string]: boolean };
+  feedbackStatus: { [key: string]: boolean };
 }
 
 @Component({
@@ -25,8 +27,8 @@ interface Filters {
   styleUrls: ['./filter.component.css']
   
 })
+
 export class FilterComponent implements OnInit {
-  showFilters = false;
 
   isDivVisible: boolean = true;
 
@@ -46,8 +48,10 @@ export class FilterComponent implements OnInit {
   projectTypeOptions = ['Project Type'];
   domainOptions = ['Domain'];
   technologyOptions = [ 'Technology '];
+  SQAOptions = ['SQA'];
   databaseUsedOptions = ['Database Used'];
   cloudUsedOptions = ['Cloud Used'];
+  feedbackStatusOptions = ['Pending', 'Recieved']
 
   // Dropdown visibility toggles
   showProjectStatus = false;
@@ -59,8 +63,10 @@ export class FilterComponent implements OnInit {
   showProjectType =false;
   showDomain = false;
   showTechnology = false;
+  showSQA= false;
   showDatabaseUsed = false;
   showCloudUsed = false;
+  showFeedbackStatus = false;
 
   filters: Filters = {
     projectStatus: {},
@@ -72,8 +78,10 @@ export class FilterComponent implements OnInit {
     projectType:{},
     domain:{},
     technology:{},
+    SQA:{},
     databaseUsed:{},
     cloudUsed:{},
+    feedbackStatus:{}
   };
 
   ngOnInit() {
@@ -104,11 +112,17 @@ export class FilterComponent implements OnInit {
     }); 
     this.technologyOptions.forEach(option => {
       this.filters.technology[option] = false;
+    }); 
+    this.SQAOptions.forEach(option => {
+      this.filters.SQA[option] = false;
     });  
     this.databaseUsedOptions.forEach(option => {
       this.filters.databaseUsed[option] = false;
     });  
     this.cloudUsedOptions.forEach(option => {
+      this.filters.cloudUsed[option] = false;
+    });
+    this.feedbackStatusOptions.forEach(option => {
       this.filters.cloudUsed[option] = false;
     });
   }
@@ -132,10 +146,14 @@ toggleDropdown(section: string) {
     this.showDomain = !this.showDomain;
     }else if (section === 'technology') {
     this.showTechnology = !this.showTechnology;
+    }else if (section === 'SQA') {
+    this.showSQA = !this.showSQA;
     }else if (section === 'databaseUsed') {
     this.showDatabaseUsed = !this.showDatabaseUsed;
     }else if (section === 'cloudUsed') {
     this.showCloudUsed = !this.showCloudUsed;
+    }else if (section === 'feedbackStatus') {
+    this.showFeedbackStatus = !this.showFeedbackStatus;
     }
   } 
 
@@ -167,11 +185,17 @@ toggleDropdown(section: string) {
     Object.keys(this.filters.technology).forEach(key => {
       this.filters.technology[key] = false;
     });
+    Object.keys(this.filters.SQA).forEach(key => {
+      this.filters.SQA[key] = false;
+    });
     Object.keys(this.filters.databaseUsed).forEach(key => {
       this.filters.databaseUsed[key] = false;
     });
     Object.keys(this.filters.cloudUsed).forEach(key => {
       this.filters.cloudUsed[key] = false;
+    });
+    Object.keys(this.filters.feedbackStatus).forEach(key => {
+      this.filters.feedbackStatus[key] = false;
     });
   }
 
@@ -179,3 +203,4 @@ toggleDropdown(section: string) {
     return this.isDivVisible=false;
   }
 }
+
