@@ -1,186 +1,7 @@
-
-// import { CommonModule } from '@angular/common';
-// import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
-// import { FormsModule } from '@angular/forms';
-
-// interface Project {
-//   projectCode: string;
-//   projectName: string;
-//   du: string;
-//   js: string;
-//   deliveryHead: string;
-//   startDate: Date;
-//   endDate: Date;
-//   contractType: string;
-//   numberOfResources: number;
-//   region: string;
-//   projectType: string;
-//   technology: string;
-//   status: string;
-// }
-
-// @Component({
-//   selector: 'app-table',
-//   standalone: true,
-//   imports: [FormsModule,CommonModule],
-//   templateUrl: './table.component.html',
-//   styleUrl: './table.component.css'
-// })
-
-
-// export class TableComponent implements OnInit {
-//   searchQuery: any;
-//   nextPage() {
-//     throw new Error('Method not implemented.');
-//   }
-//   totalPages: any;
-//   previousPage() {
-//     throw new Error('Method not implemented.');
-//   }
-//   currentPage: any;
-//   onExport() {
-//     throw new Error('Method not implemented.');
-//   }
-//   onSearch($event: Event) {
-//     throw new Error('Method not implemented.');
-//   }
-
-//   projects: Project[] = [
-//     {
-//       projectCode: 'DU6-254-SBP',
-//       projectName: 'Salesboost - Development',
-//       du: 'DU6',
-//       js: 'Jayan M S',
-//       deliveryHead: 'Jayan M S',
-//       startDate: new Date('2017-11-13'),
-//       endDate: new Date('2025-03-31'),
-//       contractType: 'T&M',
-//       numberOfResources: 7,
-//       region: 'US',
-//       projectType: 'Development',
-//       technology: '.NET',
-//       status: 'Active',
-//     },
-//     {
-//       projectCode: 'DU6-140-MPH',
-//       projectName: 'MapHabit',
-//       du: 'DU6',
-//       js: 'Jayan M S',
-//       deliveryHead: 'Jayan M S',
-//       startDate: new Date('2019-01-14'),
-//       endDate: new Date('2024-09-30'),
-//       contractType: 'T&M',
-//       numberOfResources: 3,
-//       region: 'US',
-//       projectType: 'Development',
-//       technology: 'React JS',
-//       status: 'Active',
-//     },
-//     {
-//       projectCode: 'DU6-286-DAR',
-//       projectName: 'Neighbors',
-//       du: 'DU6',
-//       js: 'Jayan M S',
-//       deliveryHead: 'Jayan M S',
-//       startDate: new Date('2018-06-18'),
-//       endDate: new Date('2025-03-31'),
-//       contractType: 'T&M',
-//       numberOfResources: 17,
-//       region: 'US',
-//       projectType: 'Development',
-//       technology: '.NET',
-//       status: 'Inactive',
-//     },
-//     {
-//       projectCode: 'DU6-284-PRT',
-//       projectName: 'Proteus 2',
-//       du: 'DU6',
-//       js: 'Jayan M S',
-//       deliveryHead: 'Jayan M S',
-//       startDate: new Date('2018-07-09'),
-//       endDate: new Date('2025-03-31'),
-//       contractType: 'T&M',
-//       numberOfResources: 22,
-//       region: 'US',
-//       projectType: 'Development',
-//       technology: '.NET',
-//       status: 'Active',
-//     },
-//   ];
-
-//   selectedColumns: { field: keyof Project; header: string }[] = [];
-
-  // allColumns: { field: keyof Project; header: string }[] = [
-   
-  //   { field: 'du', header: 'DU' },
-  //   { field: 'deliveryHead', header: 'Delivery Head' },
-  //   { field: 'startDate', header: 'Start Date' },
-  //   { field: 'endDate', header: 'End Date' },
-  //   { field: 'contractType', header: 'Contract Type' },
-  //   { field: 'numberOfResources', header: 'Number of Resources' },
-  //   { field: 'region', header: 'Region' },
-  //   { field: 'projectType', header: 'Project Type' },
-  //   { field: 'technology', header: 'Technology' },
-  //   { field: 'status', header: 'Status' },
-  // ];
-  
-
-//   dropdownVisible: any;
-//   constructor(private eRef: ElementRef, private renderer: Renderer2) {}
-
-//   ngOnInit(): void {}
-  
-//   @HostListener('document:click', ['$event'])
-//   onDocumentClick(event: MouseEvent) {
-//     const targetElement = event.target as HTMLElement;
-//     const isClickInside = targetElement.closest('.dropdown');
-
-//     if (!isClickInside) {
-//       this.dropdownVisible = false;
-//     }
-//   }
-
-//   onCheckboxChange(event: Event, column: { field: keyof Project; header: string }) {
-//     const checkbox = event.target as HTMLInputElement;
-//     if (checkbox.checked) {
-//       this.selectedColumns.push(column);
-//     } else {
-//       this.selectedColumns = this.selectedColumns.filter(
-//         (selectedColumn) => selectedColumn.field !== column.field
-//       );
-//     }
-//   }
-
-//   isSelected(column: { field: keyof Project; header: string }): boolean {
-//     return this.selectedColumns.some((selectedColumn) => selectedColumn.field === column.field);
-//   }
-
-//   removeSelection(column: { field: keyof Project; header: string }) {
-//     this.selectedColumns = this.selectedColumns.filter(
-//       (selectedColumn) => selectedColumn.field !== column.field
-//     );
-//   }
-
-//   toggleDropdown() {
-//     this.dropdownVisible = !this.dropdownVisible;
-//   }
-// }
-
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface EditableProject {
-  [key: string]: string | number | Date | undefined;
-  sqa?: string;
-  forecastedEndDate?: Date;
-  vocEligibilityDate?: Date;
-  projectType?: string;
-  domain?: string;
-  databaseUsed?: string;
-  cloudUsed?: string;
-  feedbackStatus?: string;
-}
+import { EditModalComponent } from "../edit-modal/edit-modal.component";
 
 interface Project {
   projectCode: string;
@@ -204,268 +25,50 @@ interface Project {
   cloudUsed: string;  // New column
   feedbackStatus: string;  // New column
 }
+import { DashboardTableService } from '../../../service/dashboard-table.service';
+import { DashboardTable } from '../../../interface/dashboard-table';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, EditModalComponent,HttpClientModule],
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  styleUrls: ['./table.component.css'],
 })
-
 export class TableComponent implements OnInit {
 
   searchQuery: any;
   totalPages: any;
   currentPage: any;
   dropdownVisible: boolean = false;
-  selectedColumns: { field: keyof Project; header: string }[] = [];
- 
-  
+  selectedColumns: { field: keyof DashboardTable; header: string }[] = [];
   isModalOpen = false;
-  editableProject: Partial<Project> = {};
-  projects: Project[] = [
-    {
-      projectCode: 'DU6-254-SBP',
-      projectName: 'Salesboost - Development',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2017-11-13'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 7,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'John Doe',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Finance',
-      databaseUsed: 'SQL Server',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-140-MPH',
-      projectName: 'MapHabit',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2019-01-14'),
-      endDate: new Date('2024-09-30'),
-      contractType: 'T&M',
-      numberOfResources: 3,
-      region: 'US',
-      projectType: 'Development',
-      technology: 'React JS',
-      status: 'Active',
-      sqa: 'Jane Smith',
-      forecastedEndDate: new Date('2024-09-15'),
-      vocEligibilityDate: new Date('2024-07-15'),
-      domain: 'Healthcare',
-      databaseUsed: 'MySQL',
-      cloudUsed: 'AWS',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-286-DAR',
-      projectName: 'Neighbors',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-06-18'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 17,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Inactive',
-      sqa: 'Michael Brown',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Real Estate',
-      databaseUsed: 'PostgreSQL',
-      cloudUsed: 'GCP',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-284-PRT',
-      projectName: 'Proteus 2',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-07-09'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 22,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'Alice Johnson',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'E-commerce',
-      databaseUsed: 'Oracle',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-254-SBP',
-      projectName: 'Salesboost - Development',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2017-11-13'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 7,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'John Doe',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Finance',
-      databaseUsed: 'SQL Server',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-140-MPH',
-      projectName: 'MapHabit',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2019-01-14'),
-      endDate: new Date('2024-09-30'),
-      contractType: 'T&M',
-      numberOfResources: 3,
-      region: 'US',
-      projectType: 'Development',
-      technology: 'React JS',
-      status: 'Active',
-      sqa: 'Jane Smith',
-      forecastedEndDate: new Date('2024-09-15'),
-      vocEligibilityDate: new Date('2024-07-15'),
-      domain: 'Healthcare',
-      databaseUsed: 'MySQL',
-      cloudUsed: 'AWS',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-286-DAR',
-      projectName: 'Neighbors',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-06-18'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 17,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Inactive',
-      sqa: 'Michael Brown',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Real Estate',
-      databaseUsed: 'PostgreSQL',
-      cloudUsed: 'GCP',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-284-PRT',
-      projectName: 'Proteus 2',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-07-09'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 22,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'Alice Johnson',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'E-commerce',
-      databaseUsed: 'Oracle',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-286-DAR',
-      projectName: 'Neighbors',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-06-18'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 17,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Inactive',
-      sqa: 'Michael Brown',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Real Estate',
-      databaseUsed: 'PostgreSQL',
-      cloudUsed: 'GCP',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-284-PRT',
-      projectName: 'Proteus 2',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-07-09'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 22,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'Alice Johnson',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'E-commerce',
-      databaseUsed: 'Oracle',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Pending',
-    },
-  ];
- 
-  allColumns: { field: keyof Project; header: string }[] = [
+  editableProject: Partial<DashboardTable> = {};
+  projects: DashboardTable[] = []; // Array to hold the projects data
+
+  // Updated `allColumns` array to match the `DashboardTable` interface
+  allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
-    { field: 'deliveryHead', header: 'Delivery Head' },
-    { field: 'startDate', header: 'Start Date' },
-    { field: 'endDate', header: 'End Date' },
+    { field: 'duHead', header: 'DU Head' },
+    { field: 'projectStartDate', header: 'Start Date' },
+    { field: 'projectEndDate', header: 'End Date' },
     { field: 'contractType', header: 'Contract Type' },
     { field: 'numberOfResources', header: 'Number of Resources' },
     { field: 'region', header: 'Region' },
     { field: 'projectType', header: 'Project Type' },
     { field: 'technology', header: 'Technology' },
     { field: 'status', header: 'Status' },
-    { field: 'sqa', header: 'SQA' },  // New column
-    { field: 'forecastedEndDate', header: 'Forecasted End Date' },  // New column
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },  // New column
-    { field: 'domain', header: 'Domain' },  // New column
-    { field: 'databaseUsed', header: 'Database Used' },  // New column
-    { field: 'cloudUsed', header: 'Cloud Used' },  // New column
-    { field: 'feedbackStatus', header: 'Feedback Status' },  // New column
+    { field: 'sqa', header: 'SQA' },
+    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
+    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+    { field: 'domain', header: 'Domain' },
+    { field: 'databaseUsed', header: 'Database Used' },
+    { field: 'cloudUsed', header: 'Cloud Used' },
+    { field: 'feedbackStatus', header: 'Feedback Status' },
   ];
+
+  // Updated `editableColumns` array to match the `DashboardTable` interface
   editableColumns = [
     { field: 'sqa', header: 'SQA' },
     { field: 'projectType', header: 'Project Type' },
@@ -476,11 +79,23 @@ export class TableComponent implements OnInit {
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
   ];
-  
 
-  constructor(private eRef: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private eRef: ElementRef,
+    private renderer: Renderer2,
+    private dashboardTableService: DashboardTableService // Injecting the service
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadProjects(); // Load projects on component initialization
+  }
+
+  loadProjects() {
+    this.dashboardTableService.getProjects().subscribe((data: DashboardTable[]) => {
+      this.projects = data;
+      console.log(data);
+    });
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -496,7 +111,7 @@ export class TableComponent implements OnInit {
     this.dropdownVisible = !this.dropdownVisible;
   }
 
-  onCheckboxChange(event: Event, column: { field: keyof Project; header: string }) {
+  onCheckboxChange(event: Event, column: { field: keyof DashboardTable; header: string }) {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
       this.selectedColumns.push(column);
@@ -507,11 +122,11 @@ export class TableComponent implements OnInit {
     }
   }
 
-  isSelected(column: { field: keyof Project; header: string }): boolean {
+  isSelected(column: { field: keyof DashboardTable; header: string }): boolean {
     return this.selectedColumns.some((selectedColumn) => selectedColumn.field === column.field);
   }
 
-  removeSelection(column: { field: keyof Project; header: string }) {
+  removeSelection(column: { field: keyof DashboardTable; header: string }) {
     this.selectedColumns = this.selectedColumns.filter(
       (selectedColumn) => selectedColumn.field !== column.field
     );
@@ -532,22 +147,25 @@ export class TableComponent implements OnInit {
   onSearch(event: Event) {
     // Implement search logic here
   }
-  openModal(project: Project) {
+
+  openModal(project: DashboardTable) {
     this.editableProject = { ...project };
     this.isModalOpen = true;
   }
+
   getEditableProjectField(field: string): any {
-    return this.editableProject[field as keyof Project];
+    return this.editableProject[field as keyof DashboardTable];
   }
-  
+
   setEditableProjectField(field: string, value: any): void {
-    this.editableProject[field as keyof Project] = value;
+    this.editableProject[field as keyof DashboardTable] = value;
   }
   
 
   closeModal() {
     this.isModalOpen = false;
   }
+
   saveChanges() {
     // Update the project with the new values
     const projectIndex = this.projects.findIndex(
@@ -558,6 +176,4 @@ export class TableComponent implements OnInit {
     }
     this.closeModal();
   }
-  
 }
-
