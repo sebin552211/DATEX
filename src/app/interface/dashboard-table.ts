@@ -4,8 +4,8 @@ export interface DashboardTable {
   projectName: string;
   du: string;
   duHead: string;
-  projectStartDate: string;
-  projectEndDate: string;
+  projectStartDate: Date;
+  projectEndDate: Date;
   projectManager: string;
   contractType: string;
   numberOfResources: number;
@@ -14,8 +14,8 @@ export interface DashboardTable {
   technology: string;
   status: string;
   sqa: string | null;
-  forecastedEndDate: string | null;
-  vocEligibilityDate: string | null;
+  forecastedEndDate: Date| null;
+  vocEligibilityDate: Date | null;
   projectDurationInDays: number;
   projectDurationInMonths: number;
   projectType: string | null;

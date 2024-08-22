@@ -1,6 +1,30 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { EditModalComponent } from "../edit-modal/edit-modal.component";
+
+interface Project {
+  projectCode: string;
+  projectName: string;
+  du: string;
+  js: string;
+  deliveryHead: string;
+  startDate: Date;
+  endDate: Date;
+  contractType: string;
+  numberOfResources: number;
+  region: string;
+  projectType: string;
+  technology: string;
+  status: string;
+  sqa: string;  // New column
+  forecastedEndDate: Date;  // New column
+  vocEligibilityDate: Date;  // New column
+  domain: string;  // New column
+  databaseUsed: string;  // New column
+  cloudUsed: string;  // New column
+  feedbackStatus: string;  // New column
+}
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,11 +32,12 @@ import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule,HttpClientModule],
+  imports: [FormsModule, CommonModule, EditModalComponent,HttpClientModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
+
   searchQuery: any;
   totalPages: any;
   currentPage: any;
@@ -135,6 +160,7 @@ export class TableComponent implements OnInit {
   setEditableProjectField(field: string, value: any): void {
     this.editableProject[field as keyof DashboardTable] = value;
   }
+  
 
   closeModal() {
     this.isModalOpen = false;
