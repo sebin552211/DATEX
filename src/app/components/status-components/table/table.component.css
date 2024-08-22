@@ -73,7 +73,7 @@
   /* Export button styling */
   .export-button {
     padding: 8px 15px;
-    margin-left: 20px;
+    margin-left: 0px;
     background-color: #ffffff;
     color: #151011;
     border: 2px solid #a6a2a3;
@@ -83,6 +83,7 @@
     font-size: 16px;
     display: flex;
     align-items: center;
+    margin-top: 0px;
   }
 
   .export-button i {
@@ -101,6 +102,8 @@
     overflow-y: auto;
     border-radius: 30px;
     margin-bottom: 20px;
+    max-height: 400px; /* Set a fixed maximum height */
+    height: 400px;
 
   }
   .green-background {
@@ -121,7 +124,7 @@
      background-color: #FFFFFF;
     border-collapse: separate;
     border-spacing: 0;
-    width: 50%;
+    width: 40%;
     font-family: "Arial", sans-serif;
     font-size: 14px;
     color: #333333;
@@ -134,7 +137,7 @@
     width: 150px;
     vertical-align: middle;
     text-align: center;
-
+    height: 5px;
   }
 
 
@@ -160,7 +163,7 @@
     left: 0;
     background-color: rgba(255, 255, 255, 1);
     z-index: 1;
-    width: 150px;
+   
   }
 
   .fixed-column:nth-child(2) {
@@ -217,7 +220,13 @@
     box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
   }
   .custom-table tr {
-    height: 80px; /* Adjust the height value to increase column height */
+    height: 50px; /* Adjust the height value to increase column height */
+  }
+  .custom-icon {
+    color: #96A5B8; /* Change the color */
+    font-size: 12px; /* Adjust the size */
+    margin-right: 12px; /* Add some space after the icon */
+    vertical-align: middle; /* Align icon with text */
   }
   .status-cell {
     padding: 0;
@@ -229,16 +238,15 @@
     padding: 5px 10px;
     border-radius: 4px;
 }
-
 .green-background {
-    background-color: #d4edda;
-    color: #155724;
+  background-color: #d4edda;
+  color: #155724;
+}
+.red-background {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
-.red-background {
-    background-color: #f8d7da;
-    color: #721c24;
-}
 
 
   /* Pagination styling */
@@ -283,9 +291,10 @@
 
   /* Multi-select dropdown styling */
   .multi-select-container {
-    position: absolute;
-    bottom: 20px;
-    right: 120px;
+    position: relative;
+    left:20px;
+    bottom: 1px;
+
   }
 
   .dropdown {
