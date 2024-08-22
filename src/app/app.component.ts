@@ -8,6 +8,7 @@ import { DashboardcardComponent } from './components/dashboard-components/Dashbo
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { TableComponent } from './components/status-components/table/table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -15,7 +16,7 @@ import { TableComponent } from './components/status-components/table/table.compo
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AnalysisCardComponent, DashboardcardComponent, SidebarComponent, NavbarComponent, DashboardComponent, TableComponent],
+  imports: [RouterOutlet, AnalysisCardComponent, DashboardcardComponent, SidebarComponent, NavbarComponent, DashboardComponent, TableComponent,HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
