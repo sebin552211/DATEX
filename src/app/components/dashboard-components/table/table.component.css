@@ -74,7 +74,7 @@
   /* Export button styling */
   .export-button {
     padding: 8px 15px;
-    margin-left: 30px;
+    margin-left: 0px;
     background-color: #ffffff;
     color: #151011;
     border: 2px solid #a6a2a3;
@@ -84,7 +84,7 @@
     font-size: 16px;
     display: flex;
     align-items: center;
-    margin-top: -15px;
+    margin-top: 0px;
   }
 
   .export-button i {
@@ -103,6 +103,8 @@
     overflow-y: auto;
     border-radius: 30px;
     margin-bottom: 20px;
+    max-height: 400px; /* Set a fixed maximum height */
+    height: 400px;
 
   }
 
@@ -206,7 +208,7 @@
     box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
   }
   .custom-table tr {
-    height: 40px; /* Adjust the height value to increase column height */
+    height: 50px; /* Adjust the height value to increase column height */
   }
 
   .custom-icon {
@@ -258,9 +260,10 @@
 
   /* Multi-select dropdown styling */
   .multi-select-container {
-    position: absolute;
-    bottom: 0.1cm;
-    right: 120px;
+    position: relative;
+    left:20px;
+    bottom: 1px;
+
   }
 
   .dropdown {

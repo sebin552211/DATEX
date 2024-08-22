@@ -14,8 +14,8 @@ export interface DashboardTable {
   technology: string;
   status: string;
   sqa: string | null;
-  forecastedEndDate: Date | null;
-  vocEligibilityDate: Date | null;
+  forecastedEndDate: string | null;
+  vocEligibilityDate: string | null;
   projectDurationInDays: number;
   projectDurationInMonths: number;
   projectType: string | null;
