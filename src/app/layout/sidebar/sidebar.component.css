@@ -68,13 +68,10 @@
 
 .selected {
   background-color: white;
-  color: #DC123C;
-  box-shadow: 2px 2px 5px;
   border-radius: 30px;
   width: 5cm;
   height: 40px;
   margin-bottom: 20px; 
-  transform: translateY(-2px);
 }
 
 .selected a {
