@@ -96,6 +96,8 @@
       </div>
     </div>
 
+    <input type="file" (change)="onFileChange($event)" />
+    <button (click)="importExcel()">Import</button>
 
     <button class="export-button">
       <i class="fa fa-download"></i> Export

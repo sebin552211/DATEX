@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { ExcelService } from '../../../service/excel.service';
 
 @Component({
   selector: 'app-table',
@@ -58,8 +60,10 @@ export class TableComponent implements OnInit {
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
-    private dashboardTableService: DashboardTableService // Injecting the service
+    private dashboardTableService: DashboardTableService ,// Injecting the service
+    private excelService: ExcelService, private http: HttpClient
   ) {}
+  selectedFile: File | null = null;
 
   ngOnInit(): void {
     this.loadProjects(); // Load projects on component initialization
@@ -70,6 +74,20 @@ export class TableComponent implements OnInit {
       this.projects = data;
       console.log(data);
     });
+  }
+  onFileChange(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  importExcel() {
+    if (this.selectedFile) {
+      this.excelService.readExcel(this.selectedFile).then((data) => {
+        console.log(data); // Map the data to your model and send it to the backend
+        this.http.post('API_ENDPOINT_URL', data).subscribe((response) => {
+          console.log('Data saved successfully', response);
+        });
+      });
+    }
   }
 
   @HostListener('document:click', ['$event'])
