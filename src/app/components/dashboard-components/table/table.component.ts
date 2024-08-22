@@ -167,20 +167,9 @@
 // }
 
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface EditableProject {
-  [key: string]: string | number | Date | undefined;
-  sqa?: string;
-  forecastedEndDate?: Date;
-  vocEligibilityDate?: Date;
-  projectType?: string;
-  domain?: string;
-  databaseUsed?: string;
-  cloudUsed?: string;
-  feedbackStatus?: string;
-}
+import { EditModalComponent } from "../edit-modal/edit-modal.component";
 
 interface Project {
   projectCode: string;
@@ -208,20 +197,19 @@ interface Project {
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, EditModalComponent],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
 
 export class TableComponent implements OnInit {
 
+ 
   searchQuery: any;
   totalPages: any;
   currentPage: any;
   dropdownVisible: boolean = false;
   selectedColumns: { field: keyof Project; header: string }[] = [];
- 
-  
   isModalOpen = false;
   editableProject: Partial<Project> = {};
   projects: Project[] = [
@@ -357,94 +345,10 @@ export class TableComponent implements OnInit {
       cloudUsed: 'AWS',
       feedbackStatus: 'Pending',
     },
-    {
-      projectCode: 'DU6-286-DAR',
-      projectName: 'Neighbors',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-06-18'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 17,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Inactive',
-      sqa: 'Michael Brown',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Real Estate',
-      databaseUsed: 'PostgreSQL',
-      cloudUsed: 'GCP',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-284-PRT',
-      projectName: 'Proteus 2',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-07-09'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 22,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'Alice Johnson',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'E-commerce',
-      databaseUsed: 'Oracle',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Pending',
-    },
-    {
-      projectCode: 'DU6-286-DAR',
-      projectName: 'Neighbors',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-06-18'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 17,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Inactive',
-      sqa: 'Michael Brown',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'Real Estate',
-      databaseUsed: 'PostgreSQL',
-      cloudUsed: 'GCP',
-      feedbackStatus: 'Received',
-    },
-    {
-      projectCode: 'DU6-284-PRT',
-      projectName: 'Proteus 2',
-      du: 'DU6',
-      js: 'Jayan M S',
-      deliveryHead: 'Jayan M S',
-      startDate: new Date('2018-07-09'),
-      endDate: new Date('2025-03-31'),
-      contractType: 'T&M',
-      numberOfResources: 22,
-      region: 'US',
-      projectType: 'Development',
-      technology: '.NET',
-      status: 'Active',
-      sqa: 'Alice Johnson',
-      forecastedEndDate: new Date('2025-03-01'),
-      vocEligibilityDate: new Date('2024-08-01'),
-      domain: 'E-commerce',
-      databaseUsed: 'Oracle',
-      cloudUsed: 'Azure',
-      feedbackStatus: 'Pending',
-    },
+  
+    
+    
+    
   ];
  
   allColumns: { field: keyof Project; header: string }[] = [
@@ -466,16 +370,7 @@ export class TableComponent implements OnInit {
     { field: 'cloudUsed', header: 'Cloud Used' },  // New column
     { field: 'feedbackStatus', header: 'Feedback Status' },  // New column
   ];
-  editableColumns = [
-    { field: 'sqa', header: 'SQA' },
-    { field: 'projectType', header: 'Project Type' },
-    { field: 'domain', header: 'Domain' },
-    { field: 'databaseUsed', header: 'Database Used' },
-    { field: 'cloudUsed', header: 'Cloud Used' },
-    { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
-    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
-  ];
+
   
 
   constructor(private eRef: ElementRef, private renderer: Renderer2) {}
@@ -532,31 +427,17 @@ export class TableComponent implements OnInit {
   onSearch(event: Event) {
     // Implement search logic here
   }
-  openModal(project: Project) {
-    this.editableProject = { ...project };
+  openEditModal(project: Project) {
+    // Open the modal and pass the project to the EditModalComponent
+    // For simplicity, let's assume you're using a service or a reference to open the modal
+    this.editableProject = { ...project }; // Copy project data to editableProject
     this.isModalOpen = true;
+    
   }
-  getEditableProjectField(field: string): any {
-    return this.editableProject[field as keyof Project];
-  }
-  
-  setEditableProjectField(field: string, value: any): void {
-    this.editableProject[field as keyof Project] = value;
-  }
-  
 
-  closeModal() {
+  saveProject() {
+   
     this.isModalOpen = false;
-  }
-  saveChanges() {
-    // Update the project with the new values
-    const projectIndex = this.projects.findIndex(
-      (proj) => proj.projectCode === this.editableProject.projectCode
-    );
-    if (projectIndex !== -1) {
-      this.projects[projectIndex] = { ...this.projects[projectIndex], ...this.editableProject };
-    }
-    this.closeModal();
   }
   
 }
