@@ -2,32 +2,33 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from "../edit-modal/edit-modal.component";
+import { ExcelService } from '../../../service/excel.service';
 
-interface Project {
-  projectCode: string;
-  projectName: string;
-  du: string;
-  js: string;
-  deliveryHead: string;
-  startDate: Date;
-  endDate: Date;
-  contractType: string;
-  numberOfResources: number;
-  region: string;
-  projectType: string;
-  technology: string;
-  status: string;
-  sqa: string;  // New column
-  forecastedEndDate: Date;  // New column
-  vocEligibilityDate: Date;  // New column
-  domain: string;  // New column
-  databaseUsed: string;  // New column
-  cloudUsed: string;  // New column
-  feedbackStatus: string;  // New column
-}
+// interface Project {
+//   projectCode: string;
+//   projectName: string;
+//   du: string;
+//   js: string;
+//   deliveryHead: string;
+//   startDate: Date;
+//   endDate: Date;
+//   contractType: string;
+//   numberOfResources: number;
+//   region: string;
+//   projectType: string;
+//   technology: string;
+//   status: string;
+//   sqa: string;  // New column
+//   forecastedEndDate: Date;  // New column
+//   vocEligibilityDate: Date;  // New column
+//   domain: string;  // New column
+//   databaseUsed: string;  // New column
+//   cloudUsed: string;  // New column
+//   feedbackStatus: string;  // New column
+// }
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-table',
@@ -79,11 +80,12 @@ export class TableComponent implements OnInit {
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
   ];
-
+  selectedFile: File | null = null;
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
-    private dashboardTableService: DashboardTableService // Injecting the service
+    private dashboardTableService: DashboardTableService, // Injecting the service
+    private excelService: ExcelService, private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +98,29 @@ export class TableComponent implements OnInit {
       console.log(data);
     });
   }
+
+  onFileChange(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  importExcel() {
+    if (this.selectedFile) {
+      this.excelService.readExcel(this.selectedFile).then((data) => {
+        console.log(data);
+        this.http.post('API_ENDPOINT_URL', data).subscribe({
+          next: (response) => {
+            console.log('Data saved successfully', response);
+          },
+          error: (error) => {
+            console.error('Error saving data', error);
+          }
+        });
+      }).catch(error => {
+        console.error('Error reading Excel file', error);
+      });
+    }
+  }
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -160,7 +185,7 @@ export class TableComponent implements OnInit {
   setEditableProjectField(field: string, value: any): void {
     this.editableProject[field as keyof DashboardTable] = value;
   }
-  
+
 
   closeModal() {
     this.isModalOpen = false;
