@@ -39,7 +39,6 @@ export class TableComponent implements OnInit {
   pageNumber: number = 1;
   pageSize: number = 7;
   totalProjects: number = 0;
-  totalPages: number = 0;
 
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
@@ -126,7 +125,6 @@ export class TableComponent implements OnInit {
     return Array.from({ length: end - start + 1 }, (_, i) => i + start);
   }
 
-  searchQuery: string = ''; // Track the search query
   onSearch() {
     const trimmedQuery = this.searchQuery.trim().toLowerCase();
 
