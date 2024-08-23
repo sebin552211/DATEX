@@ -1,5 +1,13 @@
 
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  Renderer2,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -12,7 +20,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule, EditModalComponent, HttpClientModule],
+  imports: [FormsModule, CommonModule, EditModalComponent,  HttpClientModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
@@ -28,6 +36,10 @@ export class TableComponent implements OnInit {
   projects: DashboardTable[] = [];
   selectedFile: File | null = null;
 
+  pageNumber: number = 1;
+  pageSize: number = 7;
+  totalProjects: number = 0;
+  totalPages: number = 0;
 
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
@@ -55,7 +67,12 @@ export class TableComponent implements OnInit {
     { field: 'domain', header: 'Domain' },
     { field: 'databaseUsed', header: 'Database Used' },
     { field: 'cloudUsed', header: 'Cloud Used' },
-    { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
+    {
+      field: 'feedbackStatus',
+      header: 'Feedback Status',
+      type: 'select',
+      options: ['Received', 'Pending'],
+    },
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
   ];
@@ -71,13 +88,60 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProjects();
+    this.loadPagedProjects();
   }
 
-  loadProjects(): void {
-    this.dashboardTableService.getProjects().subscribe((data: DashboardTable[]) => {
-      this.projects = data;
-      console.log(data);
-    });
+  loadProjects() {
+    this.dashboardTableService
+      .getProjects()
+      .subscribe((data: DashboardTable[]) => {
+        this.projects = data;
+      });
+  }
+  loadPagedProjects() {
+    this.dashboardTableService
+      .getProjectsPaged(this.pageNumber, this.pageSize)
+      .subscribe((data: any) => {
+        this.projects = data.projects;
+        this.totalProjects = data.totalProjects;
+        this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
+      });
+  }
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.pageNumber = page;
+      this.loadPagedProjects();
+    }
+  }
+  get paginationArray(): number[] {
+    const pagesToShow = 5; // Show 5 pages at a time
+    const half = Math.floor(pagesToShow / 2);
+    let start = Math.max(1, this.pageNumber - half);
+    let end = Math.min(this.totalPages, start + pagesToShow - 1);
+
+    if (end - start < pagesToShow) {
+      start = Math.max(1, end - pagesToShow + 1);
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => i + start);
+  }
+
+  searchQuery: string = ''; // Track the search query
+  onSearch() {
+    const trimmedQuery = this.searchQuery.trim().toLowerCase();
+
+    if (trimmedQuery) {
+      // Fetch projects based on the search query
+      this.dashboardTableService
+        .getProjectsName(trimmedQuery)
+        .subscribe((data: DashboardTable[]) => {
+          this.projects = data;
+          console.log(data);
+        });
+    } else {
+      // If the search box is empty, fetch all projects
+      this.loadProjects();
+    }
   }
 
 
@@ -95,7 +159,10 @@ export class TableComponent implements OnInit {
     this.dropdownVisible = !this.dropdownVisible;
   }
 
-  onCheckboxChange(event: Event, column: { field: keyof DashboardTable; header: string }): void {
+  onCheckboxChange(
+    event: Event,
+    column: { field: keyof DashboardTable; header: string }
+  ) {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
       this.selectedColumns.push(column);
@@ -107,17 +174,50 @@ export class TableComponent implements OnInit {
   }
 
   isSelected(column: { field: keyof DashboardTable; header: string }): boolean {
-    return this.selectedColumns.some((col) => col.field === column.field);
+    return this.selectedColumns.some(
+      (selectedColumn) => selectedColumn.field === column.field
+    );
   }
 
-  openModal(project: DashboardTable): void {
+  removeSelection(column: { field: keyof DashboardTable; header: string }) {
+    this.selectedColumns = this.selectedColumns.filter(
+      (selectedColumn) => selectedColumn.field !== column.field
+    );
+  }
+
+
+
+
+
+  openModal(project: DashboardTable) {
     this.editableProject = { ...project };
     this.isModalOpen = true;
   }
 
-  saveChanges(): void {
-    console.log('Save changes called');
-    // Implement the save logic here
+  getEditableProjectField(field: string): any {
+    return this.editableProject[field as keyof DashboardTable];
+  }
+
+  setEditableProjectField(field: string, value: any): void {
+    this.editableProject[field as keyof DashboardTable] = value;
+  }
+
+
+  closeModal() {
     this.isModalOpen = false;
+  }
+
+  saveChanges() {
+    // Update the project with the new values
+    const projectIndex = this.projects.findIndex(
+      (proj) => proj.projectCode === this.editableProject.projectCode
+    );
+    if (projectIndex !== -1) {
+      this.projects[projectIndex] = {
+        ...this.projects[projectIndex],
+        ...this.editableProject,
+      };
+    }
+    this.closeModal();
   }
 }

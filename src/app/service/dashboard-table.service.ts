@@ -48,4 +48,12 @@ export class DashboardTableService {
     // Return an observable with a user-facing error message
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+  getProjectsName(searchQuery: string = ''): Observable<DashboardTable[]> {
+    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/search?query=${searchQuery}`);
+  }
+  getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
+    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+ 
+  
 }
