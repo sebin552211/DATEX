@@ -18,12 +18,12 @@ export class EditModalComponent {
 
   @Input() isModalOpen = false;
   @Input() editableProject: Partial<DashboardTable> = {};
-  
+
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
- 
+
   projects: DashboardTable[] = []; // Array to hold the projects data
- 
+
   // Updated `allColumns` array to match the `DashboardTable` interface
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
@@ -44,9 +44,9 @@ export class EditModalComponent {
     { field: 'cloudUsed', header: 'Cloud Used' },
     { field: 'feedbackStatus', header: 'Feedback Status' },
   ];
- 
+
   // Updated `editableColumns` array to match the `DashboardTable` interface
- 
+
 
   editableColumns = [
     { field: 'sqa', header: 'SQA' },
@@ -55,18 +55,18 @@ export class EditModalComponent {
     { field: 'databaseUsed', header: 'Database Used' },
     { field: 'cloudUsed', header: 'Cloud Used' },
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
-   
-  ]; 
+
+  ];
 
 
   getEditableProjectField(field: string): any {
     return this.editableProject[field as keyof DashboardTable];
   }
-  
+
   setEditableProjectField(field: string, value: any): void {
     this.editableProject[field as keyof DashboardTable] = value;
   }
-  
+
 
   closeModal() {
     this.isModalOpen = false;

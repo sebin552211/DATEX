@@ -1,6 +1,8 @@
+import { DashboardTable } from './../../../interface/dashboard-table';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 
 interface EditableProject {
   [key: string]: string | number | Date | undefined;
@@ -36,7 +38,7 @@ interface Project {
 export class EditModalComponent {
 
   @Input() isModalOpen = false;
-  @Input() editableProject: Partial<Project> = {};
+  @Input() editableProject: Partial<DashboardTable> = {};
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
@@ -51,11 +53,11 @@ export class EditModalComponent {
   ];
 
   getEditableProjectField(field: string): any {
-    return this.editableProject[field as keyof Project];
+    return this.editableProject[field as keyof DashboardTable];
   }
 
   setEditableProjectField(field: string, value: any): void {
-    this.editableProject[field as keyof Project] = value;
+    this.editableProject[field as keyof DashboardTable] = value;
   }
 
   closeModal() {
@@ -65,13 +67,15 @@ export class EditModalComponent {
 
   saveChanges() {
     // Update the project with the new values
-    this.isModalOpen = false;
-    const projectIndex = this.projects.findIndex(
-      (proj) => proj.projectCode === this.editableProject.projectCode
-    );
-    if (projectIndex !== -1) {
-      this.projects[projectIndex] = { ...this.projects[projectIndex], ...this.editableProject };
-    }
-    this.closeModal();
-  }
+  //   this.isModalOpen = false;
+  //   const projectIndex = this.projects.findIndex(
+  //     (proj) => proj.projectCode === this.editableProject.projectCode
+  //   );
+  //   if (projectIndex !== -1) {
+  //     this.editableProject[projectIndex] = { ...this.projects[projectIndex], ...this.editableProject };
+  //   }
+
+  // }
+  this.closeModal();
+}
 }

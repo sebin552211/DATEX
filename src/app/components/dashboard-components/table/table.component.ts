@@ -1,55 +1,34 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { EditModalComponent } from "../edit-modal/edit-modal.component";
-
-interface Project {
-  projectCode: string;
-  projectName: string;
-  du: string;
-  js: string;
-  deliveryHead: string;
-  startDate: Date;
-  endDate: Date;
-  contractType: string;
-  numberOfResources: number;
-  region: string;
-  projectType: string;
-  technology: string;
-  status: string;
-  sqa: string;  // New column
-  forecastedEndDate: Date;  // New column
-  vocEligibilityDate: Date;  // New column
-  domain: string;  // New column
-  databaseUsed: string;  // New column
-  cloudUsed: string;  // New column
-  feedbackStatus: string;  // New column
-}
+import { EditModalComponent } from '../edit-modal/edit-modal.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
-import { DashboardTable } from '../../../interface/dashboard-table';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
 import { ExcelService } from '../../../service/excel.service';
+import { DashboardTable } from '../../../interface/dashboard-table';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule, EditModalComponent,HttpClientModule],
+  imports: [FormsModule, CommonModule, EditModalComponent, HttpClientModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
 
-  searchQuery: any;
-  totalPages: any;
-  currentPage: any;
+  searchQuery: string = '';
+  totalPages: number = 0;
+  currentPage: number = 1;
   dropdownVisible: boolean = false;
   selectedColumns: { field: keyof DashboardTable; header: string }[] = [];
-  isModalOpen = false;
+  isModalOpen: boolean = false;
   editableProject: Partial<DashboardTable> = {};
-  projects: DashboardTable[] = []; // Array to hold the projects data
+  projects: DashboardTable[] = [];
+  selectedFile: File | null = null;
 
-  // Updated `allColumns` array to match the `DashboardTable` interface
+
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
     { field: 'duHead', header: 'DU Head' },
@@ -70,7 +49,6 @@ export class TableComponent implements OnInit {
     { field: 'feedbackStatus', header: 'Feedback Status' },
   ];
 
-  // Updated `editableColumns` array to match the `DashboardTable` interface
   editableColumns = [
     { field: 'sqa', header: 'SQA' },
     { field: 'projectType', header: 'Project Type' },
@@ -85,38 +63,26 @@ export class TableComponent implements OnInit {
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
-    private dashboardTableService: DashboardTableService ,// Injecting the service
-    private excelService: ExcelService, private http: HttpClient
+    private dashboardTableService: DashboardTableService,
+    private excelService: ExcelService,
+    private http: HttpClient
   ) {}
-  selectedFile: File | null = null;
+
 
   ngOnInit(): void {
-    this.loadProjects(); // Load projects on component initialization
+    this.loadProjects();
   }
 
-  loadProjects() {
+  loadProjects(): void {
     this.dashboardTableService.getProjects().subscribe((data: DashboardTable[]) => {
       this.projects = data;
       console.log(data);
     });
   }
-  onFileChange(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
 
-  importExcel() {
-    if (this.selectedFile) {
-      this.excelService.readExcel(this.selectedFile).then((data) => {
-        console.log(data); // Map the data to your model and send it to the backend
-        this.http.post('API_ENDPOINT_URL', data).subscribe((response) => {
-          console.log('Data saved successfully', response);
-        });
-      });
-    }
-  }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
+  onDocumentClick(event: MouseEvent): void {
     const targetElement = event.target as HTMLElement;
     const isClickInside = targetElement.closest('.dropdown');
 
@@ -125,73 +91,33 @@ export class TableComponent implements OnInit {
     }
   }
 
-  toggleDropdown() {
+  toggleDropdown(): void {
     this.dropdownVisible = !this.dropdownVisible;
   }
 
-  onCheckboxChange(event: Event, column: { field: keyof DashboardTable; header: string }) {
+  onCheckboxChange(event: Event, column: { field: keyof DashboardTable; header: string }): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
       this.selectedColumns.push(column);
     } else {
       this.selectedColumns = this.selectedColumns.filter(
-        (selectedColumn) => selectedColumn.field !== column.field
+        (col) => col.field !== column.field
       );
     }
   }
 
   isSelected(column: { field: keyof DashboardTable; header: string }): boolean {
-    return this.selectedColumns.some((selectedColumn) => selectedColumn.field === column.field);
+    return this.selectedColumns.some((col) => col.field === column.field);
   }
 
-  removeSelection(column: { field: keyof DashboardTable; header: string }) {
-    this.selectedColumns = this.selectedColumns.filter(
-      (selectedColumn) => selectedColumn.field !== column.field
-    );
-  }
-
-  nextPage() {
-    // Implement pagination logic here
-  }
-
-  previousPage() {
-    // Implement pagination logic here
-  }
-
-  onExport() {
-    // Implement export logic here
-  }
-
-  onSearch(event: Event) {
-    // Implement search logic here
-  }
-
-  openModal(project: DashboardTable) {
+  openModal(project: DashboardTable): void {
     this.editableProject = { ...project };
     this.isModalOpen = true;
   }
 
-  getEditableProjectField(field: string): any {
-    return this.editableProject[field as keyof DashboardTable];
-  }
-
-  setEditableProjectField(field: string, value: any): void {
-    this.editableProject[field as keyof DashboardTable] = value;
-  }
-  
-
-  closeModal() {
+  saveChanges(): void {
+    console.log('Save changes called');
+    // Implement the save logic here
     this.isModalOpen = false;
-  }
-
-  saveChanges() {
-    // Update the project with the new values
-    const projectIndex = this.projects.findIndex(
-      (proj) => proj.projectCode === this.editableProject.projectCode
-    );
-    if (projectIndex !== -1) {
-      this.projects[projectIndex] = { ...this.projects[projectIndex], ...this.editableProject };
-    }
-    this.closeModal();
   }
 }

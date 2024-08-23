@@ -43,9 +43,8 @@
       </tbody>
     </table>
   </div>
-<!-- Modal Structure -->
 
-
+  <!-- Controls Section -->
   <div class="controls">
     <div class="multi-select-container">
       <div class="dropdown">
@@ -68,23 +67,20 @@
       </div>
     </div>
 
-    <input type="file" (change)="onFileChange($event)" />
-    <button (click)="importExcel()">Import</button>
 
     <button class="export-button">
       <i class="fa fa-download"></i> Export
     </button>
+
   </div>
 </div>
 
-<app-edit-modal  [isModalOpen]="isModalOpen"
-[editableProject]="editableProject"
-(close)="isModalOpen = false"
-(save)="saveChanges()"></app-edit-modal>
-
-
-
-
-
+<!-- Edit Modal Component -->
+<app-edit-modal
+  [isModalOpen]="isModalOpen"
+  [editableProject]="editableProject"
+  (close)="isModalOpen = false"
+  (save)="saveChanges()"
+></app-edit-modal>
 
 
