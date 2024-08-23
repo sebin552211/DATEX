@@ -1,22 +1,46 @@
 <div class="card">
   <div class="header">
     <h2 style="font-family: 'Poppins', sans-serif">Project Details</h2>
+
+    <!-- search -->
     <div class="search-container">
-      <input type="text" placeholder="Search Project Name" class="search-input" />
-      <i class="fa fa-search search-icon"></i>
+      <input 
+        type="text" 
+        placeholder="Search Project Name" 
+        class="search-input" 
+        (input)="onSearch()"
+        [(ngModel)]="searchQuery"
+      />
+      <i class="fa fa-search search-icon" (click)="onSearch()"></i>
     </div>
-    <div class="pagination-container">
-      <a href="#" class="pagination-button">&lt;</a>
-      <a href="#" class="pagination-number">1</a>
-      <a href="#" class="pagination-number">2</a>
-      <a href="#" class="pagination-number">3</a>
-      <a href="#" class="pagination-number">4</a>
-      <span class="pagination-ellipsis">...</span>
-      <a href="#" class="pagination-number">40</a>
-      <a href="#" class="pagination-button">&gt;</a>
-    </div>
+    <!-- paginator -->
+  <div class="pagination-container"> 
+      <button (click)="changePage(pageNumber - 1)" [disabled]="pageNumber === 1">
+        &lt;
+      </button>
+    
+      <button *ngFor="let page of paginationArray" 
+              [ngClass]="{'active': page === pageNumber}"
+              (click)="changePage(page)">
+        {{ page }}
+      </button>
+    
+      <span *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
+        ...
+      </span>
+    
+      <button (click)="changePage(totalPages)" 
+              *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
+        {{ totalPages }}
+      </button>
+    
+      <button (click)="changePage(pageNumber + 1)" [disabled]="pageNumber === totalPages">
+        &gt;
+      </button>
+    </div> 
   </div>
 
+  <!-- table -->
   <div class="table-wrapper">
     <table class="custom-table">
       <thead>
@@ -43,6 +67,7 @@
       </tbody>
     </table>
   </div>
+
 <!-- Modal Structure -->
 
 
