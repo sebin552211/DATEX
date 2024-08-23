@@ -24,6 +24,7 @@ export interface DashboardTable {
   cloudUsed: string | null;
   feedbackStatus: string | null;
   mailStatus: string | null;
+
 }
 
 

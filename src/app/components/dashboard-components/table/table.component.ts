@@ -14,28 +14,7 @@ import { DashboardTableService } from '../../../service/dashboard-table.service'
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { HttpClientModule } from '@angular/common/http';
 
-interface Project {
-  projectCode: string;
-  projectName: string;
-  du: string;
-  js: string;
-  deliveryHead: string;
-  startDate: Date;
-  endDate: Date;
-  contractType: string;
-  numberOfResources: number;
-  region: string;
-  projectType: string;
-  technology: string;
-  status: string;
-  sqa: string; // New column
-  forecastedEndDate: Date; // New column
-  vocEligibilityDate: Date; // New column
-  domain: string; // New column
-  databaseUsed: string; // New column
-  cloudUsed: string; // New column
-  feedbackStatus: string; // New column
-}
+
 
 @Component({
   selector: 'app-table',
@@ -70,29 +49,14 @@ export class TableComponent implements OnInit {
     { field: 'status', header: 'Status' },
     { field: 'sqa', header: 'SQA' },
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+    { field: 'customerName', header: 'CustomerName' },
     { field: 'domain', header: 'Domain' },
     { field: 'databaseUsed', header: 'Database Used' },
     { field: 'cloudUsed', header: 'Cloud Used' },
-    { field: 'feedbackStatus', header: 'Feedback Status' },
+   
   ];
 
   // Updated `editableColumns` array to match the `DashboardTable` interface
-  editableColumns = [
-    { field: 'sqa', header: 'SQA' },
-    { field: 'projectType', header: 'Project Type' },
-    { field: 'domain', header: 'Domain' },
-    { field: 'databaseUsed', header: 'Database Used' },
-    { field: 'cloudUsed', header: 'Cloud Used' },
-    {
-      field: 'feedbackStatus',
-      header: 'Feedback Status',
-      type: 'select',
-      options: ['Received', 'Pending'],
-    },
-    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
-  ];
 
   constructor(
     private eRef: ElementRef,
@@ -101,6 +65,9 @@ export class TableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.selectedColumns = this.allColumns.filter(col =>
+      ['du', 'duHead', 'status','customerName'].includes(col.field)
+    );
     this.loadProjects(); // Load projects on component initialization
     this.loadPagedProjects();
   }
