@@ -15,4 +15,12 @@ export class DashboardTableService {
   getProjects(): Observable<DashboardTable[]> {
     return this.http.get<DashboardTable[]>(this.apiUrl);
   }
+  getProjectsName(searchQuery: string = ''): Observable<DashboardTable[]> {
+    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/search?query=${searchQuery}`);
+  }
+  getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
+    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+ 
+  
 }
