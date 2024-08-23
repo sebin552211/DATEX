@@ -163,7 +163,7 @@
     left: 0;
     background-color: rgba(255, 255, 255, 1);
     z-index: 1;
-   
+
   }
 
   .fixed-column:nth-child(2) {
@@ -397,3 +397,33 @@
       font-size: 12px; /* Smaller font size for smaller screens */
     }
   }
+
+  /* Import button styling */
+.import-button {
+  padding: 8px 15px;
+  border: 2px solid #a6a2a3;
+  border-radius: 30px;
+  background-color: #ffffff;
+  color: #151011;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}
+
+.import-button:hover {
+  background-color: #ff1744;
+  color: #ffffff;
+}
+
+/* Responsive adjustments for controls */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    gap: 10px;
+  }
+}
+
+
+
+

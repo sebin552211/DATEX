@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   ElementRef,
@@ -10,53 +10,36 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
+import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
-interface Project {
-  projectCode: string;
-  projectName: string;
-  du: string;
-  js: string;
-  deliveryHead: string;
-  startDate: Date;
-  endDate: Date;
-  contractType: string;
-  numberOfResources: number;
-  region: string;
-  projectType: string;
-  technology: string;
-  status: string;
-  sqa: string; // New column
-  forecastedEndDate: Date; // New column
-  vocEligibilityDate: Date; // New column
-  domain: string; // New column
-  databaseUsed: string; // New column
-  cloudUsed: string; // New column
-  feedbackStatus: string; // New column
-}
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule, EditModalComponent, HttpClientModule],
+  imports: [FormsModule, CommonModule, EditModalComponent,  HttpClientModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  currentPage: any;
+
+  searchQuery: string = '';
+  totalPages: number = 0;
+  currentPage: number = 1;
   dropdownVisible: boolean = false;
   selectedColumns: { field: keyof DashboardTable; header: string }[] = [];
-  isModalOpen = false;
+  isModalOpen: boolean = false;
   editableProject: Partial<DashboardTable> = {};
-  projects: DashboardTable[] = []; // Array to hold the projects data
+  projects: DashboardTable[] = [];
+  selectedFile: File | null = null;
+
   pageNumber: number = 1;
   pageSize: number = 7;
   totalProjects: number = 0;
-  totalPages: number = 0;
 
-  // Updated `allColumns` array to match the `DashboardTable` interface
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
     { field: 'duHead', header: 'DU Head' },
@@ -77,7 +60,6 @@ export class TableComponent implements OnInit {
     { field: 'feedbackStatus', header: 'Feedback Status' },
   ];
 
-  // Updated `editableColumns` array to match the `DashboardTable` interface
   editableColumns = [
     { field: 'sqa', header: 'SQA' },
     { field: 'projectType', header: 'Project Type' },
@@ -97,11 +79,14 @@ export class TableComponent implements OnInit {
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
-    private dashboardTableService: DashboardTableService // Injecting the service
+    private dashboardTableService: DashboardTableService,
+    private excelService: ExcelService,
+    private http: HttpClient
   ) {}
 
+
   ngOnInit(): void {
-    this.loadProjects(); // Load projects on component initialization
+    this.loadProjects();
     this.loadPagedProjects();
   }
 
@@ -140,7 +125,6 @@ export class TableComponent implements OnInit {
     return Array.from({ length: end - start + 1 }, (_, i) => i + start);
   }
 
-  searchQuery: string = ''; // Track the search query
   onSearch() {
     const trimmedQuery = this.searchQuery.trim().toLowerCase();
 
@@ -158,8 +142,9 @@ export class TableComponent implements OnInit {
     }
   }
 
+
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
+  onDocumentClick(event: MouseEvent): void {
     const targetElement = event.target as HTMLElement;
     const isClickInside = targetElement.closest('.dropdown');
 
@@ -168,7 +153,7 @@ export class TableComponent implements OnInit {
     }
   }
 
-  toggleDropdown() {
+  toggleDropdown(): void {
     this.dropdownVisible = !this.dropdownVisible;
   }
 
@@ -181,7 +166,7 @@ export class TableComponent implements OnInit {
       this.selectedColumns.push(column);
     } else {
       this.selectedColumns = this.selectedColumns.filter(
-        (selectedColumn) => selectedColumn.field !== column.field
+        (col) => col.field !== column.field
       );
     }
   }
@@ -198,9 +183,9 @@ export class TableComponent implements OnInit {
     );
   }
 
- 
 
- 
+
+
 
   openModal(project: DashboardTable) {
     this.editableProject = { ...project };
@@ -214,6 +199,7 @@ export class TableComponent implements OnInit {
   setEditableProjectField(field: string, value: any): void {
     this.editableProject[field as keyof DashboardTable] = value;
   }
+
 
   closeModal() {
     this.isModalOpen = false;
