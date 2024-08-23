@@ -3,10 +3,10 @@
     background-color: #ffffff;
     border-radius: 50px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 15px;
     overflow: hidden;
     position: relative;
-    height:100vh;
+    height:95vh;
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
 
@@ -112,8 +112,9 @@
 
   /* Export button styling */
   .export-button {
+    position: relative;
     padding: 8px 15px;
-    margin-left: 0px;
+   right: 20px;
     background-color: #ffffff;
     color: #151011;
     border: 2px solid #a6a2a3;
@@ -139,7 +140,7 @@
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0.1, 0.1, 0.1);
     overflow-x: auto;
-    overflow-y: auto;
+    overflow-y: hidden;
     border-radius: 30px;
     margin-bottom: 20px;
     max-height: 400px; /* Set a fixed maximum height */
@@ -155,7 +156,8 @@
     font-family: "Arial", sans-serif;
     font-size: 14px;
     color: #333333;
-
+    overflow: hidden;
+    
 
   }
 
@@ -247,6 +249,7 @@
     box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
   }
   .custom-table tr {
+    max-height: 50px;
     height: 50px; /* Adjust the height value to increase column height */
   }
 

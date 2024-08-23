@@ -53,28 +53,14 @@ export class TableComponent implements OnInit {
     { field: 'status', header: 'Status' },
     { field: 'sqa', header: 'SQA' },
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+    { field: 'customerName', header: 'CustomerName' },
     { field: 'domain', header: 'Domain' },
     { field: 'databaseUsed', header: 'Database Used' },
     { field: 'cloudUsed', header: 'Cloud Used' },
-    { field: 'feedbackStatus', header: 'Feedback Status' },
+   
   ];
 
-  editableColumns = [
-    { field: 'sqa', header: 'SQA' },
-    { field: 'projectType', header: 'Project Type' },
-    { field: 'domain', header: 'Domain' },
-    { field: 'databaseUsed', header: 'Database Used' },
-    { field: 'cloudUsed', header: 'Cloud Used' },
-    {
-      field: 'feedbackStatus',
-      header: 'Feedback Status',
-      type: 'select',
-      options: ['Received', 'Pending'],
-    },
-    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
-  ];
+  // Updated `editableColumns` array to match the `DashboardTable` interface
 
   constructor(
     private eRef: ElementRef,
@@ -86,7 +72,10 @@ export class TableComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadProjects();
+    this.selectedColumns = this.allColumns.filter(col =>
+      ['du', 'duHead', 'status','customerName'].includes(col.field)
+    );
+    this.loadProjects(); // Load projects on component initialization
     this.loadPagedProjects();
   }
 
