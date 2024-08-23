@@ -17,7 +17,11 @@ export class ExcelTableComponent {
   @Output() close = new EventEmitter<void>();
   isLoading = false;
   errorMessage: string | null = null;
-  successMessage: string | null = null; // Added property for success message
+  successMessage: string | null = null;
+
+  // Pagination variables
+  currentPage = 1;
+  rowsPerPage = 10;
 
   constructor(
     private dashboardTableService: DashboardTableService,
@@ -39,6 +43,8 @@ export class ExcelTableComponent {
     if (input.files && input.files.length) {
       const file = input.files[0];
       this.isLoading = true;
+      this.errorMessage = null; // Clear previous errors
+      this.successMessage = null; // Clear previous success messages
       this.excelService.readExcel(file)
         .then(data => {
           this.excelData = data as ExcelRow[];
@@ -57,16 +63,48 @@ export class ExcelTableComponent {
     return this.excelData.length ? Object.keys(this.excelData[0]) : [];
   }
 
+  // Pagination logic
+  
+  get paginatedData(): ExcelRow[] {
+    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+    return this.excelData.slice(startIndex, startIndex + this.rowsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.excelData.length / this.rowsPerPage);
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
   saveData(): void {
     this.isLoading = true;
-    this.errorMessage = null;
-    this.successMessage = null; // Clear any previous success message
+    this.errorMessage = null; // Clear previous errors
+    this.successMessage = null; // Clear previous success messages
 
     this.dashboardTableService.updateProjects(this.excelData).subscribe(
       response => {
         console.log('Data updated successfully:', response);
         this.isLoading = false;
-        this.successMessage = 'Data saved successfully!'; // Set success message
+        this.successMessage = 'Data saved successfully!';
+
+        // Clear the success message after 3 seconds
+        setTimeout(() => this.successMessage = null, 3000);
       },
       error => {
         console.error('Error updating data:', error);

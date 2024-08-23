@@ -5,6 +5,14 @@
     <div *ngIf="!isLoading && excelData.length === 0" class="no-data">No data available</div>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
     <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+
+    <!-- Pagination at the top right -->
+    <div class="pagination-top">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">&lt;</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+    </div>
+
     <div class="table-container" *ngIf="!isLoading && excelData.length > 0">
       <table>
         <thead>
@@ -15,16 +23,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of excelData">
+          <tr *ngFor="let row of paginatedData">
             <td *ngFor="let column of getColumnHeaders()">
               {{ row[column] }}
             </td>
           </tr>
         </tbody>
       </table>
+
+
     </div>
+
     <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="file-input" />
-    <button (click)="saveData()" [disabled]="isLoading">Save Data</button>
-    <button (click)="closeModal()">Close</button>
+    <button class="save" (click)="saveData()" [disabled]="isLoading">Save Data</button>
+    <button class="close" (click)="closeModal()">Close</button>
   </div>
 </div>
