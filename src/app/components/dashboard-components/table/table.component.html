@@ -4,40 +4,40 @@
 
     <!-- search -->
     <div class="search-container">
-      <input 
-        type="text" 
-        placeholder="Search Project Name" 
-        class="search-input" 
+      <input
+        type="text"
+        placeholder="Search Project Name"
+        class="search-input"
         (input)="onSearch()"
         [(ngModel)]="searchQuery"
       />
       <i class="fa fa-search search-icon" (click)="onSearch()"></i>
     </div>
     <!-- paginator -->
-  <div class="pagination-container"> 
+  <div class="pagination-container">
       <button (click)="changePage(pageNumber - 1)" [disabled]="pageNumber === 1">
         &lt;
       </button>
-    
-      <button *ngFor="let page of paginationArray" 
+
+      <button *ngFor="let page of paginationArray"
               [ngClass]="{'active': page === pageNumber}"
               (click)="changePage(page)">
         {{ page }}
       </button>
-    
+
       <span *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
         ...
       </span>
-    
-      <button (click)="changePage(totalPages)" 
+
+      <button (click)="changePage(totalPages)"
               *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
         {{ totalPages }}
       </button>
-    
+
       <button (click)="changePage(pageNumber + 1)" [disabled]="pageNumber === totalPages">
         &gt;
       </button>
-    </div> 
+    </div>
   </div>
 
   <!-- table -->
@@ -70,7 +70,7 @@
   
 <!-- columns  -->
 
-
+  <!-- Controls Section -->
   <div class="controls">
     <div class="multi-select-container">
       <div class="dropdown">
@@ -97,17 +97,16 @@
     <button class="export-button">
       <i class="fa fa-download"></i> Export
     </button>
+
   </div>
 </div>
 
-<app-edit-modal  [isModalOpen]="isModalOpen"
-[editableProject]="editableProject"
-(close)="isModalOpen = false"
-(save)="saveChanges()"></app-edit-modal>
-
-
-
-
-
+<!-- Edit Modal Component -->
+<app-edit-modal
+  [isModalOpen]="isModalOpen"
+  [editableProject]="editableProject"
+  (close)="isModalOpen = false"
+  (save)="saveChanges()"
+></app-edit-modal>
 
 

@@ -33,8 +33,8 @@
           <td *ngFor="let col of selectedColumns">
               <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
                     [ngClass]="{
-                      'green-background': project[col.field] === 'Mail Initiated' || project[col.field] === 'Received',
-                      'red-background': project[col.field] !== 'Mail Initiated' && project[col.field] !== 'Received'
+                      'green-background': project[col.field] === 'Sent' || project[col.field] === 'Received',
+                      'red-background': project[col.field] !== 'Sent' && project[col.field] !== 'Received'
                     }">
                 {{ project[col.field] }}
               </span>
@@ -42,7 +42,7 @@
                 {{ project[col.field] }}
               </span>
             </td>
-           
+
         </tr>
       </tbody>
     </table>
@@ -56,7 +56,7 @@
           <label
             class="dropdown-item"
             *ngFor="let column of allColumns"
-           
+
           >
             <input
               type="checkbox"
@@ -69,14 +69,24 @@
         </div>
       </div>
     </div>
-
+    <button class="import-button" (click)="openExcelModal(excelData)">Import Excel</button>
     <button class="export-button">
       <i class="fa fa-download"></i> Export
     </button>
   </div>
 </div>
 
-<app-edit-modal [isModalOpen]="isModalOpen"
-[editableProject]="editableProject"
-(close)="isModalOpen = false"
-(save)="saveProject()"></app-edit-modal>
+<app-edit-modal
+  [isModalOpen]="isModalOpen"
+  [editableProject]="editableProject"
+  (close)="isModalOpen = false"
+  (save)="saveChanges()"
+></app-edit-modal>
+
+
+<!-- Excel Table Modal Component -->
+<app-excel-table
+  *ngIf="showExcelTable"
+  [excelData]="excelData"
+  (close)="showExcelTable = false"
+></app-excel-table>
