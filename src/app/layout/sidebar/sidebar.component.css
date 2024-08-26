@@ -61,9 +61,8 @@
   background-color: white;
   color: #DC123C;
   border-radius: 10px;
-  transform: translateY(-2px);
-  transition: all 0.2s ease-in-out;
   cursor: pointer;
+  height: 40px;
 }
 
 .selected {

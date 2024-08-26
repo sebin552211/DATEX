@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { DashboardTable } from '../interface/dashboard-table';
 import { ExcelRow } from '../interface/excel-row';
 
@@ -12,12 +12,14 @@ export class DashboardTableService {
 
   constructor(private http: HttpClient) {}
 
-  // Method to get projects
   getProjects(): Observable<DashboardTable[]> {
-    return this.http.get<DashboardTable[]>(this.apiUrl)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.get<object>(this.apiUrl).pipe(
+      map((response: any) => {
+        // Adjust this based on your actual API response structure
+        return response.result as DashboardTable[];
+      }),
+      catchError(this.handleError)
+    );
   }
 
   // Method to update projects
@@ -54,6 +56,6 @@ export class DashboardTableService {
   getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
     return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
- 
-  
+
+
 }
