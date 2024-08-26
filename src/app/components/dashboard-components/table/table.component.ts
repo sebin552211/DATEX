@@ -123,7 +123,7 @@ export class TableComponent implements OnInit {
         .getProjectsName(trimmedQuery)
         .subscribe((data: DashboardTable[]) => {
           this.projects = data;
-          console.log(data);
+         
         });
     } else {
       // If the search box is empty, fetch all projects
