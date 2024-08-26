@@ -21,9 +21,11 @@
     "@canvasjs/angular-charts": "^1.2.0",
     "@canvasjs/charts": "^3.10.2",
     "chart.js": "^4.4.3",
+    "date-fns": "^3.6.0",
     "primeng": "^17.18.8",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
