@@ -15,7 +15,6 @@ export class DashboardTableService {
   getProjects(): Observable<DashboardTable[]> {
     return this.http.get<object>(this.apiUrl).pipe(
       map((response: any) => {
-        // Adjust this based on your actual API response structure
         return response.result as DashboardTable[];
       }),
       catchError(this.handleError)
