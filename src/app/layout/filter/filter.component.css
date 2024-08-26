@@ -87,7 +87,7 @@
     
     .filter-option input[type="checkbox"] {
       width: 20px;
-      border: 2px solid #ccc;
+      border: 2px solid white;
       outline: none;
       cursor: pointer;
       transition: background-color 0.3s ease;
@@ -156,7 +156,7 @@
       transform: translateY(-50%);
       height: 15px;
       width: 15px;
-      background-color: #ccc;
+      background-color: white;
       border-radius: 4px;
       transition: background-color 0.3s;
     }
@@ -164,7 +164,7 @@
     /* Checkbox checked state */
     .custom-checkbox-container input:checked ~ .custom-checkbox {
       background-color: white;
-      border: 2px solid #DC123C;
+      /* border: 2px solid #DC123C; */
 
     }
     
@@ -180,9 +180,9 @@
     }
     
     .custom-checkbox::after {
-      left: 3px;
-      width: 3px;
-      height: 8px;
+      left: 5px;
+      width: 5px;
+      height: 11px;
       border: solid black;
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);

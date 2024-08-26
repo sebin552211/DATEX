@@ -2,14 +2,17 @@
   <div class="heading">Analytics Overview</div>
   <div class="maincard">
     <div
-      *ngFor="let card of cards"
+      *ngFor="let card of cards; let i = index"
       class="maincard{{ cards.indexOf(card) + 1 }}">
       <div class="ca">
         <div>
-          <i class="fa-solid fa-note-sticky " ></i>
+          <i class="fa-solid fa-note-sticky"></i>
         </div>
+
         <div>
-          <p class="numbertext{{ cards.indexOf(card) + 1 }}">{{ card.numberText }}</p>
+          <p class="numbertext{{ cards.indexOf(card) + 1 }}">
+            {{ card.numberText }}
+          </p>
           <div class="cardtext">{{ card.cardText }}</div>
         </div>
       </div>
