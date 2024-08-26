@@ -41,16 +41,29 @@ export class GraphComponent implements OnInit {
   constructor(private dashboardTableService: DashboardTableService) {}
 
   ngOnInit(): void {
-    // Fetch data for BarGraph1 and PieChart1
     this.dashboardTableService.getProjects().subscribe(projects => {
-      const technologyCounts = this.calculateTechnologyCounts(projects);
+      console.log('Projects response:', projects);
+      console.log('Type of response:', typeof projects);
 
-      const labels = Object.keys(technologyCounts);
-      const counts = Object.values(technologyCounts);
+      if (!Array.isArray(projects)) {
+        console.error('Expected projects to be an array.');
+        return;
+      }
 
-      const projectTypeCounts = this.calculateProjectTypeCounts(projects);
-      const projectTypeLabels = Object.keys(projectTypeCounts);
-      const projectTypeCountsValues = Object.values(projectTypeCounts);
+
+  const technologyCounts = this.calculateTechnologyCounts(projects);
+  const projectTypeCounts = this.calculateProjectTypeCounts(projects);
+
+
+  const labels = Object.keys(technologyCounts); // Array of technology names
+  const counts = Object.values(technologyCounts); // Array of technology counts
+
+
+  const projectTypeLabels = Object.keys(projectTypeCounts); // Array of project types
+  const projectTypeCountsValues = Object.values(projectTypeCounts); // Array of project type counts
+
+  console.log(labels,counts);
+  console.log(projectTypeLabels, projectTypeCountsValues);
 
       const documentStyle = getComputedStyle(document.documentElement);
       this.textColor = documentStyle.getPropertyValue('--text-color');
