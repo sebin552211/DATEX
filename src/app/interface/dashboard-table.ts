@@ -1,4 +1,6 @@
 export interface DashboardTable {
+  technologies: any;
+  type: any;
   projectId: number;
   projectCode: string;
   projectName: string;
