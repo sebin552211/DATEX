@@ -1,36 +1,58 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { AnalysisCardComponent } from './components/analysis-components/Analysiscard/Analysiscard.component';
-
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { DashboardcardComponent } from './components/dashboard-components/Dashboardcard/Dashboardcard.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { TableComponent } from './components/status-components/table/table.component';
-import { EditModalComponent } from "./components/dashboard-components/edit-modal/edit-modal.component";import { HttpClientModule } from '@angular/common/http';
+import { EditModalComponent } from "./components/dashboard-components/edit-modal/edit-modal.component";
+import { HttpClientModule } from '@angular/common/http';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
-
-
+import { DashboardTableService } from './service/dashboard-table.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AnalysisCardComponent, DashboardcardComponent, SidebarComponent, NavbarComponent, DashboardComponent, TableComponent, EditModalComponent,HttpClientModule,ProgressSpinnerModule,NgIf,NgClass],
+  imports: [
+    RouterOutlet,
+    AnalysisCardComponent,
+    DashboardcardComponent,
+    SidebarComponent,
+    NavbarComponent,
+    DashboardComponent,
+    TableComponent,
+    EditModalComponent,
+    HttpClientModule,
+    ProgressSpinnerModule,
+    NgIf,
+    NgClass,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'], // Corrected 'styleUrl' to 'styleUrls'
 })
 export class AppComponent {
   title = 'ProjectDatabase';
   isLoading: boolean = true;
 
+  constructor(private dashboardTableService:DashboardTableService) {}
+
   ngOnInit() {
-    console.log("entered");
-    // Simulate data fetching
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000); // Simulate a 2-second data fetch
-    console.log("exit")
+    console.log('entered');
+    this.fetchData(); // Fetch data on init
+  }
+
+  fetchData() {
+    this.dashboardTableService.getProjects().subscribe(
+      (data) => {
+        console.log(data); 
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+        this.isLoading = false; // Hide loader even if there's an error
+      }
+    );
   }
 }

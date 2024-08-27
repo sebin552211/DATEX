@@ -47,7 +47,7 @@ export class GraphComponent1 implements OnInit {
       labels: ['Very Satisfied', 'Neither Satisfied Nor Dissatisfied', 'Very Dissatisfied', 'N/A'],
       datasets: [
         {
-          label: 'Feedback',
+
           backgroundColor: 'rgba(225, 29, 72, 0.5)',
           data: [3, 2, 7, 4]
         }
@@ -161,9 +161,7 @@ export class GraphComponent1 implements OnInit {
     return {
       plugins: {
         legend: {
-          labels: {
-            color: textColorSecondary
-          }
+         display:false,
         }
       },
       scales: {
