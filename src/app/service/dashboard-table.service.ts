@@ -55,6 +55,6 @@ export class DashboardTableService {
   getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
     return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
-
+ 
 
 }

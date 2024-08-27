@@ -47,6 +47,8 @@ export class EditModalComponent {
   projects: Project[] = [
     // Your existing project data
   ];
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   editableColumns = [
     { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
@@ -67,21 +69,45 @@ export class EditModalComponent {
   }
 
   saveChanges() {
+    // Reset messages
+    this.successMessage = null;
+    this.errorMessage = null;
+  
     // Make an HTTP PUT request to update the project in the backend
     this.http.put(`https://localhost:7259/api/Project/editable/${this.editableProject.projectId}`, this.editableProject)
       .subscribe(
-        () => {
-          // Handle success, e.g., close the modal, refresh the data, etc.
+        (updatedProject: any) => {
+          // Handle success
           this.isModalOpen = false;
           this.save.emit();
           this.closeModal();
+  
+          // Update the local data model
+          const index = this.projects.findIndex(p => p.projectCode === updatedProject.projectCode);
+          if (index !== -1) {
+            this.projects[index] = updatedProject;
+          }
+  
+          // Set success message
+          this.successMessage = 'Updated successfully';
+  
+          // Clear message after 5 seconds
+          setTimeout(() => this.successMessage = null, 5000);
         },
         error => {
-          // Handle error, e.g., show an error message
+          // Handle error
           console.error('Failed to save changes:', error);
+  
+          // Set error message
+          this.errorMessage = 'Unable to update';
+  
+          // Clear message after 5 seconds
+          setTimeout(() => this.errorMessage = null, 5000);
         }
       );
-
-    }
+  }
+  
+  
+  
 }
 
