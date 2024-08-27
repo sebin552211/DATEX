@@ -17,6 +17,7 @@ export class GraphComponent implements OnInit {
   basicData3: any;
   basicData4: any;
 
+  
   pieData1: any;
   pieData2: any;
   pieData3: any;
@@ -41,6 +42,7 @@ export class GraphComponent implements OnInit {
   constructor(private dashboardTableService: DashboardTableService) {}
 
   ngOnInit(): void {
+
     this.dashboardTableService.getProjects().subscribe(projects => {
       console.log('Projects response:', projects);
       console.log('Type of response:', typeof projects);
@@ -49,7 +51,6 @@ export class GraphComponent implements OnInit {
         console.error('Expected projects to be an array.');
         return;
       }
-
 
   const technologyCounts = this.calculateTechnologyCounts(projects);
   const projectTypeCounts = this.calculateProjectTypeCounts(projects);
@@ -130,7 +131,10 @@ const predefinedColors = [
       this.pieData2 = this.getPieChartData(projectTypeLabels, projectTypeCountsValues, projectTypeBackgroundColors);
 
       this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Type', 'Count');
-    });
+    }
+  );
+
+
 
     // Static data for other bar graphs and pie charts
 

@@ -1,32 +1,25 @@
-import { NgForOf, NgIf } from '@angular/common'
+import { NgForOf, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { count } from 'rxjs';
 
-NgIf
 @Component({
   selector: 'app-dashboardcard',
   standalone: true,
   imports: [NgForOf, NgIf],
   templateUrl: './Dashboardcard.component.html',
-  styleUrl: './Dashboardcard.component.css'
+  styleUrls: ['./Dashboardcard.component.css'] // changed from 'styleUrl' to 'styleUrls'
 })
 export class DashboardcardComponent implements OnInit {
   constructor(private http: HttpClient) { }
- 
-  
-  projects: any[] = [];
-  projectCodes: string[] = [];
-  projectNames: string[] = [];
-  dusAndDuHeads: string[] = [];
-  projectManager: string[] = [];
-  contractType: string[] = [];
-  numberOfResources: string [] = [];
-  customerName: string [] = [];
-  regions: string [] = [];
-  technologies: string [] = [];
-  status: string [] = [];
 
+  projects: any[] = [];
+  projectStatusOptions: string[] = [];
+  projectContractTypeOptions: string[] = [];
+  dusAndDuHeads: string[] = [];
+  regions: string[] = [];
+  resourceOptions: string[] = [];
+  technologyOptions: string[] = [];
+  
   ongoingProjectsCount: number = 0;
   fixedPriceCount: number = 0;
   timeAndMoneyCount: number = 0;
@@ -38,44 +31,41 @@ export class DashboardcardComponent implements OnInit {
   }
 
   fetchProjects(): void {
-    this.http.get<any[]>('http://localhost:3000/projects').subscribe(data => {
-      this.projects = data;
-      this.projectCodes = [...new Set(data.map(project => project.ProjectCode))];
-      this.projectNames = [...new Set(data.map(project => project.ProjectName))];
-      this.dusAndDuHeads = [...new Set(data.map(project => project.DU + ' - ' + project.DUHead))];
-      this.projectManager = [...new Set(data.map(project => project.ProjectManager))];
-      this.contractType = [...new Set(data.map(project => project.ContractType))];
-      this.numberOfResources = [...new Set(data.map(project => project.NumberOfResources))];
-      this.customerName = [...new Set(data.map(project => project.CustomerName))];
-      this.regions = [...new Set(data.map(project => project.Region))];
-      this.technologies = [...new Set(data.map(project => project.Technology))];
-      this.status = [...new Set(data.map(project => project.Status))];
+    this.http.get<any>('https://localhost:7259/api/Filter/options').subscribe(response => {
+      console.log(response); // Log the response to inspect its structure
 
-      // Calculate the number of ongoing projects
-      this.ongoingProjectsCount = data.filter(project => project.Status === 'Ongoing').length;
-      this.fixedPriceCount = data.filter(project => project.ContractType === 'Fixed Price').length;
-      this.timeAndMoneyCount = data.filter(project => project.ContractType === 'Time & Material').length;
+      // Map the response data to the component's properties
+      this.projectStatusOptions = response.projectStatusOptions || [];
+      this.projectContractTypeOptions = response.projectContractTypeOptions || [];
+      this.dusAndDuHeads = response.duAndDuHeadOptions || [];
+      this.regions = response.regionOptions || [];
+      this.resourceOptions = response.resourceOptions || [];
+      this.technologyOptions = response.technologyOptions || [];
 
-      // Initialize the cards array after fetching the data
+      // Calculate the number of ongoing projects (just a demonstration since actual project data isn't in the response)
+      this.ongoingProjectsCount = this.projectStatusOptions.filter(status => status === 'Ongoing').length;
+      this.fixedPriceCount = this.projectContractTypeOptions.filter(type => type === 'Fixed Price').length;
+      this.timeAndMoneyCount = this.projectContractTypeOptions.filter(type => type === 'Time & Material').length;
+
+      // Initialize the cards array
       this.cards = [
         {
           numberText: this.ongoingProjectsCount, 
-          cardText: this.status[0], 
-          
+          cardText: this.projectStatusOptions.find(status => status === 'Ongoing') || 'Ongoing', 
         },
         {
           numberText: this.fixedPriceCount, 
-          cardText: this.contractType[0], 
+          cardText: this.projectContractTypeOptions.find(type => type === 'Fixed Price') || 'Fixed Price', 
         },
         {
           numberText: this.timeAndMoneyCount,
-          cardText: this.contractType[1],
+          cardText: this.projectContractTypeOptions.find(type => type === 'Time & Material') || 'Time & Material',
         },
       ];
     });
   }
-  onClick(i: any){
-     return this.isDivVisible=!this.isDivVisible;
-  }
 
+  onClick(i: any): void {
+    this.isDivVisible = !this.isDivVisible;
+  }
 }
