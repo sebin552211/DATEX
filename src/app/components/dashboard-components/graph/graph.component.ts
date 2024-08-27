@@ -42,9 +42,6 @@ export class GraphComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardTableService.getProjects().subscribe(projects => {
-      console.log('Projects response:', projects);
-      console.log('Type of response:', typeof projects);
-
       if (!Array.isArray(projects)) {
         console.error('Expected projects to be an array.');
         return;
@@ -70,8 +67,7 @@ export class GraphComponent implements OnInit {
   const customerNames = Object.keys(customerProjectCounts);
   const projectCounts = Object.values(customerProjectCounts);
 
-  console.log(labels,counts);
-  console.log(projectTypeLabels, projectTypeCountsValues);
+
 
       const documentStyle = getComputedStyle(document.documentElement);
       this.textColor = documentStyle.getPropertyValue('--text-color');
@@ -114,7 +110,7 @@ const predefinedColors = [
         counts,
         backgroundColors,
         borderColors,
-        'Programming Languages'
+
       );
    // Determine colors for project types
    const projectTypeBackgroundColors = predefinedColors.slice(0, projectTypeLabels.length);
@@ -126,7 +122,7 @@ const predefinedColors = [
       projectTypeCountsValues,
       projectTypeBackgroundColors,
       projectTypeBorderColors,
-      'Project Types'
+
     );
 
     this.basicData3 = this.getBarChartData(
@@ -134,7 +130,7 @@ const predefinedColors = [
       customerCountsValues,
       projectTypeBackgroundColors,
       projectTypeBorderColors,
-      'Customer Projects'
+
     );
 
      // Update Graph 4 (Bar chart)
@@ -143,7 +139,7 @@ const predefinedColors = [
       projectCounts,
       backgroundColors,
       borderColors,
-      'Projects Closing in One Month'
+
     );
 
       // Update PieChart1 data dynamically
@@ -158,7 +154,7 @@ const predefinedColors = [
 
       this.pieData3 = this.getPieChartData(customerLabels, customerCountsValues, projectTypeBackgroundColors);
 
-      this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer', 'Project Count');
+      this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer Name', 'Project Count');
 
             // Update Graph 4 (Pie chart)
             this.pieData4 = this.getPieChartData(
@@ -285,12 +281,12 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
                   ${Math.min(255, Math.max(0, b + (b * percent / 100)))}, 0.5)`;
   }
 
-  getBarChartData(labels: string[], data: number[], backgroundColor: string[], borderColor: string[], label: string) {
+  getBarChartData(labels: string[], data: number[], backgroundColor: string[], borderColor: string[]) {
     return {
       labels: labels,
       datasets: [
         {
-          label: label,
+         
           data: data,
           backgroundColor: backgroundColor,
           borderColor: borderColor,
@@ -304,9 +300,8 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
     return {
       plugins: {
         legend: {
-          labels: {
-            color: textColor,
-          },
+          display:false,
+
         },
       },
       scales: {
