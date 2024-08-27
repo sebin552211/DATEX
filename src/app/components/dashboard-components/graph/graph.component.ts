@@ -53,6 +53,8 @@ export class GraphComponent implements OnInit {
 
   const technologyCounts = this.calculateTechnologyCounts(projects);
   const projectTypeCounts = this.calculateProjectTypeCounts(projects);
+  const customerCounts = this.getCustomerCountsForProjectsStartedThisMonth(projects);
+  const customerProjectCounts = this.getCustomerCountsForClosingProjects(projects);
 
 
   const labels = Object.keys(technologyCounts); // Array of technology names
@@ -61,6 +63,12 @@ export class GraphComponent implements OnInit {
 
   const projectTypeLabels = Object.keys(projectTypeCounts); // Array of project types
   const projectTypeCountsValues = Object.values(projectTypeCounts); // Array of project type counts
+
+  const customerLabels = Object.keys(customerCounts);
+  const customerCountsValues = Object.values(customerCounts);
+
+  const customerNames = Object.keys(customerProjectCounts);
+  const projectCounts = Object.values(customerProjectCounts);
 
   console.log(labels,counts);
   console.log(projectTypeLabels, projectTypeCountsValues);
@@ -121,6 +129,23 @@ const predefinedColors = [
       'Project Types'
     );
 
+    this.basicData3 = this.getBarChartData(
+      customerLabels,
+      customerCountsValues,
+      projectTypeBackgroundColors,
+      projectTypeBorderColors,
+      'Customer Projects'
+    );
+
+     // Update Graph 4 (Bar chart)
+     this.basicData4 = this.getBarChartData(
+      customerNames,
+      projectCounts,
+      backgroundColors,
+      borderColors,
+      'Projects Closing in One Month'
+    );
+
       // Update PieChart1 data dynamically
       this.pieData1 = this.getPieChartData(labels, counts, backgroundColors);
 
@@ -130,87 +155,36 @@ const predefinedColors = [
       this.pieData2 = this.getPieChartData(projectTypeLabels, projectTypeCountsValues, projectTypeBackgroundColors);
 
       this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Type', 'Count');
+
+      this.pieData3 = this.getPieChartData(customerLabels, customerCountsValues, projectTypeBackgroundColors);
+
+      this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer', 'Project Count');
+
+            // Update Graph 4 (Pie chart)
+            this.pieData4 = this.getPieChartData(
+              customerNames,
+              projectCounts,
+              backgroundColors
+            );
+
+            this.basicOptions4 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer Name', 'Project Count');
+
     });
 
     // Static data for other bar graphs and pie charts
 
 
-    this.basicData3 = this.getBarChartData(
-      ['Salesboost', 'MapHabit', 'Dars', 'QuVa Pharma Support', 'Protocol', 'Deltal'],
-      [14, 15, 13, 9, 4, 23],
-      [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-      ],
-      [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-      ],
-      'Client Projects'
-    );
-
-    this.basicData4 = this.getBarChartData(
-      ['Salesboost', 'MapHabit', 'Dars', 'QuVa Pharma Support', 'Protocol', 'Deltal'],
-      [14, 10, 7, 4, 3, 22],
-      [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-      ],
-      [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-      ],
-      'Client Support Projects'
-    );
-
-    this.basicOptions1 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Technology', 'Count');
-    this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Categories', 'Count');
-    this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Client Projects', 'Count');
-    this.basicOptions4 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Client Support Projects', 'Count');
 
 
 
-    this.pieData3 = this.getPieChartData(
-      ['Salesboost', 'MapHabit', 'Dars', 'QuVa Pharma Support', 'Protocol', 'Deltal'],
-      [14, 15, 13, 9, 4, 23],
-      [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-      ]
-    );
 
-    this.pieData4 = this.getPieChartData(
-      ['Salesboost', 'MapHabit', 'Dars', 'QuVa Pharma Support', 'Protocol', 'Deltal'],
-      [14, 10, 7, 4, 3, 22],
-      [
-        'rgba(59, 130, 246, 0.5)', // Light Blue
-        'rgba(168, 85, 247, 0.5)', // Light Purple
-        'rgba(34, 197, 94, 0.5)',  // Light Green
-        'rgba(249, 115, 28, 0.5)', // Light Orange
-        'rgba(225, 29, 72, 0.5)',  // Light Red
-        'rgba(16, 185, 129, 0.5)', // Light Teal
-      ]
-    );
+    // this.basicOptions1 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Technology', 'Count');
+    // this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Categories', 'Count');
+    // this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Client Projects', 'Count');
+    // this.basicOptions4 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Client Support Projects', 'Count');
+
+
+
 
     this.pieOptions = this.getPieChartOptions(this.textColor);
   }
@@ -246,6 +220,62 @@ private calculateProjectTypeCounts(projects: any[]): { [key: string]: number } {
 
   return projectTypeCounts;
 }
+
+private getCustomerCountsForProjectsStartedThisMonth(projects: any[]): { [key: string]: number } {
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1); // Set to the first day of the current month
+  startOfMonth.setHours(0, 0, 0, 0); // Reset time to start of the day
+
+  const endOfMonth = new Date(startOfMonth);
+  endOfMonth.setMonth(endOfMonth.getMonth() + 1); // Move to the next month
+  endOfMonth.setDate(0); // Set to the last day of the current month
+  endOfMonth.setHours(23, 59, 59, 999); // Set time to end of the day
+
+  const filteredProjects = projects.filter(project => {
+    const projectStartDate = new Date(project.projectStartDate);
+    return projectStartDate >= startOfMonth && projectStartDate <= endOfMonth;
+  });
+
+  const customerCounts: { [key: string]: number } = {};
+
+  filteredProjects.forEach(project => {
+    const customerName = project.customerName;
+    if (customerCounts[customerName]) {
+      customerCounts[customerName]++;
+    } else {
+      customerCounts[customerName] = 1;
+    }
+  });
+
+  return customerCounts;
+}
+
+private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: number } {
+  const oneMonthFromNow = new Date();
+  oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+
+  const filteredProjects = projects.filter(project => {
+    const projectClosingDate = new Date(project.projectEndDate);
+    return projectClosingDate >= new Date() && projectClosingDate <= oneMonthFromNow;
+  });
+
+  const customerProjectCounts: { [key: string]: number } = {};
+
+  filteredProjects.forEach(project => {
+    const customerName = project.customerName;
+    if (customerProjectCounts[customerName]) {
+      customerProjectCounts[customerName]++;
+    } else {
+      customerProjectCounts[customerName] = 1;
+    }
+  });
+
+  return customerProjectCounts;
+}
+
+
+
+
 
   // Method to create a darker or lighter shade of a color
   private shadeColor(color: string, percent: number): string {
@@ -298,7 +328,7 @@ private calculateProjectTypeCounts(projects: any[]): { [key: string]: number } {
           ticks: {
             color: textColorSecondary,
             font: {
-              size: 5,
+              size: 10,
             },
             autoSkip: false,  // Prevent skipping of labels
             maxRotation: 0,

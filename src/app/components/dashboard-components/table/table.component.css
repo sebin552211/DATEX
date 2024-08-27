@@ -156,8 +156,8 @@
     font-family: "Arial", sans-serif;
     font-size: 14px;
     color: #333333;
-    overflow: hidden;
-    
+
+
 
   }
 
@@ -260,7 +260,7 @@
     vertical-align: middle; /* Align icon with text */
   }
 
- 
+
 
 
   /* Multi-select dropdown styling */
@@ -377,7 +377,7 @@
       font-size: 12px; /* Smaller font size for smaller screens */
     }
   }
- 
+
 
 
 
