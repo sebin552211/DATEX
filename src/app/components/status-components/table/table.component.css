@@ -274,6 +274,11 @@
     margin-right: 12px; /* Add some space after the icon */
     vertical-align: middle; /* Align icon with text */
   }
+
+  .custom-icon:hover
+  {
+    cursor: pointer;
+  }
   .status-cell {
     padding: 0;
     text-align: center;

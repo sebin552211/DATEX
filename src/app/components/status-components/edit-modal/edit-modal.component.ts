@@ -1,8 +1,9 @@
 import { DashboardTable } from './../../../interface/dashboard-table';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DashboardTableService } from '../../../service/dashboard-table.service';
 
 
 interface EditableProject {
@@ -11,23 +12,7 @@ interface EditableProject {
   vocEligibilityDate?: Date;
 }
 
-interface Project {
-  projectCode: string;
-  projectName: string;
-  du: string;
-  js: string;
-  deliveryHead: string;
-  startDate: Date;
-  endDate: Date;
-  contractType: string;
-  numberOfResources: number;
-  region: string;
-  projectType: string;
-  technology: string;
-  status: string;
-  feedbackStatus: string;  // New column
-  vocEligibilityDate: Date;  // New column
-}
+
 
 @Component({
   selector: 'app-edit-modal',
@@ -44,7 +29,9 @@ export class EditModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
 
-  projects: Project[] = [
+  
+ 
+  projects: DashboardTable[] = [
     // Your existing project data
   ];
   successMessage: string | null = null;
@@ -54,7 +41,7 @@ export class EditModalComponent {
     { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
   ];
-  constructor(private http: HttpClient) {}
+  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef) {}
   getEditableProjectField(field: string): any {
     return this.editableProject[field as keyof DashboardTable];
   }
@@ -83,10 +70,15 @@ export class EditModalComponent {
           this.closeModal();
   
           // Update the local data model
-          const index = this.projects.findIndex(p => p.projectCode === updatedProject.projectCode);
+          const index = this.projects.findIndex(p => p.projectId === updatedProject.projectId);
+
+          console.log(index)
           if (index !== -1) {
-            this.projects[index] = updatedProject;
+            this.projects[index] = { ...this.projects[index], ...updatedProject };
           }
+  
+          // Force Angular to detect changes
+          this.cdr.detectChanges();
   
           // Set success message
           this.successMessage = 'Updated successfully';
@@ -106,6 +98,7 @@ export class EditModalComponent {
         }
       );
   }
+  
   
   
   

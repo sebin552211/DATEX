@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-graph2',
@@ -26,7 +27,7 @@ export class GraphComponent2 implements OnInit {
         data: [0.26, 0.67, 0.67],
         fill: false,
         borderColor: '#36A2EB',
-        tension: 0.4
+        tension: 0.4,
       }
     ]
   };
@@ -76,7 +77,7 @@ export class GraphComponent2 implements OnInit {
     }
   };
 
-  constructor(private dashboardService: DashboardTableService) {}
+  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getVOCMetrics();
