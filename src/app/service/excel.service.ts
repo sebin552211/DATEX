@@ -20,4 +20,32 @@ export class ExcelService {
       reader.readAsBinaryString(file);
     });
   }
+
+  downloadTemplate(): void {
+    const headers = this.getTemplateHeaders();
+    const worksheet = XLSX.utils.json_to_sheet([], { header: headers });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+
+    // Generate and download the Excel file
+    XLSX.writeFile(workbook, 'ProjectDetailsUpload_Template.xlsx');
+  }
+
+  private getTemplateHeaders(): string[] {
+    // Return the headers based on the ExcelRow interface
+    return [
+      'ProjectCode',
+      'SQA',
+      'ForecastedEndDate',
+      'VOCEligibilityDate',
+      'ProjectType',
+      'Domain',
+      'DatabaseUsed',
+      'CloudUsed',
+      'FeedbackStatus',
+      'MailStatus'
+    ];
+  }
 }
+
+
