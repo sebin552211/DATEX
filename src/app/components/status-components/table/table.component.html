@@ -51,13 +51,14 @@
           <td class="fixed-column project-code"> <i class="fa-solid fa-pen custom-icon" (click)="openEditModal(project)"></i>{{ project.projectCode }}</td>
           <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">{{ project.projectName }}</td>
           <td *ngFor="let col of selectedColumns">
-              <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
-                    [ngClass]="{
-                      'green-background': project[col.field] === 'Sent' || project[col.field] === 'Received',
-                      'red-background': project[col.field] !== 'Sent' && project[col.field] !== 'Received'
-                    }">
-                {{ project[col.field] }}
-              </span>
+            <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
+            [ngClass]="{
+              'status-badge1': project[col.field] === 'Sent' || project[col.field] === 'Received',
+              'status-badge': project[col.field] !== 'Sent' && project[col.field] !== 'Received'
+            }">
+        {{ project[col.field] }}
+      </span>
+      
               <span *ngIf="col.field !== 'mailStatus' && col.field !== 'feedbackStatus'">
                 {{ project[col.field] }}
               </span>

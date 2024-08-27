@@ -35,7 +35,10 @@
     </div>
 
     <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="file-input" />
+    <button class="download-template" (click)="downloadTemplate()">Download Template</button>
     <button class="save" (click)="saveData()" [disabled]="isLoading">Save Data</button>
     <button class="close" (click)="closeModal()">Close</button>
+
+
   </div>
 </div>
