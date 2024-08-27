@@ -26,6 +26,14 @@ import { CommonModule } from '@angular/common';
 })
 export class TableComponent implements OnInit {
 
+
+areAllColumnsSelected() {
+throw new Error('Method not implemented.');
+}
+toggleSelectAll($event: Event) {
+throw new Error('Method not implemented.');
+}
+
   searchQuery: string = '';
   totalPages: number = 0;
   currentPage: number = 1;
@@ -196,15 +204,22 @@ export class TableComponent implements OnInit {
 
   saveChanges() {
     // Update the project with the new values
-    const projectIndex = this.projects.findIndex(
-      (proj) => proj.projectCode === this.editableProject.projectCode
-    );
-    if (projectIndex !== -1) {
-      this.projects[projectIndex] = {
-        ...this.projects[projectIndex],
-        ...this.editableProject,
-      };
-    }
+    this.loadPagedProjects();  // Reload the paginated project data
+    this.loadProjects();       
     this.closeModal();
   }
+
+  isAllSelected(): boolean {
+    return this.selectedColumns.length === this.allColumns.length;
+  }
+  
+  onSelectAllChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedColumns = [...this.allColumns];
+    } else {
+      this.selectedColumns = [];
+    }
+  }
+  
 }

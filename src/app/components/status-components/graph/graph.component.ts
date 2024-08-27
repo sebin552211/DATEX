@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-graph2',
@@ -22,11 +23,11 @@ export class GraphComponent2 implements OnInit {
     labels: ['DTS', 'ESS0', 'PES'],
     datasets: [
       {
-        label: 'VOC Coverage',
+       
         data: [0.26, 0.67, 0.67],
         fill: false,
         borderColor: '#36A2EB',
-        tension: 0.4
+        tension: 0.4,
       }
     ]
   };
@@ -34,9 +35,8 @@ export class GraphComponent2 implements OnInit {
   lineChartOptions: any = {
     plugins: {
       legend: {
-        labels: {
-          color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-        }
+        display:false,
+
       }
     },
     scales: {
@@ -76,7 +76,7 @@ export class GraphComponent2 implements OnInit {
     }
   };
 
-  constructor(private dashboardService: DashboardTableService) {}
+  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getVOCMetrics();
@@ -89,9 +89,7 @@ export class GraphComponent2 implements OnInit {
     this.barChartOptions = {
       plugins: {
         legend: {
-          labels: {
-            color: textColor
-          }
+      display:false,
         }
       },
       scales: {
@@ -158,7 +156,7 @@ export class GraphComponent2 implements OnInit {
         labels: ['VOC ELIGIBLE PROJECTS', 'VOC INITIATED', 'VOC RECEIVED', 'VOC COVERAGE'],
         datasets: [
           {
-            label: 'Projects',
+
             data: [eligible, initiated, received, coverage],
             backgroundColor: [
               'rgba(59, 130, 246, 0.5)', // Light Blue
