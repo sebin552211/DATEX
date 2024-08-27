@@ -328,7 +328,7 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
           ticks: {
             color: textColorSecondary,
             font: {
-              size: 5,
+              size: 10,
             },
             autoSkip: false,  // Prevent skipping of labels
             maxRotation: 0,

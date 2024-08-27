@@ -28,8 +28,13 @@ export class ExcelTableComponent {
     private excelService: ExcelService
   ) {}
 
+
   openModal(): void {
     this.showExcelTable = true;
+  }
+
+  downloadTemplate(): void {
+    this.excelService.downloadTemplate();
   }
 
   closeModal(): void {
@@ -64,7 +69,7 @@ export class ExcelTableComponent {
   }
 
   // Pagination logic
-  
+
   get paginatedData(): ExcelRow[] {
     const startIndex = (this.currentPage - 1) * this.rowsPerPage;
     return this.excelData.slice(startIndex, startIndex + this.rowsPerPage);
