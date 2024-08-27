@@ -22,6 +22,7 @@ export class EditModalComponent {
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
+ 
 
   projects: DashboardTable[] = []; // Array to hold the projects data
 
