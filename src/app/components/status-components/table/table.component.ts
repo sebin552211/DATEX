@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ExcelRow } from './../../../interface/excel-row';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { DashboardTable } from '../../../interface/dashboard-table';
 import { ExcelTableComponent } from '../../dashboard-components/excel-table/excel-table.component';
 import { interval, Subscription } from 'rxjs';
 import { SignalRService } from '../../../service/signal-r.service';
+import { SharedDataService } from '../../../service/shared-data.service';
 
 
 
@@ -68,10 +69,13 @@ export class TableComponent implements OnInit ,OnDestroy{
    
 
   ];
-
-  constructor(private eRef: ElementRef, private renderer: Renderer2,    private dashboardTableService: DashboardTableService,
+ 
+  private projectsSubscription: Subscription | undefined;
+  constructor(private eRef: ElementRef, private renderer: Renderer2,    private dashboardTableService: DashboardTableService,   
+    private cd: ChangeDetectorRef,
     private excelService: ExcelService,
-    private http: HttpClient, private signalRService: SignalRService) {}
+    private http: HttpClient, private signalRService: SignalRService,
+    private sharedDataService: SharedDataService) {}
   ngOnDestroy(): void {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
@@ -89,6 +93,14 @@ export class TableComponent implements OnInit ,OnDestroy{
   ngOnInit(): void {
     // this.startPolling();
     
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
+      this.projects = projects;
+    });
+    this.signalRService.mailStatusUpdated$.subscribe(() => {
+      this.onMailStatusUpdated();
+    });
+
+    
     this.selectedColumns = this.allColumns.filter(col =>
       ['vocEligibilityDate', 'projectManager','mailStatus','feedbackStatus'].includes(col.field)
     );
@@ -97,6 +109,13 @@ export class TableComponent implements OnInit ,OnDestroy{
     this.signalRService.mailStatusUpdated$.subscribe(() => {
       this.loadProjects(); // Reload the projects to get the updated Mail Status
     });
+    this.cd.detectChanges();
+  }
+  onMailStatusUpdated() {
+    this.loadProjects();
+
+    // Manually trigger change detection to update the UI
+    this.cd.detectChanges();
   }
   startPolling(): void {
     this.pollingSubscription = interval(5000) // Poll every 5 seconds
@@ -117,7 +136,8 @@ export class TableComponent implements OnInit ,OnDestroy{
   loadProjects(): void {
     this.dashboardTableService.getProjects().subscribe((data: DashboardTable[]) => {
       this.projects = data;
-     
+      this.totalProjects = data.length; // Update total projects based on data length
+        this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
     });
   }
   changePage(page: number) {

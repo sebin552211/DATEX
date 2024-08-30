@@ -18,6 +18,7 @@ export class SignalRService {
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7259/mailStatusHub')
+      .withAutomaticReconnect()   
       .build();
 
     this.hubConnection

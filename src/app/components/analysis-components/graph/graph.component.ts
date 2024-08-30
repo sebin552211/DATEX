@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
-
+ 
 @Component({
   selector: 'app-graph2',
   standalone: true,
@@ -11,49 +11,49 @@ import { ChartModule } from 'primeng/chart';
   styleUrls: ['./graph.component.css']
 })
 export class GraphComponent1 implements OnInit {
-
+ 
   // Data for Bar Charts
   barData1: any;
   barData2: any;
-
+ 
   // Data for Pie Chart
   pieData1: any;
-
+ 
   // Data for Donut Chart
   donutData: any;
-
+ 
   // Options for Bar Charts
   barOptions1: any;
   barOptions2: any;
-
+ 
   // Options for Pie and Donut Charts
   pieOptions: any;
   donutOptions: any;
-
+ 
   // Toggle states
   showPieChart1: boolean = false;
-
+ 
   // Custom Colors and Borders
   textColor: string = '#495057';
   textColorSecondary: string = '#6c757d';
   surfaceBorder: string = '#dee2e6';
-
+ 
   // Satisfactory Score
   satisfactory_score: number = 70;
-
+ 
   ngOnInit() {
     // Overall Feedback - Bar Chart
     this.barData1 = {
       labels: ['Very Satisfied', 'Neither Satisfied Nor Dissatisfied', 'Very Dissatisfied', 'N/A'],
       datasets: [
         {
-          label: 'Feedback',
+ 
           backgroundColor: 'rgba(225, 29, 72, 0.5)',
           data: [3, 2, 7, 4]
         }
       ]
     };
-
+ 
     // Feedback - Parameter Wise - Bar Chart
     this.barData2 = {
       labels: ['Customer Focus', 'Planning and Control', 'Quality', 'Communication', 'Knowledge'],
@@ -80,7 +80,7 @@ export class GraphComponent1 implements OnInit {
         }
       ]
     };
-
+ 
     // Donut Chart Data
     this.donutData = {
       labels: ['Very Likely', 'Likely'],
@@ -94,7 +94,7 @@ export class GraphComponent1 implements OnInit {
         }
       ]
     };
-
+ 
     // Pie Chart Data
     this.pieData1 = {
       labels: ['Very Satisfied', 'Neither Satisfied Nor Dissatisfied', 'Very Dissatisfied', 'N/A'],
@@ -110,7 +110,7 @@ export class GraphComponent1 implements OnInit {
         }
       ]
     };
-
+ 
     // Chart Options
     this.barOptions1 = this.getBarChartOptions(
       this.textColor, this.textColorSecondary, this.surfaceBorder, 'Feedback', 'Count'
@@ -118,7 +118,7 @@ export class GraphComponent1 implements OnInit {
     this.barOptions2 = this.getBarChartOptions(
       this.textColor, this.textColorSecondary, this.surfaceBorder, 'Parameter Wise Feedback', 'Count'
     );
-
+ 
     this.pieOptions = {
       plugins: {
         legend: {
@@ -133,7 +133,7 @@ export class GraphComponent1 implements OnInit {
       responsive: true,
       maintainAspectRatio: false,
     };
-
+ 
     this.donutOptions = {
       cutout: '60%',
       plugins: {
@@ -145,11 +145,11 @@ export class GraphComponent1 implements OnInit {
       }
     };
   }
-
+ 
   togglePieChart() {
     this.showPieChart1 = !this.showPieChart1;
   }
-
+ 
   // Method to get bar chart options
   getBarChartOptions(
     textColor: string,
@@ -161,9 +161,7 @@ export class GraphComponent1 implements OnInit {
     return {
       plugins: {
         legend: {
-          labels: {
-            color: textColorSecondary
-          }
+         display:false,
         }
       },
       scales: {
@@ -197,3 +195,4 @@ export class GraphComponent1 implements OnInit {
     };
   }
 }
+ 
