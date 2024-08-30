@@ -29,6 +29,7 @@ export class GraphComponent2 implements OnInit {
     datasets: [
       {
        
+       
         data: [0.26, 0.67, 0.67],
         fill: false,
         borderColor: '#36A2EB',
@@ -94,6 +95,7 @@ export class GraphComponent2 implements OnInit {
     this.barChartOptions = {
       plugins: {
         legend: {
+      display:false,
       display:false,
         }
       },

@@ -47,6 +47,7 @@ export class GraphComponent1 implements OnInit {
       labels: ['Very Satisfied', 'Neither Satisfied Nor Dissatisfied', 'Very Dissatisfied', 'N/A'],
       datasets: [
         {
+
  
           backgroundColor: 'rgba(225, 29, 72, 0.5)',
           data: [3, 2, 7, 4]

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, map, Observable, of, throwError } from 'rxjs';
 import { DashboardTable } from '../interface/dashboard-table';
 import { ExcelRow } from '../interface/excel-row';
 import { SharedDataService } from './shared-data.service';
@@ -15,6 +15,7 @@ export class DashboardTableService {
 
 
   constructor(private http: HttpClient, private sharedDataService: SharedDataService) {}
+  private cachedProjects: DashboardTable[] | null = null;
 
   // getProjects(params: any): Observable<DashboardTable[]> {
   //   return this.http.get<object>(this.apiUrl).pipe(
@@ -89,9 +90,6 @@ export class DashboardTableService {
   updateProjects(projectData: ExcelRow): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    // Log the request payload before sending it
-    console.log('Request Payload:', projectData);
-
     return this.http.post(`${this.apiUrl}/update`, projectData, { headers })
       .pipe(
         catchError(this.handleError)
@@ -114,8 +112,13 @@ export class DashboardTableService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
   getProjectsName(searchQuery: string = ''): Observable<DashboardTable[]> {
-    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/search?query=${searchQuery}`);
+    return this.http.get<DashboardTable[]>(`${this.apiUrl}/search`, { params: { query: searchQuery } }).pipe(
+      debounceTime(300), // Add debounce
+      distinctUntilChanged(), // Avoid duplicate requests
+      catchError(this.handleError)
+    );
   }
+
   getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
     return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }

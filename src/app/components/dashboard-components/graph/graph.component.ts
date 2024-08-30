@@ -75,8 +75,7 @@ export class GraphComponent implements OnInit {
   const customerNames = Object.keys(customerProjectCounts);
   const projectCounts = Object.values(customerProjectCounts);
 
-  console.log(labels,counts);
-  console.log(projectTypeLabels, projectTypeCountsValues);
+
 
       const documentStyle = getComputedStyle(document.documentElement);
       this.textColor = documentStyle.getPropertyValue('--text-color');
@@ -163,7 +162,7 @@ const predefinedColors = [
 
       this.pieData3 = this.getPieChartData(customerLabels, customerCountsValues, projectTypeBackgroundColors);
 
-      this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer', 'Project Count');
+      this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer Name', 'Project Count');
 
             // Update Graph 4 (Pie chart)
             this.pieData4 = this.getPieChartData(
@@ -295,6 +294,7 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
       labels: labels,
       datasets: [
         {
+         
          
           data: data,
           backgroundColor: backgroundColor,
