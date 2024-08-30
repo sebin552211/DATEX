@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ExcelRow } from './../../../interface/excel-row';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -8,6 +8,9 @@ import { DashboardTableService } from '../../../service/dashboard-table.service'
 import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { ExcelTableComponent } from '../../dashboard-components/excel-table/excel-table.component';
+import { interval, Subscription } from 'rxjs';
+import { SignalRService } from '../../../service/signal-r.service';
+import { SharedDataService } from '../../../service/shared-data.service';
 
 
 
@@ -21,8 +24,8 @@ import { ExcelTableComponent } from '../../dashboard-components/excel-table/exce
   styleUrls: ['./table.component.css']
 })
 
-export class TableComponent implements OnInit {
-
+export class TableComponent implements OnInit ,OnDestroy{
+  private pollingSubscription!: Subscription;
   @Input() isModalOpen = false;
   // @Input() editableProject: Partial<DashboardTable> = {};
 
@@ -66,10 +69,18 @@ export class TableComponent implements OnInit {
    
 
   ];
-
-  constructor(private eRef: ElementRef, private renderer: Renderer2,    private dashboardTableService: DashboardTableService,
+ 
+  private projectsSubscription: Subscription | undefined;
+  constructor(private eRef: ElementRef, private renderer: Renderer2,    private dashboardTableService: DashboardTableService,   
+    private cd: ChangeDetectorRef,
     private excelService: ExcelService,
-    private http: HttpClient) {}
+    private http: HttpClient, private signalRService: SignalRService,
+    private sharedDataService: SharedDataService) {}
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    } 
+  }
 
     showExcelTable: boolean = false; 
 
@@ -80,11 +91,37 @@ export class TableComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // this.startPolling();
+    
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
+      this.projects = projects;
+    });
+    this.signalRService.mailStatusUpdated$.subscribe(() => {
+      this.onMailStatusUpdated();
+    });
+
+    
     this.selectedColumns = this.allColumns.filter(col =>
       ['vocEligibilityDate', 'projectManager','mailStatus','feedbackStatus'].includes(col.field)
     );
     this.loadProjects();
     this.loadPagedProjects();
+    this.signalRService.mailStatusUpdated$.subscribe(() => {
+      this.loadProjects(); // Reload the projects to get the updated Mail Status
+    });
+    this.cd.detectChanges();
+  }
+  onMailStatusUpdated() {
+    this.loadProjects();
+
+    // Manually trigger change detection to update the UI
+    this.cd.detectChanges();
+  }
+  startPolling(): void {
+    this.pollingSubscription = interval(5000) // Poll every 5 seconds
+      .subscribe(() => {
+        this.loadProjects(); // Refresh the table data
+      });
   }
   loadPagedProjects() {
     this.dashboardTableService
@@ -99,7 +136,8 @@ export class TableComponent implements OnInit {
   loadProjects(): void {
     this.dashboardTableService.getProjects().subscribe((data: DashboardTable[]) => {
       this.projects = data;
-     
+      this.totalProjects = data.length; // Update total projects based on data length
+        this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
     });
   }
   changePage(page: number) {
@@ -206,9 +244,24 @@ export class TableComponent implements OnInit {
     this.close.emit();
   }
 
-  saveChanges(): void {
-    console.log('Save changes called');
-    // Implement the save logic here
-    this.isModalOpen = false;
+  
+  saveChanges() {
+    // Update the project with the new values
+    this.loadPagedProjects();  // Reload the paginated project data
+    this.loadProjects();       
+    this.closeModal();
   }
+  isAllSelected(): boolean {
+    return this.selectedColumns.length === this.allColumns.length;
+  }
+  
+  onSelectAllChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedColumns = [...this.allColumns];
+    } else {
+      this.selectedColumns = [];
+    }
+  }
+  
 }

@@ -74,8 +74,19 @@
   <div class="controls">
     <div class="multi-select-container">
       <div class="dropdown">
-        <div class="placeholder" (click)="toggleDropdown()">Columns</div>
+        <div class="placeholder" (click)="toggleDropdown()">
+          Columns</div>
         <div class="dropdown-list" *ngIf="dropdownVisible">
+          <!-- Select All Checkbox -->
+          <label class="dropdown-item select-all">
+            <input
+              type="checkbox"
+              (change)="onSelectAllChange($event)"
+              [checked]="isAllSelected()"
+            />
+            <span>Select All</span>
+          </label>
+          <!-- Individual Column Checkboxes -->
           <label
             class="dropdown-item"
             *ngFor="let column of allColumns"
@@ -92,6 +103,7 @@
         </div>
       </div>
     </div>
+    
 
 
     <button class="export-button">

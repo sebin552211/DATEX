@@ -1,35 +1,55 @@
-import { NgForOf, NgIf } from '@angular/common'
+import { NgForOf, NgIf } from '@angular/common';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SharedDataService } from '../../../service/shared-data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboardcard',
   standalone: true,
   imports: [NgForOf, NgIf],
   templateUrl: './Dashboardcard.component.html',
-  styleUrls: ['./Dashboardcard.component.css'] // changed from 'styleUrl' to 'styleUrls'
+  styleUrls: ['./Dashboardcard.component.css'] // Corrected `styleUrl` to `styleUrls`
 })
-export class DashboardcardComponent implements OnInit {
+export class DashboardcardComponent implements OnInit, OnDestroy {
+  private projectsSubscription: Subscription | undefined;
 
   cards: { numberText: string; cardText: string; checkboxes: boolean[] }[] = [];
 
-  constructor(private dashboardTableService: DashboardTableService) { }
+  constructor(
+    private dashboardTableService: DashboardTableService,
+    private sharedDataService: SharedDataService
+  ) {}
 
   ngOnInit(): void {
     this.getCardData();
   }
 
-    // Method to fetch and populate card data
-    getCardData() {
-      this.dashboardTableService.getProjects().subscribe((projects: DashboardTable[]) => {
+  ngOnDestroy(): void {
+    if (this.projectsSubscription) {
+      this.projectsSubscription.unsubscribe();
+    }
+  }
 
-        const activeProjects=projects.filter(project=>project.status==='Ongoing').length;
+  // Method to fetch and populate card data
+  getCardData() {
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(
+      projects => {
+        const activeProjects = projects.filter(
+          project => project.status === 'Ongoing'
+        ).length;
 
-        const activeFPProjects=projects.filter(project=>project.status==='Ongoing'&& project.contractType==='Fixed Price').length;
+        const activeFPProjects = projects.filter(
+          project =>
+            project.status === 'Ongoing' && project.contractType === 'Fixed Price'
+        ).length;
 
-        const activeTMProjects=projects.filter(project=>project.status==='Ongoing'&& project.contractType==='Time & Material').length;
+        const activeTMProjects = projects.filter(
+          project =>
+            project.status === 'Ongoing' && project.contractType === 'Time & Material'
+        ).length;
+
         this.cards = [
           {
             numberText: activeProjects.toString(),
@@ -47,8 +67,10 @@ export class DashboardcardComponent implements OnInit {
             checkboxes: Array(7).fill(false)
           }
         ];
-      }, error => {
+      },
+      error => {
         console.error('Error fetching projects:', error);
-      });
-    }
+      }
+    );
+  }
 }

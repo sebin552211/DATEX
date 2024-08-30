@@ -15,6 +15,8 @@ import { DashboardTableService } from '../../../service/dashboard-table.service'
 import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { CommonModule } from '@angular/common';
+import { SharedDataService } from '../../../service/shared-data.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -25,6 +27,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
+
+
+areAllColumnsSelected() {
+throw new Error('Method not implemented.');
+}
+toggleSelectAll($event: Event) {
+throw new Error('Method not implemented.');
+}
 
   searchQuery: string = '';
   totalPages: number = 0;
@@ -59,6 +69,7 @@ export class TableComponent implements OnInit {
     { field: 'cloudUsed', header: 'Cloud Used' },
    
   ];
+  private projectsSubscription: Subscription | undefined;
 
   // Updated `editableColumns` array to match the `DashboardTable` interface
 
@@ -67,16 +78,23 @@ export class TableComponent implements OnInit {
     private renderer: Renderer2,
     private dashboardTableService: DashboardTableService,
     private excelService: ExcelService,
-    private http: HttpClient
+    private http: HttpClient,
+    private sharedDataService: SharedDataService
   ) {}
 
 
   ngOnInit(): void {
+
+    
     this.selectedColumns = this.allColumns.filter(col =>
       ['du', 'duHead', 'status','customerName'].includes(col.field)
     );
     this.loadProjects(); // Load projects on component initialization
     this.loadPagedProjects();
+       
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
+      this.projects = projects;
+    });
   }
 
   loadProjects() {
@@ -196,15 +214,22 @@ export class TableComponent implements OnInit {
 
   saveChanges() {
     // Update the project with the new values
-    const projectIndex = this.projects.findIndex(
-      (proj) => proj.projectCode === this.editableProject.projectCode
-    );
-    if (projectIndex !== -1) {
-      this.projects[projectIndex] = {
-        ...this.projects[projectIndex],
-        ...this.editableProject,
-      };
-    }
+    this.loadPagedProjects();  // Reload the paginated project data
+    this.loadProjects();       
     this.closeModal();
   }
+
+  isAllSelected(): boolean {
+    return this.selectedColumns.length === this.allColumns.length;
+  }
+  
+  onSelectAllChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedColumns = [...this.allColumns];
+    } else {
+      this.selectedColumns = [];
+    }
+  }
+  
 }
