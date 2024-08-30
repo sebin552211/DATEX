@@ -15,6 +15,8 @@ import { DashboardTableService } from '../../../service/dashboard-table.service'
 import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { CommonModule } from '@angular/common';
+import { SharedDataService } from '../../../service/shared-data.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -67,6 +69,7 @@ throw new Error('Method not implemented.');
     { field: 'cloudUsed', header: 'Cloud Used' },
    
   ];
+  private projectsSubscription: Subscription | undefined;
 
   // Updated `editableColumns` array to match the `DashboardTable` interface
 
@@ -75,16 +78,23 @@ throw new Error('Method not implemented.');
     private renderer: Renderer2,
     private dashboardTableService: DashboardTableService,
     private excelService: ExcelService,
-    private http: HttpClient
+    private http: HttpClient,
+    private sharedDataService: SharedDataService
   ) {}
 
 
   ngOnInit(): void {
+
+    
     this.selectedColumns = this.allColumns.filter(col =>
       ['du', 'duHead', 'status','customerName'].includes(col.field)
     );
     this.loadProjects(); // Load projects on component initialization
     this.loadPagedProjects();
+       
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
+      this.projects = projects;
+    });
   }
 
   loadProjects() {

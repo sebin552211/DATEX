@@ -1,31 +1,91 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, map, Observable, of, throwError } from 'rxjs';
 import { DashboardTable } from '../interface/dashboard-table';
 import { ExcelRow } from '../interface/excel-row';
+import { SharedDataService } from './shared-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardTableService {
+ 
   private apiUrl = 'https://localhost:7259/api/Project';
+  private projectsData: BehaviorSubject<DashboardTable[]> = new BehaviorSubject<DashboardTable[]>([]);
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, private sharedDataService: SharedDataService) {}
   private cachedProjects: DashboardTable[] | null = null;
 
-  getProjects(): Observable<DashboardTable[]> {
-    if (this.cachedProjects) {
-      return of(this.cachedProjects); // Return cached data
-    }
-    return this.http.get<object>(this.apiUrl).pipe(
-      map((response: any) => {
-        this.cachedProjects = response.result as DashboardTable[];
-        return this.cachedProjects;
-      }),
-      catchError(this.handleError)
-    );
-  }
+  // getProjects(params: any): Observable<DashboardTable[]> {
+  //   return this.http.get<object>(this.apiUrl).pipe(
+  //     map((response: any) => {
+  //       const projects = response.result as DashboardTable[];
+  //       this.projectsData.next(projects); // Store data locally
+  //       return projects;
+  //     }),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
+  getProjects(filters: any = {}): Observable<DashboardTable[]> {
+    console.log('Filters:', filters);
+    let params = new HttpParams(); // Use HttpParams for query parameters
+    let url = this.apiUrl; // Default to the base URL
+
+    // Add filters to query parameters
+    Object.keys(filters).forEach(key => {
+        const filterValue = filters[key];
+        
+        if (Array.isArray(filterValue) && filterValue.length > 0) {
+            params = params.append(key, filterValue.join(','));
+            url = `${this.apiUrl}/filter`;
+        } else if (filterValue) {
+            params = params.append(key, filterValue);
+            url = `${this.apiUrl}/filter`;
+        }
+    });
+
+    return this.http.get<any>(url, { params }).pipe(
+        map(response => {
+            console.log('Raw API response:', response); // Log the entire response
+
+            let projects: DashboardTable[] = [];
+
+            // Handle different response structures
+            if (Array.isArray(response)) {
+                projects = response as DashboardTable[];
+            } else if (response && response.result && Array.isArray(response.result)) {
+                projects = response.result as DashboardTable[];
+            } else if (response && typeof response === 'object') {
+                // Convert object to array if needed
+                console.log("Converted to array")
+                projects = Object.values(response) as DashboardTable[];
+            } else {
+                console.error("Unexpected API response structure:", response);
+            }
+            this.sharedDataService.updateProjects(projects); // Notify other components
+        return projects;
+            console.log('Fetched projects:', projects);
+            // this.projectsData.next(projects); // Store data locally
+            // console.log(this.projectsData,"projectsdata")
+            return projects;
+        }),
+        catchError(this.handleError)
+    );
+}
+
+
+
+
+  
+  
+
+
+
+  getLocalProjects(): Observable<DashboardTable[]> {
+    return this.projectsData.asObservable(); // Return locally stored data as observable
+  }
   // Method to update projects
   updateProjects(projectData: ExcelRow): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -62,6 +122,13 @@ export class DashboardTableService {
   getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
     return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
+  private selectedFiltersSubject = new BehaviorSubject<{ [key: string]: string[] }>({});
+  selectedFilters$ = this.selectedFiltersSubject.asObservable();
 
+  // Method to update the selected filters
+  updateSelectedFilters(filters: { [key: string]: string[] }) {
+    this.selectedFiltersSubject.next(filters);
+  }
 
+  
 }

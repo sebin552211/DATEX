@@ -4,7 +4,10 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { HttpClient } from '@angular/common/http';
-
+import { DashboardTable } from '../../../interface/dashboard-table';
+import { Subscription } from 'rxjs';
+import { SharedDataService } from '../../../service/shared-data.service';
+ 
 @Component({
   selector: 'app-graph2',
   standalone: true,
@@ -18,11 +21,14 @@ export class GraphComponent2 implements OnInit {
   pieChartData: any;
   pieChartOptions: any;
   showPieChart = false;
-
+  projects: DashboardTable[] = [];
+  private projectsSubscription: Subscription | undefined;
+ 
   lineChartData: any = {
     labels: ['DTS', 'ESS0', 'PES'],
     datasets: [
       {
+       
        
         data: [0.26, 0.67, 0.67],
         fill: false,
@@ -31,12 +37,12 @@ export class GraphComponent2 implements OnInit {
       }
     ]
   };
-
+ 
   lineChartOptions: any = {
     plugins: {
       legend: {
         display:false,
-
+ 
       }
     },
     scales: {
@@ -75,20 +81,21 @@ export class GraphComponent2 implements OnInit {
       }
     }
   };
-
-  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef) {}
-
+ 
+  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef,private sharedDataService: SharedDataService) {}
+ 
   ngOnInit() {
     this.getVOCMetrics();
-
+ 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
+ 
     this.barChartOptions = {
       plugins: {
         legend: {
+      display:false,
       display:false,
         }
       },
@@ -129,7 +136,7 @@ export class GraphComponent2 implements OnInit {
         }
       }
     };
-
+ 
     this.pieChartOptions = {
       plugins: {
         legend: {
@@ -144,19 +151,19 @@ export class GraphComponent2 implements OnInit {
       }
     };
   }
-
+ 
   getVOCMetrics() {
-    this.dashboardService.getProjects().subscribe((projects) => {
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects =>{
       const eligible = projects.filter(p => p.vocEligibilityDate !== null).length;
       const initiated = projects.filter(p => p.mailStatus === 'Sent').length;
       const received = projects.filter(p => p.feedbackStatus === 'Received').length;
       const coverage = (received / eligible) * 100;
-
+ 
       this.barChartData = {
         labels: ['VOC ELIGIBLE PROJECTS', 'VOC INITIATED', 'VOC RECEIVED', 'VOC COVERAGE'],
         datasets: [
           {
-
+ 
             data: [eligible, initiated, received, coverage],
             backgroundColor: [
               'rgba(59, 130, 246, 0.5)', // Light Blue
@@ -173,7 +180,7 @@ export class GraphComponent2 implements OnInit {
           }
         ]
       };
-
+ 
       this.pieChartData = {
         labels: ['VOC ELIGIBLE PROJECTS', 'VOC INITIATED', 'VOC RECEIVED', 'VOC COVERAGE'],
         datasets: [
@@ -196,8 +203,9 @@ export class GraphComponent2 implements OnInit {
       };
     });
   }
-
+ 
   togglePieChart() {
     this.showPieChart = !this.showPieChart;
   }
 }
+ 

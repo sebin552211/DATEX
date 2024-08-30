@@ -3,6 +3,9 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
+import { SharedDataService } from '../../../service/shared-data.service';
+import { DashboardTable } from '../../../interface/dashboard-table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-graph1',
@@ -37,11 +40,16 @@ export class GraphComponent implements OnInit {
   textColor!: string;
   textColorSecondary!: string;
   surfaceBorder!: string;
+  projects: DashboardTable[] = [];
+  private projectsSubscription: Subscription | undefined;
 
-  constructor(private dashboardTableService: DashboardTableService) {}
+  constructor(private dashboardTableService: DashboardTableService,  private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
-    this.dashboardTableService.getProjects().subscribe(projects => {
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
+      console.log('Projects response:', projects);
+      console.log('Type of response:', typeof projects);
+
       if (!Array.isArray(projects)) {
         console.error('Expected projects to be an array.');
         return;
@@ -110,7 +118,7 @@ const predefinedColors = [
         counts,
         backgroundColors,
         borderColors,
-
+       
       );
    // Determine colors for project types
    const projectTypeBackgroundColors = predefinedColors.slice(0, projectTypeLabels.length);
@@ -122,7 +130,7 @@ const predefinedColors = [
       projectTypeCountsValues,
       projectTypeBackgroundColors,
       projectTypeBorderColors,
-
+      
     );
 
     this.basicData3 = this.getBarChartData(
@@ -130,7 +138,7 @@ const predefinedColors = [
       customerCountsValues,
       projectTypeBackgroundColors,
       projectTypeBorderColors,
-
+     
     );
 
      // Update Graph 4 (Bar chart)
@@ -139,7 +147,7 @@ const predefinedColors = [
       projectCounts,
       backgroundColors,
       borderColors,
-
+     
     );
 
       // Update PieChart1 data dynamically
@@ -287,6 +295,7 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
       datasets: [
         {
          
+         
           data: data,
           backgroundColor: backgroundColor,
           borderColor: borderColor,
@@ -301,7 +310,9 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
       plugins: {
         legend: {
           display:false,
-
+          labels: {
+            color: textColor,
+          },
         },
       },
       scales: {
