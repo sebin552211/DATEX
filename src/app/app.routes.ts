@@ -5,6 +5,11 @@ import { NgModule } from '@angular/core';
 export const routes: Routes = [
   {
     path: '',
+    loadComponent: () => import('./layout/login/login.component').then((m) => m.LoginComponent),
+
+  },
+  {
+    path: 'dashboard',
     loadComponent: () => import('./pages/dashboard/dashboard.component').then((m) => m.DashboardComponent),
 
   },

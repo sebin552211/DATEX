@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { DashboardTableService } from './service/dashboard-table.service';
+import { LoginComponent } from "./layout/login/login.component";
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ import { DashboardTableService } from './service/dashboard-table.service';
     ProgressSpinnerModule,
     NgIf,
     NgClass,
-  ],
+    LoginComponent
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'], // Corrected 'styleUrl' to 'styleUrls'
 })

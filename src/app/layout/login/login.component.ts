@@ -14,22 +14,22 @@ export class LoginComponent {
 
   }
 
-trainerLogin() {
-  alert("trainer logged in")
+// trainerLogin() {
+//   alert("trainer logged in")
   
-  localStorage.setItem("logintoken","trainer")
-  this.router.navigate(['/home'])
+//   localStorage.setItem("logintoken","trainer")
+//   this.router.navigate(['/dashboard'])
 
-}
+// }
 adminLogin() {
-  alert("admin logged in")
-  localStorage.setItem("logintoken","admin")
-  this.router.navigate(['/home'])
+  // alert("admin logged in")
+  // localStorage.setItem("logintoken","admin")
+  // this.router.navigate(['/home'])
 }
-trainee() { 
-  alert("trainee logged in")
-  localStorage.setItem("logintoken","user")
-  this.router.navigate(['/home'])
-}
+// trainee() { 
+//   alert("trainee logged in")
+//   localStorage.setItem("logintoken","user")
+//   this.router.navigate(['/home'])
+// }
 
 }
