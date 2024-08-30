@@ -1,369 +1,575 @@
- <div class="filter-container scroll">
-  <div class="filter-group filter-section">
-    <h4
-      (click)="toggleDropdown('status')"
-      class="filter-heading"  >
-    Status
-      <i
-        class="fa"
-        [ngClass]="{
-          'fa-chevron-down': !showStatus,
-          'fa-chevron-up': showStatus
-        }"
-      ></i>
-    </h4>
-    <div
-      *ngIf="showStatus"
-      class="filter-components filter-options">
-      <div
-      *ngFor="let status of status; let i = index"
-        class="filter-option"
-        style="width: 7cm; border-radius: 20px"
-        [ngClass]="{ 'selected-item': filters.status[status] }">
-
-        <label class="custom-checkbox-container">
-          {{ status }}
-          <input
-            type="checkbox"
-            [(ngModel)]="filters.status[status]"/>
-          <span class="custom-checkbox"></span>
-        </label>
-      </div>
-    </div>  
- <hr />
-
- <div class="filter-group filter-section">
-  <h4 (click)="toggleDropdown('contractType')" class="filter-heading">
-    Contract Type
-    <i
-      class="fa"
-      [ngClass]="{
-        'fa-chevron-down': !showContractType,
-        'fa-chevron-up': showContractType
-      }"
-    ></i>
-  </h4>
-
-  <div *ngIf="showContractType" class="filter-components filter-options">
-    <div
-    *ngFor="let contracttype of contractType; let i = index"
-      class="filter-option"
-      style="width: 7cm; border-radius: 20px"
-      [ngClass]="{ 'selected-item': filters.contractType[contracttype] }">
-      <label class="custom-checkbox-container">
-        {{ contracttype }}
-        <input type="checkbox" 
-        [(ngModel)]="filters.contractType[contracttype]"/>
-        <span class="custom-checkbox"></span>
-      </label>
-    </div>
-  </div>
-
-  <hr />
-
-  <div class="filter-group filter-section">
-    <h4 (click)="toggleDropdown('dusAndDuHeads')" class="filter-heading">
-      DU & DU Heads
-      <i
-        class="fa"
-        [ngClass]="{
-          'fa-chevron-down': !showDuAndDuHead,
-          'fa-chevron-up': showDuAndDuHead
-        }"
-      ></i>
-    </h4>
-    <div *ngIf="showDuAndDuHead" class="filter-components filter-options">
-      <div
-      *ngFor="let dusandduhead of dusAndDuHeads;  let i = index"
-        class="filter-option"
-        style="width: 7cm; border-radius: 20px"
-        [ngClass]="{ 'selected-item': filters.dusAndDuHeads[dusandduhead] }">
-        <label class="custom-checkbox-container">
-          {{ dusandduhead }}
-          <input type="checkbox"
-          [(ngModel)]="filters.dusAndDuHeads[dusandduhead]"/>
-          <span class="custom-checkbox"></span>
-        </label>
-      </div>
-    </div>
-  </div>
-
-  <hr />
-
-  <div class="filter-group filter-section">
-    <h4 (click)="toggleDropdown('regions')" class="filter-heading">
-      Region
-      <i
-        class="fa"
-        [ngClass]="{
-          'fa-chevron-down': !showRegions,
-          'fa-chevron-up': showRegions
-        }"
-      ></i>
-    </h4>
-
-    <div
-      *ngIf="showRegions"
-      class="filter-components filter-options"
-    >
-      <div
-      *ngFor="let region of regions;  let i = index"
-        class="filter-option"
-        style="width: 7cm; border-radius: 20px"
-        [ngClass]="{ 'selected-item': filters.regions[region] }">
-      
-        <label class="custom-checkbox-container">
-          {{ region }}
-          <input
-            type="checkbox"
-            [(ngModel)]="filters.regions[region]"/>
-          <span class="custom-checkbox"></span>
-        </label>
-      </div>
-    </div>
-
-    <hr />
-
-    <div class="filter-group filter-section">
-      <h4 (click)="toggleDropdown('customerName')" class="filter-heading">
-        Customer Name
-        <i
-          class="fa"
-          [ngClass]="{
-            'fa-chevron-down': !showCustomerName,
-            'fa-chevron-up': showCustomerName
-          }"
-        ></i>
-      </h4>
-      <div *ngIf="showCustomerName" class="filter-components filter-options">
-        <div
-        *ngFor="let customername of customerName; let i = index"
-          class="filter-option"
-          style="width: 7cm; border-radius: 20px"
-          [ngClass]="{ 'selected-item': filters.customerName[customername]}">
-        
-          <label class="custom-checkbox-container">
-            {{ customername }}
-            <input type="checkbox"
-            [(ngModel)]="filters.customerName[customername]"/>
-            <span class="custom-checkbox"></span>
-          </label>
-        </div>
-      </div>
-
-      <hr />
-
-  <div class="filter-group filter-section">
-    <h4 (click)="toggleDropdown('projectManager')" class="filter-heading">
-      Project Manager
-      <i
-        class="fa"
-        [ngClass]="{
-          'fa-chevron-down': !showProjectManager,
-          'fa-chevron-up': showProjectManager
-        }"
-      ></i>
-    </h4>
-    <div *ngIf="showProjectManager" class="filter-components filter-options">
-      <div
-        *ngFor="let manager of projectManager; let i = index"
-        class="filter-option"
-        style="width: 7cm; border-radius: 20px"
-        [ngClass]="{ 'selected-item': filters.projectManager[manager] }">
-        <label class="custom-checkbox-container">
-          {{ manager }}
-          <input type="checkbox"
-          [(ngModel)]="filters.projectManager[manager]"/>
-          <span class="custom-checkbox"></span>
-        </label>
-      </div>
-    </div>
-
-    <hr />
-
-    <div class="filter-group filter-section">
-      <h4 (click)="toggleDropdown('date')" class="filter-heading">
-        Project Date
-        <i
-          class="fa"
-          [ngClass]="{
-            'fa-chevron-down': !showDate,
-            'fa-chevron-up': showDate
-          }"
-        ></i>
-      </h4>
-      <div *ngIf="showDate" class="filtercomponents filter-options" style="margin-top: -20px;">
-        <div class="dates">
-          <div>
-            <h5 style="font-size: 12px; margin-left: -60px">Start date:</h5>
-            <input style="margin-left: 10px; font-size: 16px" type="date" />
-          </div>
-          <div>
-            <h5 style="font-size: 12px; margin-left: -70px">End date:</h5>
-            <input style="margin-left: 10px; font-size: 16px" type="date" />
-          </div>
-          <div>
-            <h5 style="font-size: 12px;">
-              Forecasted End date:
-            </h5>
-            <input style="margin-left: 10px; font-size: 16px" type="date" />
+<div class="filter-container scroll">
+  <table>
+    <tr>
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('status')" class="filter-heading">
+            Status
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showStatus,
+                'fa-chevron-up': showStatus
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showStatus" class="filter-components filter-options">
+            <div
+              *ngFor="let statusItem of status; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{ 'selected-item': filters.status[statusItem] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ statusItem }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.status[statusItem]"
+                  (change)="StatusCheckboxChange(statusItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </th>
 
-      <hr />
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('contractType')" class="filter-heading">
+            Contract Type
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showContractType,
+                'fa-chevron-up': showContractType
+              }"
+            ></i>
+          </h4>
 
-      <div class="filter-group filter-section">
-        <h4 (click)="toggleDropdown('numberOfResources')" class="filter-heading">
-          Resources
-          <i
-            class="fa"
-            [ngClass]="{
-              'fa-chevron-down': !showNumberOfResources,
-              'fa-chevron-up': showNumberOfResources
-            }"
-          ></i>
-        </h4>
-
-        <div *ngIf="showNumberOfResources" class="filter-components filter-options">
           <div
-          *ngFor="let numberofresources of numberOfResources; let i = index"
-            class="filter-option"
-            style="width: 7cm; border-radius: 20px"
-            [ngClass]="{ 'selected-item': filters.numberOfResources[numberofresources] }">
-          
-            <label class="custom-checkbox-container">
-              {{ numberofresources }}
-              <input
-                type="checkbox"
-                [(ngModel)]="filters.numberOfResources[numberofresources]"/>
-              <span class="custom-checkbox"></span>
-            </label>
-          </div>
-        </div>
-
-            <hr />
-
-            <div class="filter-group">
-              <h4 (click)="toggleDropdown('technologies')" class="filter-heading">
-                Technology
-                <i
-                  class="fa"
-                  [ngClass]="{
-                    'fa-chevron-down': !showTechnology,
-                    'fa-chevron-up': showTechnology
-                  }"
-                ></i>
-              </h4>
-              <div *ngIf="showTechnology" class="filter-components filter-options">
-                <div
-                *ngFor="let technology of technologies; let i = index"
-                  class="filter-option"
-                  style="width: 7cm; border-radius: 20px;"
-                  [ngClass]="{ 'selected-item': filters.technologies[technology] }">
-
-                  <label class="custom-checkbox-container">
-                    {{ technology }}
-                    <input type="checkbox" 
-                    [(ngModel)]="filters.technologies[technology]"/>
-                    <span class="custom-checkbox"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <hr/>
-
-        
-              <!-- <div class="filter-group filter-section">
-                <h4
-                  (click)="toggleDropdown('cloudUsed')"
-                  class="filter-heading"
-                >
-                  Cloud Used
-                  <i
-                    class="fa"
-                    [ngClass]="{
-                      'fa-chevron-down': !showCloudUsed,
-                      'fa-chevron-up': showCloudUsed
-                    }"
-                  ></i>
-                </h4>
-                <div
-                  *ngIf="showCloudUsed"
-                  class="filtercomponents filter-options"
-                >
-                  <div
-                    *ngIf="showCloudUsed"
-                    class="filter-components filter-options"
-                  >
-                    <div
-                      *ngFor="let option of cloudUsedOptions; let i = index"
-                      class="filter-option"
-                      style="width: 7cm; border-radius: 20px"
-                      [ngClass]="{ 'selected-item': filters.cloudUsed[option] }"
-                    >
-                      <label class="custom-checkbox-container">
-                        {{ option }}
-                        <input
-                          type="checkbox"
-                          [(ngModel)]="filters.cloudUsed[option]"
-                        />
-                        <span class="custom-checkbox"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div> -
-              </div>
-              <hr/>
-
-              <div class="filter-group filter-section">
-                <h4
-                  (click)="toggleDropdown('feedbackStatus')"
-                  class="filter-heading"
-                >
-                  Feedback Status
-                  <i
-                    class="fa"
-                    [ngClass]="{
-                      'fa-chevron-down': !showFeedbackStatus,
-                      'fa-chevron-up': showFeedbackStatus
-                    }"
-                  ></i>
-                </h4>
-                <div
-                  *ngIf="showFeedbackStatus"
-                  class="filtercomponents filter-options"
-                >
-                  <div
-                      *ngFor="let option of feedbackStatusOptions; let i = index"
-                      class="filter-option"
-                      style="width: 7cm; border-radius: 20px"
-                      [ngClass]="{ 'selected-item': filters.feedbackStatus[option] }"
-                    >
-                      <label class="custom-checkbox-container">
-                        {{ option }}
-                        <input
-                          type="checkbox"
-                          [(ngModel)]="filters.feedbackStatus[option]"
-                        />
-                        <span class="custom-checkbox"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-               <hr/>
+            *ngIf="showContractType"
+            class="filter-components filter-options"
+          >
+            <div
+              *ngFor="let contractTypeItem of contractType; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.contractType[contractTypeItem]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ contractTypeItem }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.contractType[contractTypeItem]"
+                  (change)="ContractCheckboxChange(contractTypeItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
             </div>
           </div>
         </div>
-      </div>-->
-      <button class="btn1" >Apply filters</button>
-      <button class="btn2" (click)="resetFilters()">Reset</button>
-        
-          <hr />
-        
-   
-        
+      </th>
 
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('dusAndDuHeads')" class="filter-heading">
+            DU & DU Heads
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDuAndDuHead,
+                'fa-chevron-up': showDuAndDuHead
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showDuAndDuHead" class="filter-components filter-options">
+            <div
+              *ngFor="let dusandduheadItem of dusAndDuHeads; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.dusAndDuHeads[dusandduheadItem]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ dusandduheadItem }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.dusAndDuHeads[dusandduheadItem]"
+                  (change)="DuDUHeadCheckboxChange(dusandduheadItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('regions')" class="filter-heading">
+            Region
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showRegions,
+                'fa-chevron-up': showRegions
+              }"
+            ></i>
+          </h4>
+
+          <div *ngIf="showRegions" class="filter-components filter-options">
+            <div
+              *ngFor="let regionItem of regions; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{ 'selected-item': filters.regions[regionItem] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ regionItem }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.regions[regionItem]"
+                  (change)="RegionCheckboxChange(regionItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('customerName')" class="filter-heading">
+            Customer Name
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showCustomerName,
+                'fa-chevron-up': showCustomerName
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showCustomerName"
+            class="filter-components filter-options"
+          >
+            <div
+              *ngFor="let customernameItem of customerName; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.customerName[customernameItem]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ customernameItem }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.customerName[customernameItem]"
+                  (change)="CustomerNameCheckboxChange(customernameItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('projectManager')" class="filter-heading">
+            Project Manager
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showProjectManager,
+                'fa-chevron-up': showProjectManager
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showProjectManager"
+            class="filter-components filter-options"
+          >
+            <div
+              *ngFor="let managerItem of projectManager; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.projectManager[managerItem]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ managerItem }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.projectManager[managerItem]"
+                  (change)="ProjectManagerCheckboxChange(managerItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('date')" class="filter-heading">
+            Project Date
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDate,
+                'fa-chevron-up': showDate
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showDate"
+            class="filtercomponents filter-options"
+            style="margin-top: -20px"
+          >
+            <div class="dates">
+              <div>
+                <h5 style="font-size: 12px; margin-left: -60px">Start date:</h5>
+                <input style="margin-left: 10px; font-size: 16px" type="date" />
+              </div>
+              <div>
+                <h5 style="font-size: 12px; margin-left: -70px">End date:</h5>
+                <input style="margin-left: 10px; font-size: 16px" type="date" />
+              </div>
+              <div>
+                <h5 style="font-size: 12px">Forecasted End date:</h5>
+                <input style="margin-left: 10px; font-size: 16px" type="date" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4
+            (click)="toggleDropdown('numberOfResources')"
+            class="filter-heading"
+          >
+            Resources
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showNumberOfResources,
+                'fa-chevron-up': showNumberOfResources
+              }"
+            ></i>
+          </h4>
+
+          <div
+            *ngIf="showNumberOfResources"
+            class="filter-components filter-options"
+          >
+            <div
+              *ngFor="let numberofresources of numberOfResources; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.numberOfResources[numberofresources]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ numberofresources }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.numberOfResources[numberofresources]"
+                  (change)="ResourceCheckboxChange(numberofresources)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <div class="filter-group">
+          <h4 (click)="toggleDropdown('technologies')" class="filter-heading">
+            Technology
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showTechnology,
+                'fa-chevron-up': showTechnology
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showTechnology" class="filter-components filter-options">
+            <div
+              *ngFor="let technology of technologies; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{
+                'selected-item': filters.technologies[technology]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ technology }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.technologies[technology]"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('cloudUsed')" class="filter-heading">
+            Cloud Used
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showCloudUsed,
+                'fa-chevron-up': showCloudUsed
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showCloudUsed" class="filtercomponents filter-options">
+            <div
+              *ngFor="let cloud of cloudOption; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.cloudUsed[cloud] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ cloud }}
+                <input type="checkbox" [(ngModel)]="filters.cloudUsed[cloud]" />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('feedback')" class="filter-heading">
+            Feedback Status
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showFeedbackStatus,
+                'fa-chevron-up': showFeedbackStatus
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showFeedbackStatus"
+            class="filtercomponents filter-options"
+          >
+            <div
+              *ngFor="let status of feedbackOptions; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.feedback[status] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ status }}
+                <input type="checkbox" [(ngModel)]="filters.feedback[status]" />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('SQA')" class="filter-heading">
+            SQA
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showSQA,
+                'fa-chevron-up': showSQA
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showSQA" class="filtercomponents filter-options">
+            <div
+              *ngFor="let sqa of SQAOptions; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.SQA[sqa] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ sqa }}
+                <input type="checkbox" [(ngModel)]="filters.SQA[sqa]" />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('projectType')" class="filter-heading">
+            Project Type
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showProjectType,
+                'fa-chevron-up': showProjectType
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showProjectType" class="filtercomponents filter-options">
+            <div
+              *ngFor="let projecttype of projectTypeOptions; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{
+                'selected-item': filters.projectType[projecttype]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ projecttype }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.projectType[projecttype]"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('domain')" class="filter-heading">
+            Domain
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDomain,
+                'fa-chevron-up': showDomain
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showDomain" class="filtercomponents filter-options">
+            <div
+              *ngFor="let key of domainOptions; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.domain[key] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ key }}
+                <input type="checkbox" [(ngModel)]="filters.domain[key]" />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="filter-group filter-section">
+          <h4 (click)="toggleDropdown('databaseUsed')" class="filter-heading">
+            DataBase Used
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDatabaseUsed,
+                'fa-chevron-up': showDatabaseUsed
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showDatabaseUsed" class="filtercomponents filter-options">
+            <div
+              *ngFor="let database of databaseUsedOptions; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.databaseUsed[database] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ database }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.databaseUsed[database]"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
+  </table>
+  <div class="fillist">
+    <div class="select-list">
+      <div *ngFor="let selectedItem of selectedStatusItems" class="select-item">
+        {{ selectedItem }}
+        <span class="remove-item" (click)="removeStatusItem(selectedItem)"
+          >✖</span
+        >
+      </div>
+    </div>
+    <div class="select-list">
+      <div *ngFor="let item of selectedContractTypeItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeContractItem(item)">✖</span>
+      </div>
+    </div>
+    <div class="select-list">
+      <div *ngFor="let item of selectedduDuHeadItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeDuDuHeadItem(item)">✖</span>
+      </div>
+    </div>
+    <div class="select-list">
+      <div *ngFor="let item of selectedRegionItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeRegionItem(item)">✖</span>
+      </div>
+    </div>
+
+   <div class="select-list">
+      <div *ngFor="let item of selectedCustomerNameItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeCustomerNameItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+
+    <div class="select-list">
+      <div *ngFor="let item of selectedProjectManagerItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeProjectManagerItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+
+    <div class="select-list">
+      <div *ngFor="let item of selectedResourcesItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeResourcesItem(item)">✖</span>
+      </div>
+    </div>
+  </div>
+    <button class="btn2" (click)="resetFilters()">Reset</button>
+    <button class="btn1" (click)="resetFilters()">Apply Filter</button>
+</div>

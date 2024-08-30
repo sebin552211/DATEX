@@ -17,8 +17,6 @@ export class DashboardcardComponent implements OnInit {
 
   constructor(private dashboardTableService: DashboardTableService) { }
 
-
-
   ngOnInit(): void {
     this.getCardData();
   }

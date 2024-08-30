@@ -1,54 +1,56 @@
-.filter-container.scroll {
+.filter-container {
     height: 12.5cm;
     overflow-x: hidden;
-     overflow-y: auto; 
+    overflow-y: auto; 
     text-align: center;
     padding: 20px;
     border: 1px solid white;
-    width: 14cm;   
+    width: 20cm;   
     box-shadow: 2px 2px 10px;
     position: fixed;
     top: 2cm;
-    right: 30px;
+    right: 4cm;
     background-color: #FFFFFF;
     }
     
-    .filter-group {
-      margin-bottom: 20px;
-    }
     
     .filter-group h4 {
-      margin-bottom: 20px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-left: 10px;
     }  
   
     .filter-heading {
       font-weight: bold;
       cursor: pointer;
       margin-bottom: 5px;
+      display: block;
     }
     
     .filter-options {
-      display: flex;
-      flex-wrap: wrap;
+      flex: 0 0 60%; 
+      height:auto;
+      background-color: white;
+      width: 4.5cm;
+      z-index: 1;
+      display: block;
+      position: absolute; 
+      border-radius: 15px;
+      padding: 5px;
+      box-shadow: 2px 2px 5px;
     }
     
     .filter-option {
-      flex: 0 0 30%; 
+      flex: 60%; 
+      width: 3.5cm;
       margin-bottom: 5px;
-      display: flex;
       align-items: center;
       margin-right: 10px;
-      background-color: #D9D9D9
+      background-color: #D9D9D9;
     }
     
-    hr{
-        border: 1.5px solid #D8D8D8;
-    }
-
     .filter-option:hover{
       background-color: #DC123C;
       color: white;
@@ -69,12 +71,19 @@
       margin-right: 10px;
       background-color: #000;
       color: white;
+      position: fixed;      
+      left: 12cm;
+      bottom: 1.5cm;
+
     }
 
     .btn2{
       margin-left: 10px;
       background-color: #D4D4D4;
       border-color:#D4D4D4 ;
+      position: fixed; 
+      right: 9cm;     
+      bottom: 1.5cm;
     }
 
     .filter-option {
@@ -116,10 +125,39 @@
       padding-left: 15px;
       margin-top: 10px;
     }
+    .fa{
+      margin-left: 5px;
+      margin-right: 20px;
+    }
     
     .filter-option {
       border-radius: 10px;
       transition: background-color 0.3s;
+    }
+    .fillist{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    /*/////////Selected Item///////////////*/
+    .select-list {
+      display: flex;
+      flex: auto;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .select-item {
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .remove-item {
+      margin-left: 10px;
+      cursor: pointer;
+      color: #ff0000;
     }
     
     /* Selected state style */
