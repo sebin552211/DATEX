@@ -46,6 +46,7 @@ export class GraphComponent implements OnInit {
   constructor(private dashboardTableService: DashboardTableService,  private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
+
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
       console.log('Projects response:', projects);
       console.log('Type of response:', typeof projects);

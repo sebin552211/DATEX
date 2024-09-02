@@ -1,244 +1,678 @@
-<div class="filters">
-  <!-- Status Filter -->
-  <div class="dropdown" (click)="toggleDropdown('status')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Status
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['status']">
-      <label *ngFor="let status of statuses">
-        <input 
-          type="checkbox" 
-          [value]="status" 
-          (change)="onFilterChange($event, 'status')"
-          [checked]="isSelectedFilter('status', status)">
-        {{ status }}
-      </label>
-    </div>
-  </div>
+<div  class="filters filter-container scroll">
+  <table>
+    <tr>
+      <th>
+        <!-- Status Filter -->
+        <div class="filter-group filter-section dropdown">
+          <h4 (click)="toggleDropdown('status')" class="filter-heading">
+            Status
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showStatus,
+                'fa-chevron-up': showStatus
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showStatus" class="filter-components filter-options">
+            <div
+              *ngFor="let status of statuses; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{ 'selected-item': filters.status[status] }"
+            >
+              <div class="dropdown-menu">
+                <label class="custom-checkbox-container">
+                  {{ status }}
+                  <input
+                    type="checkbox"
+                    [value]="status"
+                    [(ngModel)]="filters.status[status]"
+                    (change)="onFilterChange($event, 'status')"
+                    [checked]="isSelectedFilter('status', status)"
+                    (change)="StatusCheckboxChange(status)"
+                  />
+                  <span class="custom-checkbox"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Contract Type Filter -->
-  <div class="dropdown" (click)="toggleDropdown('contractType')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Contract Type
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['contractType']">
-      <label *ngFor="let contractType of contractTypes">
-        <input 
-          type="checkbox" 
-          [value]="contractType" 
-          (change)="onFilterChange($event, 'contractType')"
-          [checked]="isSelectedFilter('contractType', contractType)">
-        {{ contractType }}
-      </label>
-    </div>
-  </div>
+      <!-- Contract Type Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('contractType')" class="filter-heading">
+            Contract Type
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showContractType,
+                'fa-chevron-up': showContractType
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showContractType"
+            class="dropdown-menu filter-components filter-options"
+          >
+            <div
+              *ngFor="let contractType of contractTypes; let i = index"
+              class="filter-option"
+              style=" border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.contractType[contractType]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ contractType }}
+                <input
+                  type="checkbox"
+                  [value]="contractType"
+                  [(ngModel)]="filters.contractType[contractType]"
+                  (change)="ContractCheckboxChange(contractType)"
+                  (change)="onFilterChange($event, 'contractType')"
+                  [checked]="isSelectedFilter('contractType', contractType)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- DU and DU Head Filter -->
-  <div class="dropdown" (click)="toggleDropdown('dusAndDuHeads')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      DU & DU Head
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['dusAndDuHeads']">
-      <label *ngFor="let dusAndDuHead of dusAndDuHeads">
-        <input 
-          type="checkbox" 
-          [value]="dusAndDuHead" 
-          (change)="onFilterChange($event, 'dusAndDuHeads')"
-          [checked]="isSelectedFilter('dusAndDuHeads', dusAndDuHead)">
-        {{ dusAndDuHead }}
-      </label>
-    </div>
-  </div>
+      <!-- DU and DU Head Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('dusAndDuHeads')" class="filter-heading">
+            DU & DU Heads
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDuAndDuHead,
+                'fa-chevron-up': showDuAndDuHead
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showDuAndDuHead"
+            class="dropdown-menu filter-components filter-options"
+          >
+            <div
+              *ngFor="let dusandduhead of dusAndDuHeads; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.dusAndDuHeads[dusandduhead]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ dusandduhead }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.dusAndDuHeads[dusandduhead]"
+                  (change)="DuDUHeadCheckboxChange(dusandduhead)"
+                  [value]="dusandduhead"
+                  (change)="onFilterChange($event, 'dusAndDuHeads')"
+                  [checked]="isSelectedFilter('dusAndDuHeads', dusandduhead)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Region Filter -->
-  <div class="dropdown" (click)="toggleDropdown('region')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Region
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['region']">
-      <label *ngFor="let region of regions">
-        <input 
-          type="checkbox" 
-          [value]="region" 
-          (change)="onFilterChange($event, 'region')"
-          [checked]="isSelectedFilter('region', region)">
-        {{ region }}
-      </label>
-    </div>
-  </div>
+      <!-- Region Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('regions')" class="filter-heading">
+            Region
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showRegions,
+                'fa-chevron-up': showRegions
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showRegions"
+            class="dropdown-menu filter-components filter-options"
+          >
+            <div
+              *ngFor="let region of regions; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{ 'selected-item': filters.regions[region] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ region }}
+                <input
+                  type="checkbox"
+                  [(ngModel)]="filters.regions[region]"
+                  (change)="RegionCheckboxChange(region)"
+                  [value]="region"
+                  (change)="onFilterChange($event, 'region')"
+                  [checked]="isSelectedFilter('region', region)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <!-- Customer Name Filter -->
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('customerName')" class="filter-heading">
+            Customer Name
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showCustomerName,
+                'fa-chevron-up': showCustomerName
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showCustomerName"
+            class="filter-components filter-options"
+          >
+            <div
+              *ngFor="let customername of customerNames; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px;"
+              [ngClass]="{
+                'selected-item': filters.customerNames[customername]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ customername }}
+                <input
+                  type="checkbox"
+                  [value]="customerNames"
+                  (change)="onFilterChange($event, 'customerNames')"
+                  [checked]="isSelectedFilter('customerNames', customername)"
+                  [(ngModel)]="filters.customerNames[customername]"
+                  (change)="CustomerCheckboxChange(customername)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Customer Name Filter -->
-  <div class="dropdown" (click)="toggleDropdown('customerName')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Customer Name
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['customerName']">
-      <label *ngFor="let customerName of customerNames">
-        <input 
-          type="checkbox" 
-          [value]="customerName" 
-          (change)="onFilterChange($event, 'customerName')"
-          [checked]="isSelectedFilter('customerName', customerName)">
-        {{ customerName }}
-      </label>
-    </div>
-  </div>
+      <!-- Technology Filter -->
+      <th>
+        <div class="dropdown filter-group" >
+          <h4 (click)="toggleDropdown('technologies')" class="filter-heading">
+            Technology
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showTechnology,
+                'fa-chevron-up': showTechnology
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showTechnology"
+            class="dropdown-menu filter-components filter-options"
+          >
+            <div
+              *ngFor="let technology of technologies; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px;"
+              [ngClass]="{
+                'selected-item': filters.technologies[technology]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ technology }}
+                <input
+                  type="checkbox"
+                  [value]="technology"
+                  (change)="onFilterChange($event, 'technology')"
+                  (change)="TechnologyCheckboxChange(technology)"
+                  [checked]="isSelectedFilter('technology', technology)"
+                  [(ngModel)]="filters.technologies[technology]"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Technology Filter -->
-  <div class="dropdown" (click)="toggleDropdown('technology')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Technology
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['technology']">
-      <label *ngFor="let technology of technologies">
-        <input 
-          type="checkbox" 
-          [value]="technology" 
-          (change)="onFilterChange($event, 'technology')"
-          [checked]="isSelectedFilter('technology', technology)">
-        {{ technology }}
-      </label>
-    </div>
-  </div>
+      <!-- Project Start Date Filter -->
+      <th>
+        <div class="dropdown filter-group">
+          <h4 (click)="toggleDropdown('projectStartDate')" class="filter-heading">
+            Project Start Date
+            <i
+            class="fa"
+            [ngClass]="{
+              'fa-chevron-down': !showProjectStartDate,
+              'fa-chevron-up': showProjectStartDate
+            }"
+          ></i>
+        </h4>
+        <div
+        *ngIf="showProjectStartDate"
+        class="dropdown-menu filter-components filter-options">
+        <div
+              *ngFor="let projectstartdate of projectStartDates; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px;"
+              [ngClass]="{'selected-item': filters.projectStartDate[projectstartdate]}">
+            <label class="custom-checkbox-container">
+              {{ projectstartdate }}
+              <input
+                type="checkbox"
+                [value]="projectstartdate"
+                (change)="onFilterChange($event, 'projectStartDate')"
+                (change)="ProjectStartDateCheckboxChange(projectstartdate)"
+                [(ngModel)]="filters.projectStartDate[projectstartdate]"
+                [checked]="isSelectedFilter('projectStartDate', projectstartdate)"/> 
+                <span class="custom-checkbox"></span>             
+            </label>
+          </div>
+        </div>
+        </div>
+      </th>
 
-  <!-- Project Start Date Filter -->
-  <div class="dropdown" (click)="toggleDropdown('projectStartDate')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Project Start Date
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['projectStartDate']">
-      <label *ngFor="let projectStartDate of projectStartDates">
-        <input 
-          type="checkbox" 
-          [value]="projectStartDate" 
-          (change)="onFilterChange($event, 'projectStartDate')"
-          [checked]="isSelectedFilter('projectStartDate', projectStartDate)">
-        {{ projectStartDate }}
-      </label>
-    </div>
-  </div>
+      <!-- Project End Date Filter -->
+      <th>
+        <div class="dropdown filter-group">
+          <h4 (click)="toggleDropdown('projectEndDate')" class="filter-heading">
+            Project End Date
+            <i
+            class="fa"
+            [ngClass]="{
+              'fa-chevron-down': !showProjectEndDate,
+              'fa-chevron-up': showProjectEndDate
+            }"
+          ></i>
+        </h4>
+        <div *ngIf="showProjectEndDate"
+        class="dropdown-menu filter-components filter-options">
+        <div
+              *ngFor="let projectenddate of projectEndDates; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px;"
+              [ngClass]="{'selected-item': filters.projectEndDate[projectenddate]}">
+            <label class="custom-checkbox-container">
+              {{ projectenddate }}
+              <input
+                type="checkbox"
+                [value]="projectenddate"
+                (change)="onFilterChange($event, 'projectEndDate')"
+                (change)="ProjectEndDateCheckboxChange(projectenddate)"
+                [(ngModel)]="filters.projectEndDate[projectenddate]"
+                [checked]="isSelectedFilter('projectEndDate', projectenddate)"
+              />
+              <span class="custom-checkbox"></span>
+            </label>
+          </div>
+        </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <!-- Project Manager Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('projectManager')" class="filter-heading">
+            Project Manager
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showProjectManager,
+                'fa-chevron-up': showProjectManager
+              }"
+            ></i>
+          </h4>
+          <div
+            *ngIf="showProjectManager"
+            class="filter-components filter-options"
+          >
+            <div
+              *ngFor="let manager of projectManagers; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px"
+              [ngClass]="{
+                'selected-item': filters.projectManager[manager]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ manager }}
+                <input
+                  type="checkbox"
+                  [value]="manager"
+                  (change)="onFilterChange($event, 'projectManager')"
+                  [checked]="isSelectedFilter('projectManager', manager)"
+                  [(ngModel)]="filters.projectManager[manager]"
+                  (change)="ProjectManagerCheckboxChange(manager)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Project End Date Filter -->
-  <div class="dropdown" (click)="toggleDropdown('projectEndDate')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Project End Date
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['projectEndDate']">
-      <label *ngFor="let projectEndDate of projectEndDates">
-        <input 
-          type="checkbox" 
-          [value]="projectEndDate" 
-          (change)="onFilterChange($event, 'projectEndDate')"
-          [checked]="isSelectedFilter('projectEndDate', projectEndDate)">
-        {{ projectEndDate }}
-      </label>
-    </div>
-  </div>
+      <!-- SQA Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('SQA')" class="filter-heading">
+            SQA
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showSQA,
+                'fa-chevron-up': showSQA
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showSQA" class="filtercomponents filter-options">
+            <div
+              *ngFor="let sqaItem of sqas; let i = index"
+              class="filter-option"
+              style="border-radius: 20px; margin-bottom: 10px;"
+              [ngClass]="{ 'selected-item': filters.sqa[sqaItem] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ sqaItem }}
+                <input
+                  type="checkbox"
+                  [value]="sqaItem"
+                  (change)="onFilterChange($event, 'sqa')"
+                  [(ngModel)]="filters.sqa[sqaItem]"
+                  [checked]="isSelectedFilter('sqa', sqaItem)"
+                  (change)="SQACheckboxChange(sqaItem)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Project Manager Filter -->
-  <div class="dropdown" (click)="toggleDropdown('projectManager')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Project Manager
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['projectManager']">
-      <label *ngFor="let projectManager of projectManagers">
-        <input 
-          type="checkbox" 
-          [value]="projectManager" 
-          (change)="onFilterChange($event, 'projectManager')"
-          [checked]="isSelectedFilter('projectManager', projectManager)">
-        {{ projectManager }}
-      </label>
-    </div>
-  </div>
+      <!-- Project Type Filter -->
+      <th>
+        <div class="dropdown selectedsqaTechnologyItems">
+          <h4 (click)="toggleDropdown('projectType')" class="filter-heading">
+            Project Type
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showProjectType,
+                'fa-chevron-up': showProjectType
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showProjectType" class="filtercomponents filter-options">
+            <div
+              *ngFor="let projectType of projectTypes; let i = index"
+              class="filter-option"
+              style=" border-radius: 20px; margin-bottom: 10px;"
+              [ngClass]="{
+                'selected-item': filters.projectType[projectType]
+              }"
+            >
+              <label class="custom-checkbox-container">
+                {{ projectType }}
+                <input
+                  type="checkbox"
+                  [value]="projectType"
+                  (change)="onFilterChange($event, 'projectType')"
+                  [checked]="isSelectedFilter('projectType', projectType)"
+                  [(ngModel)]="filters.projectType[projectType]"
+                  (change)="ProjectTypeCheckboxChange(projectType)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- SQA Filter -->
-  <div class="dropdown" (click)="toggleDropdown('sqa')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      SQA
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['sqa']">
-      <label *ngFor="let sqa of sqas">
-        <input 
-          type="checkbox" 
-          [value]="sqa" 
-          (change)="onFilterChange($event, 'sqa')"
-          [checked]="isSelectedFilter('sqa', sqa)">
-        {{ sqa }}
-      </label>
-    </div>
-  </div>
+      <!-- Domain Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('domain')" class="filter-heading">
+            Domain
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDomain,
+                'fa-chevron-up': showDomain
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showDomain" class="filtercomponents filter-options">
+            <div
+              *ngFor="let key of domains; let i = index"
+              class="filter-option"
+              style="border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.domain[key] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ key }}
+                <input
+                  type="checkbox"
+                  [value]="key"
+                  (change)="onFilterChange($event, 'domain')"
+                  [checked]="isSelectedFilter('domain', key)"
+                  (change)="DomainCheckboxChange(key)"
+                  [(ngModel)]="filters.domain[key]"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
 
-  <!-- Project Type Filter -->
-  <div class="dropdown" (click)="toggleDropdown('projectType')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Project Type
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['projectType']">
-      <label *ngFor="let projectType of projectTypes">
-        <input 
-          type="checkbox" 
-          [value]="projectType" 
-          (change)="onFilterChange($event, 'projectType')"
-          [checked]="isSelectedFilter('projectType', projectType)">
-        {{ projectType }}
-      </label>
-    </div>
-  </div>
+    <!-- Database Used Filter -->
+    <tr>
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('databaseUsed')" class="filter-heading">
+            DataBase Used
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showDatabaseUsed,
+                'fa-chevron-up': showDatabaseUsed
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showDatabaseUsed" class="filtercomponents filter-options">
+            <div
+              *ngFor="let database of databasesUsed; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.databaseUsed[database] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ database }}
+                <input
+                  type="checkbox"
+                  [value]="database"
+                  (change)="onFilterChange($event, 'databaseUsed')"
+                  [checked]="isSelectedFilter('databaseUsed', database)"
+                  [(ngModel)]="filters.databaseUsed[database]"
+                  (change)="DatabaseUsedCheckboxChange(database)"/>
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
 
-  <!-- Domain Filter -->
-  <div class="dropdown" (click)="toggleDropdown('domain')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Domain
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['domain']">
-      <label *ngFor="let domain of domains">
-        <input 
-          type="checkbox" 
-          [value]="domain" 
-          (change)="onFilterChange($event, 'domain')"
-          [checked]="isSelectedFilter('domain', domain)">
-        {{ domain }}
-      </label>
+      <!-- Cloud Used Filter -->
+      <th>
+        <div class="dropdown filter-group filter-section">
+          <h4 (click)="toggleDropdown('cloudUsed')" class="filter-heading">
+            Cloud Used
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-chevron-down': !showCloudUsed,
+                'fa-chevron-up': showCloudUsed
+              }"
+            ></i>
+          </h4>
+          <div *ngIf="showCloudUsed" class="filtercomponents filter-options">
+            <div
+              *ngFor="let cloud of cloudsUsed; let i = index"
+              class="filter-option"
+              style="width: 3.3cm; border-radius: 20px"
+              [ngClass]="{ 'selected-item': filters.cloudUsed[cloud] }"
+            >
+              <label class="custom-checkbox-container">
+                {{ cloud }}
+                <input
+                  type="checkbox"
+                  [value]="cloud"
+                  (change)="onFilterChange($event, 'cloudsUsed')"
+                  [checked]="isSelectedFilter('cloudsUsed', cloud)"
+                  [(ngModel)]="filters.cloudUsed[cloud]"
+                  (change)="CloudUsedCheckboxChange(cloud)"
+                />
+                <span class="custom-checkbox"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </th>
+    </tr>
+  </table>
+  <div class="fillist">
+    <div class="select-list">
+      <div *ngFor="let selectedItem of selectedStatusItems" class="select-item">
+        {{ selectedItem }}
+        <span class="remove-item" (click)="removeStatusItem(selectedItem)"
+          >✖</span
+        >
+      </div>
     </div>
-  </div>
-
-  <!-- Database Used Filter -->
-  <div class="dropdown" (click)="toggleDropdown('databaseUsed')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Database Used
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['databaseUsed']">
-      <label *ngFor="let databaseUsed of databasesUsed">
-        <input 
-          type="checkbox" 
-          [value]="databaseUsed" 
-          (change)="onFilterChange($event, 'databaseUsed')"
-          [checked]="isSelectedFilter('databaseUsed', databaseUsed)">
-        {{ databaseUsed }}
-      </label>
+    <div class="select-list">
+      <div *ngFor="let item of selectedContractTypeItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeContractItem(item)">✖</span>
+      </div>
     </div>
-  </div>
-
-  <!-- Cloud Used Filter -->
-  <div class="dropdown" (click)="toggleDropdown('cloudUsed')">
-    <button class="btn btn-secondary dropdown-toggle" type="button">
-      Cloud Used
-    </button>
-    <div class="dropdown-menu" *ngIf="dropdownVisible['cloudUsed']">
-      <label *ngFor="let cloudUsed of cloudsUsed">
-        <input 
-          type="checkbox" 
-          [value]="cloudUsed" 
-          (change)="onFilterChange($event, 'cloudUsed')"
-          [checked]="isSelectedFilter('cloudUsed', cloudUsed)">
-        {{ cloudUsed }}
-      </label>
+    <div class="select-list">
+      <div *ngFor="let item of selectedduDuHeadItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeDuDuHeadItem(item)">✖</span>
+      </div>
+    </div>
+    <div class="select-list">
+      <div *ngFor="let item of selectedRegionItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeRegionItem(item)">✖</span>
+      </div>
     </div>
 
-  </div>
+   <div class="select-list">
+      <div *ngFor="let item of selectedCustomerNameItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeCustomerNameItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+   
+    <div class="select-list">
+      <div *ngFor="let item of selectedTechnologyItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeTechnologyItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+    
+    <div class="select-list">
+      <div *ngFor="let item of selectedProjectStartDate" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeProjectStartDateItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+    
+    <div class="select-list">
+      <div *ngFor="let item of selectedProjectEndDate" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeProjectEndDateItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+
+    <div class="select-list">
+      <div *ngFor="let item of selectedProjectManagerItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeProjectManagerItem(item)"
+          >✖</span
+        >
+      </div>
+    </div>
+
+    <div class="select-list">
+      <div *ngFor="let item of selectedResourcesItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeResourcesItem(item)">✖</span>
+      </div>
+    </div>
+
+    <div class="select-list">
+      <div *ngFor="let item of selectedsqaItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeSQAItem(item)">✖</span>
+      </div>
+    </div>
+    
+    <div class="select-list">
+      <div *ngFor="let item of selectedProjectTypeItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeProjectTypeItem(item)">✖</span>
+      </div>
+    </div>
+    
+    <div class="select-list">
+      <div *ngFor="let item of selectedDomainItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeDomainItem(item)">✖</span>
+      </div>
+    </div>
+    
+    <div class="select-list">
+      <div *ngFor="let item of selectedDatabaseUsedItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeDatabaseItem(item)">✖</span>
+      </div>
+    </div>
+    
+    <div class="select-list">
+      <div *ngFor="let item of selectedCloudUsedItems" class="select-item">
+        {{ item }}
+        <span class="remove-item" (click)="removeCloudUsedItem(item)">✖</span>
+      </div>
+    </div>
+
   <div class="filter-actions">
-    <button class="btn btn-primary" (click)="onApplyFilters()">Apply Filters</button>
-    <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
+    <button class="btn2" (click)="onApplyFilters()">Apply Filters</button>
+    <button class="btn1" (click)="resetFilters()">Reset</button>
   </div>
+
 </div>

@@ -15,7 +15,6 @@ export class NavbarComponent {
 
   toggleFilters() {
      return this.isDivVisible=!this.isDivVisible;
-    // return true;
   }
 }
 
