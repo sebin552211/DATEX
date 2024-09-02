@@ -12,7 +12,7 @@ import { FilterComponent } from '../filter/filter.component';
 export class NavbarComponent {
   username="ACE Team";
   isDivVisible: boolean = false;
-  
+
   toggleFilters() {
      return this.isDivVisible=!this.isDivVisible;
   }

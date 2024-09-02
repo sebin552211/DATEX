@@ -16,19 +16,12 @@ import { DashboardTableService } from './service/dashboard-table.service';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
-    AnalysisCardComponent,
-    DashboardcardComponent,
-    SidebarComponent,
-    NavbarComponent,
-    DashboardComponent,
-    TableComponent,
-    EditModalComponent,
-    HttpClientModule,
-    ProgressSpinnerModule,
     NgIf,
     NgClass,
-  ],
+    SidebarComponent,
+    NavbarComponent,
+    RouterOutlet
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'], // Corrected 'styleUrl' to 'styleUrls'
 })
@@ -46,7 +39,7 @@ export class AppComponent {
   fetchData() {
     this.dashboardTableService.getProjects().subscribe(
       (data) => {
-        console.log(data); 
+        console.log(data);
         this.isLoading = false;
       },
       (error) => {

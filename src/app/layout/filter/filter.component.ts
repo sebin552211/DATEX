@@ -18,7 +18,7 @@ import { ExportbuttonComponent } from "../../ui/exportbutton/exportbutton.compon
 export class FilterComponent implements OnInit {
 
 
-  
+
 onApplyFilters() {
   // var isdivDivisible = true;
   const params: any = {};
