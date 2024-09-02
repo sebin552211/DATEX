@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class FilterComponent implements OnInit {
 
 
-  
+
 onApplyFilters() {
   const params: any = {};
 
@@ -43,8 +43,8 @@ onApplyFilters() {
   dropdownVisible: { [key: string]: boolean } = {};
   selectedFilters: { [key: string]: string[] } = {};
   filters: Filter = {
-   
-   
+
+
     du: {},
     duHead: {},
     projectStartDate: {},
