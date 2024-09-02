@@ -3,12 +3,13 @@ export interface Filter {
   
         du: { [key: string]: boolean };
         duHead: { [key: string]: boolean };
+        dusAndDuHeads: { [key: string]: boolean };
         projectStartDate: { [key: string]: boolean };
         projectEndDate: { [key: string]: boolean };
         projectManager: { [key: string]: boolean };
         contractType: { [key: string]: boolean };
-        customerName: { [key: string]: boolean };
-        region: { [key: string]: boolean };
+        customerNames: { [key: string]: boolean };
+        regions: { [key: string]: boolean };
         technology: { [key: string]: boolean };
         status: { [key: string]: boolean };
         sqa: { [key: string]: boolean };

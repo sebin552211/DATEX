@@ -31,7 +31,9 @@
     
     .filter-options {
       flex: 0 0 60%; 
-      height:auto;
+      height:3cm;
+      overflow-x: auto;
+      overflow-y: auto; 
       background-color: white;
       width: 4.5cm;
       z-index: 1;
@@ -44,7 +46,7 @@
     
     .filter-option {
       flex: 60%; 
-      width: 3.5cm;
+      width: 4cm;
       margin-bottom: 5px;
       align-items: center;
       margin-right: 10px;
@@ -65,25 +67,22 @@
       width: 200px;
       border-radius: 20px;
       cursor: pointer;
+      position: absolute;
+      bottom: 1cm;
     }
 
     .btn1{
       margin-right: 10px;
       background-color: #000;
-      color: white;
-      position: fixed;      
-      left: 12cm;
-      bottom: 1.5cm;
-
+      color: white;      
+      left: 10cm;
     }
 
     .btn2{
       margin-left: 10px;
       background-color: #D4D4D4;
-      border-color:#D4D4D4 ;
-      position: fixed; 
-      right: 9cm;     
-      bottom: 1.5cm;
+      border-color:#D4D4D4 ;       
+      right: 10cm;     
     }
 
     .filter-option {
@@ -226,5 +225,5 @@
       transform: rotate(45deg);
     }
     
-  
-     
+    
+    

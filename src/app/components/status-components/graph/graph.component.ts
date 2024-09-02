@@ -96,7 +96,6 @@ export class GraphComponent2 implements OnInit {
       plugins: {
         legend: {
       display:false,
-      display:false,
         }
       },
       scales: {
