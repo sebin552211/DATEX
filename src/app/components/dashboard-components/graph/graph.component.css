@@ -3,6 +3,7 @@
   grid-template-columns: repeat(2, 1fr); /* Two columns */
   gap: 20px; /* Space between cards */
   margin-left: 6.5cm; /* Adjust as needed */
+  margin-top: 1cm;
 }
 
 .card {

@@ -9,18 +9,19 @@ import { TableComponent } from './components/status-components/table/table.compo
 import { EditModalComponent } from "./components/dashboard-components/edit-modal/edit-modal.component";
 import { HttpClientModule } from '@angular/common/http';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { DashboardTableService } from './service/dashboard-table.service';
+import { FilterComponent } from "./layout/filter/filter.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    NgIf,
-    NgClass,
+    CommonModule,
     SidebarComponent,
     NavbarComponent,
-    RouterOutlet
+    RouterOutlet,
+    FilterComponent
 ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'], // Corrected 'styleUrl' to 'styleUrls'
