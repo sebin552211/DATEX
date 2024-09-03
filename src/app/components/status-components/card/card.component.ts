@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
@@ -9,7 +9,7 @@ import { startOfMonth, endOfMonth } from 'date-fns';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [NgForOf, NgIf],
+  imports: [CommonModule],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })

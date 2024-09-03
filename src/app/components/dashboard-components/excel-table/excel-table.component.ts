@@ -2,12 +2,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { ExcelService } from '../../../service/excel.service';
 import { ExcelRow } from '../../../interface/excel-row';
-import { NgFor, NgIf, CommonModule } from '@angular/common';
+import {  CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-excel-table',
   standalone: true,
-  imports: [NgFor, NgIf, CommonModule],
+  imports: [ CommonModule],
   templateUrl: './excel-table.component.html',
   styleUrls: ['./excel-table.component.css']
 })

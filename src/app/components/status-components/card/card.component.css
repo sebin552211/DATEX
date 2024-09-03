@@ -22,7 +22,7 @@
   display: flex;
   justify-content: space-between;
 
- 
+
 }
 
 .maincard1, .maincard2, .maincard3 {
@@ -87,7 +87,7 @@
 }
 
 .cardtext {
-  font-size: 16px;
+  font-size: 14px;
   color: #4079ED;
   font-weight:700px;
   font-family: 'Poppins', sans-serif;
