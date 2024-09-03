@@ -4,12 +4,11 @@
   background-color:#DC123C;
   position: fixed;
   top: 0; /* Align to the top of the viewport */
-  left: 240px; /* Align to the left edge */
+  left: 228px; /* Align to the left edge */
   width: 100%; /* Full width minus the sidebar */
   height: 1.3cm;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   z-index:1;
-  border-radius: 5px;
 }
 
 i{
