@@ -3,6 +3,7 @@
   grid-template-columns: repeat(2, 1fr); /* Two columns */
   gap: 20px; /* Space between cards */
   margin-left: 6.5cm; /* Adjust as needed */
+  margin-top: 1cm;
 }
 
 .card {
@@ -16,6 +17,7 @@
   align-items: center;
   overflow: hidden; /* Hide overflow content */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 400px;
 
 }
 .graph_dashboard > .card_1,
@@ -23,12 +25,24 @@
   grid-column: span 2; /* Make these cards span across both columns */
 }
 
+/* Styling for cards when data length <= 5 */
+.single-line {
+  grid-column: span 1; /* Make cards fit in one line */
+}
+
+/* Specific styling for the first two cards when they should align in one line */
+.graph_dashboard > .card_1.single-line,
+.graph_dashboard > .card_2.single-line {
+  grid-column: span 1; /* Each card spans one column */
+}
+
+
+
 ::ng-deep canvas {
   width: 8cm;
   height: auto;
-  max-height: 5cm; /* Adjust height to fit content */
+  max-height: 4.5cm; /* Adjust height to fit content */
 }
-
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -50,6 +64,13 @@ p-chart {
 
 }
 
+
+.chart-container {
+  flex: 1 1 400px; /* Flex-grow, flex-shrink, and minimum width */
+  max-width: 48%; /* To make sure two charts fit in one row */
+}
+
+
 /* Styling for bar charts */
 .card p-chart[type="bar"] {
   max-height: 300px; /* Adjust the max height as needed */
@@ -64,5 +85,4 @@ p-chart {
   max-height: 300px;
 
 }
-
 

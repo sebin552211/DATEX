@@ -3,9 +3,9 @@
   flex-wrap: wrap;
   gap: 20px; /* Space between cards */
   margin-left: 6.5cm;
-
+ 
 }
-
+ 
 .card {
   flex: 1 1 calc(50% - 20px); /* Two cards per row with spacing */
   box-sizing: border-box;
@@ -19,20 +19,21 @@
   overflow: hidden;
   max-width: 100%; /* Ensure cards fit within the row */
   height: auto; /* Adjusted to fit the content height */
-
+   min-width: 300px;
+ 
 }
-
+ 
 .card-header{
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-
+ 
 }
 .card-header input[type="checkbox"] {
   margin-left: 60px;
   cursor: pointer;
-
+ 
 }
 p-chart {
   width: 100%;
@@ -40,13 +41,19 @@ p-chart {
   height: auto;
  
 }
-
+ 
+::ng-deep canvas {
+  width: 8vw;
+ 
+}
+ 
 /* Styling for bar charts */
 .card p-chart[type="bar"] {
-  max-height: 300px; /* Adjust the max height as needed */
-
+  max-height: 300px;
+   width: 80vw; /* Adjust the max height as needed */
+ 
 }
-
+ 
 /* Styling for pie charts */
 .card p-chart[type="pie"] {
   width: 80%; /* Adjust size of pie chart to fit within the card */
@@ -55,9 +62,9 @@ p-chart {
   max-height: 300px; /* Adjust max height if needed */
  
 }
-
+ 
 /* Styling for line charts */
 .card p-chart[type="line"] {
   max-height: 300px; /* Adjust the max height as needed */
-
+ 
 }

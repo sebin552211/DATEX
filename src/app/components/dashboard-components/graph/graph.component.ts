@@ -3,6 +3,9 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
+import { SharedDataService } from '../../../service/shared-data.service';
+import { DashboardTable } from '../../../interface/dashboard-table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-graph1',
@@ -37,15 +40,23 @@ export class GraphComponent implements OnInit {
   textColor!: string;
   textColorSecondary!: string;
   surfaceBorder!: string;
+  projects: DashboardTable[] = [];
+  private projectsSubscription: Subscription | undefined;
 
-  constructor(private dashboardTableService: DashboardTableService) {}
+  constructor(private dashboardTableService: DashboardTableService,  private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
-    this.dashboardTableService.getProjects().subscribe(projects => {
+
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
+      console.log('Projects response:', projects);
+      console.log('Type of response:', typeof projects);
+
       if (!Array.isArray(projects)) {
         console.error('Expected projects to be an array.');
         return;
       }
+
+
 
 
   const technologyCounts = this.calculateTechnologyCounts(projects);
@@ -103,6 +114,11 @@ const predefinedColors = [
       // Determine colors based on the number of technologies
       const backgroundColors = predefinedColors.slice(0, labels.length);
       const borderColors = backgroundColors.map(color => this.shadeColor(color, -20)); // Darker shade for border
+
+
+
+
+
 
       // Update BarGraph1 data dynamically
       this.basicData1 = this.getBarChartData(
@@ -166,21 +182,6 @@ const predefinedColors = [
             this.basicOptions4 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Customer Name', 'Project Count');
 
     });
-
-    // Static data for other bar graphs and pie charts
-
-
-
-
-
-
-    // this.basicOptions1 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Technology', 'Count');
-    // this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Categories', 'Count');
-    // this.basicOptions3 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Client Projects', 'Count');
-    // this.basicOptions4 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Client Support Projects', 'Count');
-
-
-
 
     this.pieOptions = this.getPieChartOptions(this.textColor);
   }
@@ -269,10 +270,6 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
   return customerProjectCounts;
 }
 
-
-
-
-
   // Method to create a darker or lighter shade of a color
   private shadeColor(color: string, percent: number): string {
     const [r, g, b] = color.match(/\d+/g)!.map(Number);
@@ -286,7 +283,8 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
       labels: labels,
       datasets: [
         {
-         
+
+
           data: data,
           backgroundColor: backgroundColor,
           borderColor: borderColor,
@@ -301,7 +299,9 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
       plugins: {
         legend: {
           display:false,
-
+          labels: {
+            color: textColor,
+          },
         },
       },
       scales: {
@@ -384,4 +384,20 @@ private getCustomerCountsForClosingProjects(projects: any[]): { [key: string]: n
   togglePieChart4() {
     this.showPieChart4 = !this.showPieChart4;
   }
+
+  calculateChartWidth(dataCount: number | null): string {
+    const defaultWidth = 950; // Default width in pixels
+    const baseWidth = 350; // Base width in pixels
+    const extraWidthPerData = 50; // Extra width per data point
+
+    // If no data count is provided, use the default width
+    if (dataCount === null || dataCount === 0) {
+      return `${defaultWidth}px`;
+    }
+
+    // Calculate the final width based on data count
+    const finalWidth = baseWidth + (dataCount * extraWidthPerData);
+    return `${finalWidth}px`;
+  }
+
 }

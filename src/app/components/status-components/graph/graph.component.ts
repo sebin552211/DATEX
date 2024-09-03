@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { HttpClient } from '@angular/common/http';
+import { DashboardTable } from '../../../interface/dashboard-table';
+import { Subscription } from 'rxjs';
+import { SharedDataService } from '../../../service/shared-data.service';
 
 @Component({
   selector: 'app-graph2',
@@ -18,12 +21,15 @@ export class GraphComponent2 implements OnInit {
   pieChartData: any;
   pieChartOptions: any;
   showPieChart = false;
+  projects: DashboardTable[] = [];
+  private projectsSubscription: Subscription | undefined;
 
   lineChartData: any = {
     labels: ['DTS', 'ESS0', 'PES'],
     datasets: [
       {
-       
+
+
         data: [0.26, 0.67, 0.67],
         fill: false,
         borderColor: '#36A2EB',
@@ -76,7 +82,7 @@ export class GraphComponent2 implements OnInit {
     }
   };
 
-  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef,private sharedDataService: SharedDataService) {}
 
   ngOnInit() {
     this.getVOCMetrics();
@@ -146,7 +152,7 @@ export class GraphComponent2 implements OnInit {
   }
 
   getVOCMetrics() {
-    this.dashboardService.getProjects().subscribe((projects) => {
+    this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects =>{
       const eligible = projects.filter(p => p.vocEligibilityDate !== null).length;
       const initiated = projects.filter(p => p.mailStatus === 'Sent').length;
       const received = projects.filter(p => p.feedbackStatus === 'Received').length;
@@ -201,3 +207,4 @@ export class GraphComponent2 implements OnInit {
     this.showPieChart = !this.showPieChart;
   }
 }
+
