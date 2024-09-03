@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Component } from '@angular/core';
 import { FilterComponent } from '../filter/filter.component';
 import { MenuItem } from 'primeng/api';
@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NgIf, FilterComponent,RouterLink],
+  imports: [CommonModule, FilterComponent,RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

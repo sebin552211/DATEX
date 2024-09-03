@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-dashboardcard',
   standalone: true,
-  imports: [NgForOf, NgIf],
+  imports: [CommonModule],
   templateUrl: './Dashboardcard.component.html',
   styleUrls: ['./Dashboardcard.component.css'] // Corrected `styleUrl` to `styleUrls`
 })
