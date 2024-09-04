@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  User='User';
   items: MenuItem[] | undefined;
   ngOnInit() {
     this.items = [

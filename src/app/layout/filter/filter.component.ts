@@ -37,14 +37,9 @@ onApplyFilters() {
   });
 
 }
-
-
-
   dropdownVisible: { [key: string]: boolean } = {};
   selectedFilters: { [key: string]: string[] } = {};
   filters: Filter = {
-
-
     du: {},
     duHead: {},
     projectStartDate: {},
