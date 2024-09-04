@@ -77,7 +77,7 @@ margin-top: 1.3cm;
 /* Floating label styles */
 .filter-label {
   position: absolute;
-  top: 10px; /* Adjusted position */
+  top: 10px;
   left: 10px;
   font-size: 0.75rem;
 
@@ -96,6 +96,7 @@ margin-top: 1.3cm;
   background-color: white;
   padding: 0 5px;
   left: 15px;
+  z-index:1;
 }
 
 .selected-value {
