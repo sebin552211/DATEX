@@ -4,6 +4,8 @@ import { Filter } from '../../interface/filter';
 import { DashboardTableService } from '../../service/dashboard-table.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DashboardFilterService } from '../../service/dashboard-filter-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-filter',
@@ -15,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class FilterComponent implements OnInit {
 
 
-
+  private filterSelectionSubscription: Subscription | undefined;
 onApplyFilters() {
   const params: any = {};
 
@@ -37,14 +39,9 @@ onApplyFilters() {
   });
 
 }
-
-
-
   dropdownVisible: { [key: string]: boolean } = {};
   selectedFilters: { [key: string]: string[] } = {};
   filters: Filter = {
-
-
     du: {},
     duHead: {},
     projectStartDate: {},
@@ -97,14 +94,27 @@ onApplyFilters() {
 
     private projectData: any[] = [];
 
-  constructor(private http: HttpClient, private dashboardTableService: DashboardTableService) {}
+  constructor(private http: HttpClient, private dashboardTableService: DashboardTableService ,private dashboardFilterService: DashboardFilterService) {}
 
   ngOnInit() {
     this.dashboardTableService.getProjects().subscribe((projects) => {
       this.updateFilterOptions(projects);
     });
+    this.filterSelectionSubscription = this.dashboardFilterService.filterSelection$.subscribe(
+      ({ filterKey, value }) => {
+        this.selectFilterOption(filterKey, value);
+        this.applyFilters();
+      }
+    );
   }
-
+  selectFilterOption(filterKey: string, value: string): void {
+    if (!this.selectedFilters[filterKey]) {
+      this.selectedFilters[filterKey] = [];
+    }
+    if (!this.selectedFilters[filterKey].includes(value)) {
+      this.selectedFilters[filterKey].push(value);
+    }
+  }
   getDistinctValues(projects: any[], key: string): string[] {
     return [...new Set(projects.map(project => project[key]))];
   }
@@ -376,26 +386,61 @@ getSelectedCloudUsed(): string | null {
         console.log('Filtered project data:', this.projectData);
         this.updateFilterOptions(response);
       });
+
+      this.onApplyFilters();
   }
 
   updateFilterOptions(projects: any[]): void {
-    this.statuses = this.getDistinctValues(projects, 'status');
-    this.contractTypes = this.getDistinctValues(projects, 'contractType');
-    this.dusAndDuHeads = this.getMappedDuAndDuHeads(projects);
-    this.regions = this.getDistinctValues(projects, 'region');
-    this.customerNames = this.getDistinctValues(projects, 'customerName');
-    this.technologies = this.getDistinctValues(projects, 'technology');
-    this.projectStartDates = this.getDistinctValues(projects, 'projectStartDate');
-    this.projectEndDates = this.getDistinctValues(projects, 'projectEndDate');
-    this.projectManagers = this.getDistinctValues(projects, 'projectManager');
-    this.sqas = this.getDistinctValues(projects, 'sqa');
-    this.projectTypes = this.getDistinctValues(projects, 'projectType');
-    this.domains = this.getDistinctValues(projects, 'domain');
-    this.databasesUsed = this.getDistinctValues(projects, 'databaseUsed');
-    this.cloudsUsed = this.getDistinctValues(projects, 'cloudUsed');
+    // Helper function to get distinct values, excluding null or empty strings
+    const getNonNullDistinctValues = (projects: any[], key: string): string[] => {
+      return [...new Set(projects.map(project => project[key]).filter(value => value !== null && value !== ''))];
+    };
+
+    // Helper function to map DU and DU Heads, excluding null values
+    const getMappedDuAndDuHeads = (projects: any[]): string[] => {
+      const duMap: { [key: string]: Set<string> } = {};
+
+      projects.forEach(project => {
+        const du = project['du'];
+        const duHead = project['duHead'];
+
+        if (du && duHead) {
+          if (!duMap[du]) {
+            duMap[du] = new Set();
+          }
+          duMap[du].add(duHead);
+        }
+      });
+
+      const mappedValues: string[] = [];
+
+      Object.keys(duMap).forEach(du => {
+        duMap[du].forEach(duHead => {
+          mappedValues.push(`${du} - ${duHead}`);
+        });
+      });
+
+      return mappedValues;
+    };
+
+    this.statuses = getNonNullDistinctValues(projects, 'status');
+    this.contractTypes = getNonNullDistinctValues(projects, 'contractType');
+    this.dusAndDuHeads = getMappedDuAndDuHeads(projects);
+    this.regions = getNonNullDistinctValues(projects, 'region');
+    this.customerNames = getNonNullDistinctValues(projects, 'customerName');
+    this.technologies = getNonNullDistinctValues(projects, 'technology');
+    this.projectStartDates = getNonNullDistinctValues(projects, 'projectStartDate');
+    this.projectEndDates = getNonNullDistinctValues(projects, 'projectEndDate');
+    this.projectManagers = getNonNullDistinctValues(projects, 'projectManager');
+    this.sqas = getNonNullDistinctValues(projects, 'sqa');
+    this.projectTypes = getNonNullDistinctValues(projects, 'projectType');
+    this.domains = getNonNullDistinctValues(projects, 'domain');
+    this.databasesUsed = getNonNullDistinctValues(projects, 'databaseUsed');
+    this.cloudsUsed = getNonNullDistinctValues(projects, 'cloudUsed');
 
     this.dropdownVisible = {};
   }
+
 
 // Method to check if a specific status is selected
 

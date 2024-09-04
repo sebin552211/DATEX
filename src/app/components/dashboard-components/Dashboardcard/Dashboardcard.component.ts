@@ -4,6 +4,7 @@ import { DashboardTable } from '../../../interface/dashboard-table';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
+import { DashboardFilterService } from '../../../service/dashboard-filter-service.service';
 
 @Component({
   selector: 'app-dashboardcard',
@@ -15,11 +16,12 @@ import { Subscription } from 'rxjs';
 export class DashboardcardComponent implements OnInit, OnDestroy {
   private projectsSubscription: Subscription | undefined;
 
-  cards: { numberText: string; cardText: string; checkboxes: boolean[] }[] = [];
+  cards: { numberText: string; cardText: string; checkboxes: boolean[];filterKey: string; filterValue: string  }[] = [];
 
   constructor(
     private dashboardTableService: DashboardTableService,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private dashboardFilterService: DashboardFilterService
   ) {}
 
   ngOnInit(): void {
@@ -54,17 +56,24 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
           {
             numberText: activeProjects.toString(),
             cardText: 'Active Projects',
-            checkboxes: Array(7).fill(false)
+            checkboxes: Array(7).fill(false),
+            filterKey: 'status',
+            filterValue: 'Ongoing'
+           
           },
           {
             numberText: activeFPProjects.toString(),
             cardText: 'Fixed Price Projects',
-            checkboxes: Array(7).fill(false)
+            checkboxes: Array(7).fill(false),
+            filterKey: 'contractType',
+            filterValue: 'Fixed Price'
           },
           {
             numberText: activeTMProjects.toString(),
             cardText: 'Time & Material Projects',
-            checkboxes: Array(7).fill(false)
+            checkboxes: Array(7).fill(false),
+             filterKey: 'contractType',
+            filterValue: 'Time & Material'
           }
         ];
       },
@@ -72,5 +81,8 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
         console.error('Error fetching projects:', error);
       }
     );
+  }
+  onCardClick(card: { filterKey: string; filterValue: string }) {
+    this.dashboardFilterService.selectFilter(card.filterKey, card.filterValue);
   }
 }
