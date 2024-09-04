@@ -4,15 +4,24 @@ body {
   background-color: #f0f0f0;
   padding: 20px;
 }
+#image{
+  top: 3px;
+  left: 30px;
+  position: fixed;
+  height: 43px;
+  width: 150px;
+}
+
 
 /* Filter sidebar styles */
 .filters {
-margin-top: 1.3cm;
+
   width: 6cm; /* Adjust as needed */
   position: fixed;
-  height: 95vh;
-  top: 0;
+  height: 100vh;
+  top: 50px;
   left: 0;
+  background-color:rgb(203, 203, 203);
   z-index: 2;
   overflow-y: auto;
   display: flex;
