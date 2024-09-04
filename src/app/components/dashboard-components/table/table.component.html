@@ -50,18 +50,35 @@
           <th *ngFor="let col of selectedColumns">{{ col.header }}</th>
         </tr>
       </thead>
-      <tbody>
+         <tbody>
         <tr class="custom-row" *ngFor="let project of projects">
           <td class="fixed-column project-code">
             <i class="fa-solid fa-pen custom-icon" (click)="openModal(project)"></i>
             {{ project.projectCode }}
           </td>
-          <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">{{ project.projectName }}</td>
-          <td *ngFor="let col of selectedColumns" [ngClass]="{
-            'green-background': project[col.field] === 'Mail Initiated' || project[col.field] === 'Received',
-            'red-background': project[col.field] !== 'Mail Initiated' && project[col.field] !== 'Received'
-          }">
-            {{ project[col.field] }}
+          <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">
+            {{ project.projectName }}
+          </td>
+          <td *ngFor="let col of selectedColumns">
+            <!-- Check if the column is a date field and format it -->
+            <span *ngIf="col.field === 'projectStartDate' || col.field === 'projectEndDate' || col.field === 'forecastedEndDate' || col.field === 'vocEligibilityDate'">
+              {{ project[col.field] | date: 'yyyy-MM-dd' }}
+            </span>
+
+            <!-- Handle specific statuses -->
+            <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
+              [ngClass]="{
+                'status-badge1': project[col.field] === 'Sent' || project[col.field] === 'Received',
+                'status-badge': project[col.field] !== 'Sent' && project[col.field] !== 'Received'
+              }">
+              {{ project[col.field] }}
+            </span>
+
+            <!-- Display other fields without changes -->
+            <span *ngIf="col.field !== 'mailStatus' && col.field !== 'feedbackStatus' && 
+            col.field !== 'projectStartDate' && col.field !== 'projectEndDate' && col.field !== 'forecastedEndDate' && col.field !== 'vocEligibilityDate'">
+              {{ project[col.field] }}
+            </span>
           </td>
         </tr>
       </tbody>
