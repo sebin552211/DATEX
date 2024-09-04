@@ -39,14 +39,9 @@ onApplyFilters() {
   });
 
 }
-
-
-
   dropdownVisible: { [key: string]: boolean } = {};
   selectedFilters: { [key: string]: string[] } = {};
   filters: Filter = {
-
-
     du: {},
     duHead: {},
     projectStartDate: {},
@@ -396,23 +391,56 @@ getSelectedCloudUsed(): string | null {
   }
 
   updateFilterOptions(projects: any[]): void {
-    this.statuses = this.getDistinctValues(projects, 'status');
-    this.contractTypes = this.getDistinctValues(projects, 'contractType');
-    this.dusAndDuHeads = this.getMappedDuAndDuHeads(projects);
-    this.regions = this.getDistinctValues(projects, 'region');
-    this.customerNames = this.getDistinctValues(projects, 'customerName');
-    this.technologies = this.getDistinctValues(projects, 'technology');
-    this.projectStartDates = this.getDistinctValues(projects, 'projectStartDate');
-    this.projectEndDates = this.getDistinctValues(projects, 'projectEndDate');
-    this.projectManagers = this.getDistinctValues(projects, 'projectManager');
-    this.sqas = this.getDistinctValues(projects, 'sqa');
-    this.projectTypes = this.getDistinctValues(projects, 'projectType');
-    this.domains = this.getDistinctValues(projects, 'domain');
-    this.databasesUsed = this.getDistinctValues(projects, 'databaseUsed');
-    this.cloudsUsed = this.getDistinctValues(projects, 'cloudUsed');
+    // Helper function to get distinct values, excluding null or empty strings
+    const getNonNullDistinctValues = (projects: any[], key: string): string[] => {
+      return [...new Set(projects.map(project => project[key]).filter(value => value !== null && value !== ''))];
+    };
+
+    // Helper function to map DU and DU Heads, excluding null values
+    const getMappedDuAndDuHeads = (projects: any[]): string[] => {
+      const duMap: { [key: string]: Set<string> } = {};
+
+      projects.forEach(project => {
+        const du = project['du'];
+        const duHead = project['duHead'];
+
+        if (du && duHead) {
+          if (!duMap[du]) {
+            duMap[du] = new Set();
+          }
+          duMap[du].add(duHead);
+        }
+      });
+
+      const mappedValues: string[] = [];
+
+      Object.keys(duMap).forEach(du => {
+        duMap[du].forEach(duHead => {
+          mappedValues.push(`${du} - ${duHead}`);
+        });
+      });
+
+      return mappedValues;
+    };
+
+    this.statuses = getNonNullDistinctValues(projects, 'status');
+    this.contractTypes = getNonNullDistinctValues(projects, 'contractType');
+    this.dusAndDuHeads = getMappedDuAndDuHeads(projects);
+    this.regions = getNonNullDistinctValues(projects, 'region');
+    this.customerNames = getNonNullDistinctValues(projects, 'customerName');
+    this.technologies = getNonNullDistinctValues(projects, 'technology');
+    this.projectStartDates = getNonNullDistinctValues(projects, 'projectStartDate');
+    this.projectEndDates = getNonNullDistinctValues(projects, 'projectEndDate');
+    this.projectManagers = getNonNullDistinctValues(projects, 'projectManager');
+    this.sqas = getNonNullDistinctValues(projects, 'sqa');
+    this.projectTypes = getNonNullDistinctValues(projects, 'projectType');
+    this.domains = getNonNullDistinctValues(projects, 'domain');
+    this.databasesUsed = getNonNullDistinctValues(projects, 'databaseUsed');
+    this.cloudsUsed = getNonNullDistinctValues(projects, 'cloudUsed');
 
     this.dropdownVisible = {};
   }
+
 
 // Method to check if a specific status is selected
 
