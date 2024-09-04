@@ -391,6 +391,8 @@ getSelectedCloudUsed(): string | null {
         console.log('Filtered project data:', this.projectData);
         this.updateFilterOptions(response);
       });
+
+      this.onApplyFilters();
   }
 
   updateFilterOptions(projects: any[]): void {
