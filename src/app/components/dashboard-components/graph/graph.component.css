@@ -36,7 +36,10 @@
   grid-column: span 1; /* Each card spans one column */
 }
 
-
+.graph_dashboard > .card_3,
+.graph_dashboard > .card_4{
+  grid-column: span 2;
+}
 
 ::ng-deep canvas {
   width: 8cm;

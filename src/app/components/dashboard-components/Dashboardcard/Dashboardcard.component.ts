@@ -37,17 +37,17 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(
       projects => {
         const activeProjects = projects.filter(
-          project => project.status === 'Ongoing'
+          project => project.status === 'Active'
         ).length;
 
         const activeFPProjects = projects.filter(
           project =>
-            project.status === 'Ongoing' && project.contractType === 'Fixed Price'
+             project.contractType === 'FP'
         ).length;
 
         const activeTMProjects = projects.filter(
           project =>
-            project.status === 'Ongoing' && project.contractType === 'Time & Material'
+             project.contractType === 'T&M'
         ).length;
 
         this.cards = [

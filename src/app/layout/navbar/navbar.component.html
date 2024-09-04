@@ -3,7 +3,7 @@
         <div class="nav-link dashboard1" style="margin-left: 80px;"
         (click)="selectDashboard()"
         [class.selected]="isDashboardSelected">
-          <a routerLink="/" >
+          <a routerLink="/app/dashboard" >
             <p class="dashboard" style="color:white;">
               <i class="fa-sharp-duotone fa-solid fa-chart-pie" style="margin-right: 10px; color:white;"></i>
               Dashboard
@@ -13,7 +13,7 @@
         <div class="nav-link status1"
         (click)="selectVocStatus() "
         [class.selected]="isVocStatusSelected">
-          <a routerLink="/voc-status">
+          <a routerLink="/app/voc-status">
             <p class="status" style="color:white;">
               <i class="fa-solid fa-chart-simple" style="margin-right: 10px;" ></i>
               VOC Status
@@ -23,7 +23,7 @@
         <div class="nav-link analysis1"
         (click)="selectVocAnalysis()"
           [class.selected]="isVocAnalysisSelected">
-          <a routerLink="/voc-analysis" >
+          <a routerLink="/app/voc-analysis" >
             <p class="analysis" style="color:white;">
               <i class="fa-solid fa-chart-line" style="margin-right: 10px;"></i>
               VOC Analysis

@@ -86,15 +86,11 @@ export class DashboardTableService {
   getLocalProjects(): Observable<DashboardTable[]> {
     return this.projectsData.asObservable(); // Return locally stored data as observable
   }
-  // Method to update projects
-  updateProjects(projectData: ExcelRow): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    return this.http.post(`${this.apiUrl}/update`, projectData, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
+  updateProjects(data: ExcelRow[]): Observable<any> {
+    return this.http.post(this.apiUrl + '/update', data);
   }
+  
+  
 
   // Error handling
   private handleError(error: HttpErrorResponse): Observable<never> {
