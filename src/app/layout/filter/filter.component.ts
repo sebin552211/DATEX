@@ -4,6 +4,8 @@ import { Filter } from '../../interface/filter';
 import { DashboardTableService } from '../../service/dashboard-table.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DashboardFilterService } from '../../service/dashboard-filter-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-filter',
@@ -15,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class FilterComponent implements OnInit {
 
 
-
+  private filterSelectionSubscription: Subscription | undefined;
 onApplyFilters() {
   const params: any = {};
 
@@ -97,14 +99,27 @@ onApplyFilters() {
 
     private projectData: any[] = [];
 
-  constructor(private http: HttpClient, private dashboardTableService: DashboardTableService) {}
+  constructor(private http: HttpClient, private dashboardTableService: DashboardTableService ,private dashboardFilterService: DashboardFilterService) {}
 
   ngOnInit() {
     this.dashboardTableService.getProjects().subscribe((projects) => {
       this.updateFilterOptions(projects);
     });
+    this.filterSelectionSubscription = this.dashboardFilterService.filterSelection$.subscribe(
+      ({ filterKey, value }) => {
+        this.selectFilterOption(filterKey, value);
+        this.applyFilters();
+      }
+    );
   }
-
+  selectFilterOption(filterKey: string, value: string): void {
+    if (!this.selectedFilters[filterKey]) {
+      this.selectedFilters[filterKey] = [];
+    }
+    if (!this.selectedFilters[filterKey].includes(value)) {
+      this.selectedFilters[filterKey].push(value);
+    }
+  }
   getDistinctValues(projects: any[], key: string): string[] {
     return [...new Set(projects.map(project => project[key]))];
   }

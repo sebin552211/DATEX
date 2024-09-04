@@ -18,10 +18,10 @@ body {
 
   width: 6cm; /* Adjust as needed */
   position: fixed;
-  height: 100vh;
+  height: 93vh;
   top: 50px;
   left: 0;
-  background-color:rgb(203, 203, 203);
+  background-color:#EFF1F3;
   z-index: 2;
   overflow-y: auto;
   display: flex;
