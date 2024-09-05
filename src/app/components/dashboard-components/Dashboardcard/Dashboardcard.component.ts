@@ -58,7 +58,7 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
             cardText: 'Active Projects',
             checkboxes: Array(7).fill(false),
             filterKey: 'status',
-            filterValue: 'Ongoing'
+            filterValue: 'Active'
            
           },
           {
@@ -66,14 +66,14 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
             cardText: 'Fixed Price Projects',
             checkboxes: Array(7).fill(false),
             filterKey: 'contractType',
-            filterValue: 'Fixed Price'
+            filterValue: 'FP'
           },
           {
             numberText: activeTMProjects.toString(),
             cardText: 'Time & Material Projects',
             checkboxes: Array(7).fill(false),
              filterKey: 'contractType',
-            filterValue: 'Time & Material'
+            filterValue: 'T&M'
           }
         ];
       },

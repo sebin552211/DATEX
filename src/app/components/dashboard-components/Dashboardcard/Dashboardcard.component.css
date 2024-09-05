@@ -31,6 +31,7 @@
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     width: 30%;
+    cursor: pointer;
   }
 
   .maincard1 {
@@ -44,7 +45,7 @@
   .maincard3 {
     background-color: #DCFCE7;
   }
-  /* .maincard1:hover {
+  .maincard1:hover {
     background-color: #fdb9b9;
   }
   .maincard2:hover {
@@ -52,7 +53,7 @@
   }
   .maincard3:hover {
     background-color: #ccffd1;
-  } */
+  }
   .ca {
     display: flex;
     align-items: center;
@@ -91,9 +92,9 @@
     font-weight:700px;
     font-family: 'Poppins', sans-serif;
   }
-  /* .maincard1:hover, .maincard2:hover, .maincard3:hover
+  .maincard1:hover, .maincard2:hover, .maincard3:hover
   {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
     transition: all 0.2s ease-in-out;
-  } */
+  }

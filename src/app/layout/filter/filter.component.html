@@ -2,13 +2,15 @@
 <div class="filters">
 
   <div class="filter-container">
-  <h2 class="filter-heading">Filters</h2>
-    <!-- Buttons to apply or reset filters -->
+    <!-- Funnel icon next to the Filter heading -->
+    <h2 class="filter-heading">
+      <i class="fa fa-filter filter-icon"></i> Filters
+    </h2>
+    <!-- Reset button aligned to the filter option box -->
     <div class="filter-actions">
-      <!-- <button class="btn btn-primary" (click)="resetFilters()">Reset</button> -->
       <i class="fa-solid fa-undo custom-icon" (click)="resetFilters()"></i>
     </div>
-    </div>
+  </div>
      <!-- Status Filter -->
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('status')">
