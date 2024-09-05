@@ -1,4 +1,3 @@
-/* General styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
@@ -11,11 +10,11 @@ body {
   height: 43px;
   width: 150px;
 }
-
-
+ 
+ 
 /* Filter sidebar styles */
 .filters {
-
+ 
   width: 6cm; /* Adjust as needed */
   position: fixed;
   height: 93vh;
@@ -31,33 +30,37 @@ body {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column; /* Add a slight shadow */
-}
-
-.filter-heading {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
-
-  font-size: 1.3rem;
-  margin-bottom: 20px;
+  flex-direction: column; /* Add a slight shadow */
+}
+ 
+.filter-heading {
+  
+ display: flex;
+  font-size: 1rem;
+  /* margin-bottom: 20px; */
   color: #333; /* Darker text color */
   text-align: center; /* Centered heading */
 }
 .filter-container
 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+ 
+ 
   margin-bottom: 10px;
   display: flex;
+  
+
   gap:60px
 }
-
+ 
 /* Dropdown styles */
 .dropdown {
   position: relative;
   width: 100%; /* Full width of the sidebar */
   margin-bottom: 15px; /* Add margin between dropdowns */
 }
-
+ 
 /* Button styles */
 .btn-secondary {
   width: 100%; /* Full width of the parent container */
@@ -75,7 +78,7 @@ body {
   align-items: center;
   font-size: 0.875rem; /* Adjusted font size */
 }
-
+ 
 .btn-secondary::after {
   content: '\25BC';
   position: absolute;
@@ -85,19 +88,19 @@ body {
   font-size: 0.55em;
   color: #86888a;
 }
-
+ 
 .btn-secondary:hover,
 .btn-secondary:focus {
   border-color: #DC123C;
 }
-
+ 
 /* Floating label styles */
 .filter-label {
   position: absolute;
   top: 10px;
   left: 10px;
   font-size: 0.75rem;
-
+ 
   color: #495057;
   background: #fff;
   padding: 0 0.25rem;
@@ -105,7 +108,7 @@ body {
   transition: all 0.3s ease;
   pointer-events: none;
 }
-
+ 
 .filter-label.floating {
   top: -10px;
   font-size: 12px;
@@ -115,12 +118,12 @@ body {
   left: 15px;
   z-index:1;
 }
-
+ 
 .selected-value {
   margin-left: 1rem;
   color: #333;
 }
-
+ 
 /* Dropdown menu styles */
 .dropdown-menu {
   position: absolute;
@@ -136,7 +139,7 @@ body {
   z-index: 1000;
   padding: 5px; /* Reduced padding */
 }
-
+ 
 /* Checkbox container styles */
 .floating-label-container {
   display: flex;
@@ -144,32 +147,33 @@ body {
   margin-bottom: 10px; /* Margin between checkboxes */
   font-size: 0.75rem; /* Smaller font size */
 }
-
+ 
 /* Checkbox styles */
 .floating-label-container input[type="checkbox"] {
   margin-right: 10px;
 }
-
+ 
 .floating-label-container span {
   font-size: 0.75rem; /* Adjusted font size */
 }
-
+ 
 /* Filter actions styles */
 .filter-actions {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 23px; /* Reduced margin */
   gap: 10px;
 }
-
+ 
 .filter-button:hover {
   background-color:#ccffd1 ; /* Darker blue on hover */
   color: #3CD856;
 }
-
-
-
+ 
+ 
+ 
 .filter-button {
   background-color: #DC123C;
   color: white;
@@ -182,57 +186,158 @@ body {
   height:fit-content; /* Let height adjust to content */
   line-height: 1.5;
 }
-
+ 
 .btn-primary:hover {
   opacity: 0.8; 
 }
+
 .filter-icon {
   cursor: pointer;
-  /* height: fit-content; */
+  margin-top: 3px;
+  height: fit-content;
   font-size: 13px;
- margin-top: 8px;
- margin-right: 7px;
+ margin-right: 10px;
  height: 1.3rem;
   color: #575252; /* Customize this color as needed */
-  background-color: #f8f9fa; /* Light background color */
+ /* Light background color */
  /* Adjust padding to fit around the icon */
    /* Light border */
   border-radius: 4px; /* Rounded corners */
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
-
+ 
 .custom-icon:hover {
   color: #DC123C; /* Darker color on hover */
   background-color: #e2e6ea; /* Slightly darker background on hover */
   border-color: #ccc; /* Darker border on hover */
 }
-
+ 
 .custom-icon:active {
   color: #004080; /* Even darker color on click */
   background-color: #d6d8db; /* Even darker background on click */
   border-color: #bbb; /* Darker border on click */
 }
-.custom-icon {
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: -17px;
-  margin-left: 8px;
-}
 
+ 
 .dropdown-menu.custom-scrollbar {
   max-height: 200px;
   overflow-y: auto;
 }
-
+ 
 .dropdown-menu.custom-scrollbar::-webkit-scrollbar {
   width: 2px;
 }
-
+ 
 .dropdown-menu.custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #007bff;
   border-radius: 3px;
 }
-
+ 
 .dropdown-menu.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+
+
+
+/* Main filter sidebar styles */
+.filters {
+  width: 6cm;
+  position: fixed;
+  height: 93vh;
+  top: 50px;
+  left: 0;
+  background-color: #EFF1F3;
+  z-index: 2;
+  overflow-y: auto;
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Adjustments for filter heading and icons */
+/* .filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+} */
+
+/* .filter-heading {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #333;
+  margin: 0;
+} */
+
+.custom-icon {
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: -22px;
+  color: #575252;
+  margin-left: 45px;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.btn-secondary {
+  width: 100%;
+  height: 35px;
+  padding: 8px;
+  border: 1.8px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.btn-secondary::after {
+  content: '\25BC';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.55em;
+  color: #86888a;
+}
+
+/* Styling for reset icon hover state */
+.custom-icon:hover {
+  color: #DC123C;
+  background-color: #e2e6ea;
+  border-color: #ccc;
+}
+
+/* Scrollbar customization */
+.filters::-webkit-scrollbar {
+  width: 4px;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background-color: #DC123C;
+  border-radius: 3px;
+}
+
+.filters::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
