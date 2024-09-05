@@ -1,14 +1,15 @@
-
 <div class="filters">
-
+ 
   <div class="filter-container">
-  <h2 class="filter-heading">Filters</h2>
-    <!-- Buttons to apply or reset filters -->
+    <!-- Funnel icon next to the Filter heading -->
+    <h2 class="filter-heading">
+      <i class="fa fa-filter filter-icon"></i> <span style="font-size:1rem;">Filters</span>
+    </h2>
+    <!-- Reset button aligned to the filter option box -->
     <div class="filter-actions">
-      <!-- <button class="btn btn-primary" (click)="resetFilters()">Reset</button> -->
       <i class="fa-solid fa-undo custom-icon" (click)="resetFilters()"></i>
     </div>
-    </div>
+  </div>
      <!-- Status Filter -->
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('status')">
@@ -33,11 +34,11 @@
       </label>
     </div>
   </div>
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
 <!-- Contract Type Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('contractType')">
@@ -62,8 +63,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- DU & DU Head Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('dusAndDuHeads')">
@@ -88,8 +89,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Region Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('region')">
@@ -114,8 +115,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Customer Name Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('customerName')">
@@ -140,8 +141,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Technology Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('technology')">
@@ -166,9 +167,9 @@
     </label>
   </div>
 </div>
-
-
-
+ 
+ 
+ 
 <!-- Project Start Date Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('projectStartDate')">
@@ -193,8 +194,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Project End Date Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('projectEndDate')">
@@ -219,8 +220,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Project Manager Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('projectManager')">
@@ -245,8 +246,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- SQA Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('sqa')">
@@ -271,8 +272,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Project Type Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('projectType')">
@@ -297,9 +298,9 @@
     </label>
   </div>
 </div>
-
-
-
+ 
+ 
+ 
 <!-- Domain Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('domain')">
@@ -324,8 +325,8 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 <!-- Database Used Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('databaseUsed')">
@@ -350,7 +351,7 @@
     </label>
   </div>
 </div>
-
+ 
 <!-- Cloud Used Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('cloudUsed')">
@@ -375,6 +376,6 @@
     </label>
   </div>
 </div>
-
-
+ 
+ 
 </div>
