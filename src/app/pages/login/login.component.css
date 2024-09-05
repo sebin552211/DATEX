@@ -14,21 +14,7 @@
     animation: fadeIn 1s ease-in-out; /* Fade-in animation */
   }
   
-  /* Translucent box to wrap content */
-  .translucent-box {
-    background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
-    padding: 30px; /* Add padding for spacing */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px); /* Optional: Adds a blur effect behind the box */
-    max-width: 400px; /* Optional: Max width to keep content centered */
-    width: 90%; /* Responsive width */
-    margin: 20px auto; /* Center the box */
-  }
+
   
   /* Header section styling */
   .header {
@@ -161,7 +147,6 @@
   .logo {
     width: 200px;
     height: 60px;
-    animation: bounce 2s infinite; /* Add bounce animation */
   }
   
   /* Keyframes for bouncing logo */
