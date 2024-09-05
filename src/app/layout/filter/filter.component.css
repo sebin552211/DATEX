@@ -36,8 +36,8 @@ body {
 }
  
 .filter-heading {
-  display: flex;
- 
+  
+ display: flex;
   font-size: 1rem;
   /* margin-bottom: 20px; */
   color: #333; /* Darker text color */
@@ -45,15 +45,12 @@ body {
 }
 .filter-container
 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+ 
+ 
   margin-bottom: 10px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  display: flex;
+  
+
   gap:60px
 }
  
@@ -193,7 +190,7 @@ body {
 .btn-primary:hover {
   opacity: 0.8; 
 }
-.filter-icon {
+
 .filter-icon {
   cursor: pointer;
   margin-top: 3px;
@@ -262,13 +259,13 @@ body {
 }
 
 /* Adjustments for filter heading and icons */
-.filter-container {
+/* .filter-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-bottom: 10px;
-}
+} */
 
 /* .filter-heading {
   display: flex;
@@ -281,7 +278,7 @@ body {
 .custom-icon {
   font-size: 18px;
   cursor: pointer;
-  margin-top: -20px;
+  margin-top: -22px;
   color: #575252;
   margin-left: 45px;
 }
@@ -343,5 +340,4 @@ body {
 
 .filters::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
 }
