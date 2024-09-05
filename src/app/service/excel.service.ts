@@ -84,4 +84,15 @@ export class ExcelService {
       'Technology'
     ];
   }
+
+ // Method to export data as Excel
+ exportAsExcelFile(json: any[], fileName: string): void {
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+  // Generate and download the Excel file
+  XLSX.writeFile(workbook, `${fileName}.xlsx`);
+}
+
 }
