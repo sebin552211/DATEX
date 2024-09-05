@@ -1,0 +1,20 @@
+<div class="dashboard">
+</div>
+
+<div class="graph-container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Voice of Customer</h3>
+            <input type="checkbox" (change)="togglePieChart()" /> Pie Chart
+        </div>
+        <p-chart *ngIf="!showPieChart" type="bar" [data]="barChartData" [options]="barChartOptions"></p-chart>
+        <p-chart *ngIf="showPieChart" type="pie" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
+    </div>
+
+    <!-- <div class="card">
+        <div class="card-header">
+            <h3>VOC Coverage</h3>
+        </div>
+        <p-chart type="line" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
+    </div> -->
+</div>

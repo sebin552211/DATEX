@@ -1,0 +1,26 @@
+.sidenavbar {
+ 
+  width: 6.2cm;
+  position: fixed;
+  height: 16cm;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+  border-radius: 10px;
+  z-index: 5;
+}
+
+#image{
+  top: 7px;
+  left: 30px;
+  position: fixed;
+  height: 43px;
+  width: 150px;
+}
+

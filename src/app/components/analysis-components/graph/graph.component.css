@@ -1,0 +1,91 @@
+.graph_dashboard {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Two columns layout */
+  grid-template-rows: auto; /* Adjust rows based on content */
+  gap: 20px; /* Space between cards */
+  margin-left: 6.5cm;
+  margin-top: 2.2cm;
+}
+
+.card {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 7.5cm; /* Minimum height to ensure uniformity */
+  height: auto; /* Allow height to adjust based on content */
+
+}
+
+::ng-deep canvas {
+  width: 8cm;
+  height: auto;
+  max-height: 4.5cm; /* Adjust height to fit content */
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-header input[type="checkbox"] {
+  margin-left: 60px;
+  cursor: pointer;
+}
+
+.card_quarter {
+  grid-column: span 1;
+}
+
+p-chart {
+  width: 100%;
+}
+
+.card p-chart[type="bar"] {
+  max-height: 250px;
+}
+
+.card p-chart[type="pie"] {
+  width: 80%;
+  max-width: 450px;
+  height: auto; /* Adjust height to fit the chart content */
+}
+
+.cardnumber {
+  font-size:95px;
+  font-weight: bold;
+  margin-right: 30px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.satisfactorycard {
+  background-color: #FFE2E5;
+}
+
+.cardtext {
+  font-size: 30px;
+  color: #4079ED;
+  margin-top: 30px;
+}
+.score_icon{
+  display: flex;
+ gap:1px;
+
+}
+i {
+  font-size: 75px;
+  color: #ffffff;
+  background-color: #ff6f6f;
+  border-radius: 50%;
+  padding: 25px;
+  margin-left: 30px;
+  margin-top: 10px;
+
+}

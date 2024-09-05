@@ -1,0 +1,23 @@
+<div class="body">
+  <div class="heading">Analytics Overview</div>
+  <div class="maincard">
+    <div
+      *ngFor="let card of cards; let i = index"
+      class="maincard{{ cards.indexOf(card) + 1 }}"
+      (click)="onCardClick(card)"
+      >
+      <div class="ca">
+        <div>
+          <i class="fa-solid fa-note-sticky"></i>
+        </div>
+
+        <div>
+          <p class="numbertext{{ cards.indexOf(card) + 1 }}">
+            {{ card.numberText }}
+          </p>
+          <div class="cardtext">{{ card.cardText }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

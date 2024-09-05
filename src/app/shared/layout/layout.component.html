@@ -1,0 +1,14 @@
+<app-navbar></app-navbar>
+<app-filter></app-filter>
+
+<div [ngClass]="{'blur-content': isLoading}">
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="isLoading" class="spinner-wrapper">
+  <div class="bouncing-loader">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+

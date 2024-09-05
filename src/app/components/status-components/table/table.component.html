@@ -1,1 +1,134 @@
-<p>table works!</p>
+<div class="card">
+  <div class="header">
+    <h2 style="font-family: 'Poppins', sans-serif">Project Details</h2>
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search Project Name"
+        class="search-input"
+        (input)="onSearch()"
+        [(ngModel)]="searchQuery"
+      />
+      <i class="fa fa-search search-icon" (click)="onSearch()"></i>
+    </div>
+    <div class="pagination-container">
+      <button (click)="changePage(pageNumber - 1)" [disabled]="pageNumber === 1">
+        &lt;
+      </button>
+
+      <button *ngFor="let page of paginationArray"
+              [ngClass]="{'active': page === pageNumber}"
+              (click)="changePage(page)">
+        {{ page }}
+      </button>
+
+      <span *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
+        ...
+      </span>
+
+      <button (click)="changePage(totalPages)"
+              *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
+        {{ totalPages }}
+      </button>
+
+      <button (click)="changePage(pageNumber + 1)" [disabled]="pageNumber === totalPages">
+        &gt;
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="custom-table">
+      <thead>
+        <tr class="custom-header">
+          <th class="fixed-column project-code">Project Code</th>
+          <th class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">Project Name</th>
+          <th *ngFor="let col of selectedColumns">{{ col.header }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="custom-row" *ngFor="let project of projects">
+          <td class="fixed-column project-code">
+            <i class="fa-solid fa-pen custom-icon" (click)="openEditModal(project)"></i>
+            {{ project.projectCode }}
+          </td>
+          <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">
+            {{ project.projectName }}
+          </td>
+          <td *ngFor="let col of selectedColumns">
+            <!-- Check if the column is a date field and format it -->
+            <span *ngIf="col.field === 'projectStartDate' || col.field === 'projectEndDate' || col.field === 'forecastedEndDate' || col.field === 'vocEligibilityDate'">
+              {{ project[col.field] | date: 'yyyy-MM-dd' }}
+            </span>
+
+            <!-- Handle specific statuses -->
+            <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
+              [ngClass]="{
+                'status-badge1': project[col.field] === 'Sent' || project[col.field] === 'Received',
+                'status-badge': project[col.field] !== 'Sent' && project[col.field] !== 'Received'
+              }">
+              {{ project[col.field] }}
+            </span>
+
+            <!-- Display other fields without changes -->
+            <span *ngIf="col.field !== 'mailStatus' && col.field !== 'feedbackStatus' && 
+            col.field !== 'projectStartDate' && col.field !== 'projectEndDate' && col.field !== 'forecastedEndDate' && col.field !== 'vocEligibilityDate'">
+              {{ project[col.field] }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="controls">
+    <div class="multi-select-container">
+      <div class="dropdown">
+        <div class="placeholder" (click)="toggleDropdown()">Columns</div>
+        <div class="dropdown-list" *ngIf="dropdownVisible">
+          <!-- Select All Checkbox -->
+          <label class="dropdown-item select-all">
+            <input
+              type="checkbox"
+              (change)="onSelectAllChange($event)"
+              [checked]="isAllSelected()"
+            />
+            <span>Select All</span>
+          </label>
+          <!-- Individual Column Checkboxes -->
+          <label
+            class="dropdown-item"
+            *ngFor="let column of allColumns"
+            [ngClass]="{ 'selected-item': isSelected(column) }"
+          >
+            <input
+              type="checkbox"
+              [value]="column"
+              (change)="onCheckboxChange($event, column)"
+              [checked]="isSelected(column)"
+            />
+            <span>{{ column.header }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <button class="import-button" (click)="openExcelModal(excelData)">Import Excel</button>
+    <button class="export-button" (click)="exportToExcel()">
+      <i class="fa fa-download"></i> Export
+    </button>
+  </div>
+</div>
+
+<app-edit-modal
+  [isModalOpen]="isModalOpen"
+  [editableProject]="editableProject"
+  (close)="isModalOpen = false"
+  (save)="saveChanges()"
+></app-edit-modal>
+
+<!-- Excel Table Modal Component -->
+<app-excel-table
+  *ngIf="showExcelTable"
+  [excelData]="excelData"
+  (close)="showExcelTable = false"
+></app-excel-table>
