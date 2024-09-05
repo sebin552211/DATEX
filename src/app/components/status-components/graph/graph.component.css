@@ -43,21 +43,23 @@ p-chart {
 }
  
 ::ng-deep canvas {
-  width: 8vw;
- 
+  width: 8cm;
+  height: auto;
+  max-height: 4.5cm; /* Adjust height to fit content */
 }
- 
 /* Styling for bar charts */
 .card p-chart[type="bar"] {
-  max-height: 300px;
+  max-height: 200px;
    width: 80vw; /* Adjust the max height as needed */
  
 }
+
+
  
 /* Styling for pie charts */
 .card p-chart[type="pie"] {
   width: 80%; /* Adjust size of pie chart to fit within the card */
-  max-width: 300px; /* Limit max width of pie chart */
+  max-width: 400px; /* Limit max width of pie chart */
   height: auto;
   max-height: 300px; /* Adjust max height if needed */
  

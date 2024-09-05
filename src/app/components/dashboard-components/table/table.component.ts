@@ -19,6 +19,7 @@ import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
 
 
+
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -95,6 +96,9 @@ throw new Error('Method not implemented.');
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
       this.projects = projects;
     });
+
+
+    
   }
 
   loadProjects() {
@@ -192,7 +196,25 @@ throw new Error('Method not implemented.');
 
 
 
-
+  exportToExcel(): void {
+    const exportData = this.projects.map((project) => {
+      const exportObj: any = {
+        'Project Code': project.projectCode, // Add Project Code
+        'Project Name': project.projectName, // Add Project Name
+      };
+  
+      // Add selected dynamic columns
+      this.selectedColumns.forEach((col) => {
+        exportObj[col.header] = project[col.field];
+      });
+  
+      return exportObj;
+    });
+  
+    // Call the ExcelService to export the data
+    this.excelService.exportAsExcelFile(exportData, 'ProjectDetails');
+  }
+  
 
   openModal(project: DashboardTable) {
     this.editableProject = { ...project };
