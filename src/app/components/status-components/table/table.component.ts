@@ -57,7 +57,6 @@ export class TableComponent implements OnInit ,OnDestroy{
     { field: 'technology', header: 'Technology' },
     { field: 'status', header: 'Status' },
     { field: 'sqa', header: 'SQA' },
-
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
     { field: 'domain', header: 'Domain' },
@@ -65,9 +64,6 @@ export class TableComponent implements OnInit ,OnDestroy{
     { field: 'cloudUsed', header: 'Cloud Used' },
     { field: 'mailStatus', header: 'Mail Status' },
     { field: 'feedbackStatus', header: 'Feedback Status' },
-   
-   
-
   ];
  
   private projectsSubscription: Subscription | undefined;
@@ -76,7 +72,7 @@ export class TableComponent implements OnInit ,OnDestroy{
     private excelService: ExcelService,
     private http: HttpClient, private signalRService: SignalRService,
     private sharedDataService: SharedDataService) {}
-  ngOnDestroy(): void {
+    ngOnDestroy(): void {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     } 
@@ -214,22 +210,33 @@ export class TableComponent implements OnInit ,OnDestroy{
     );
   }
 
- 
+  exportToExcel(): void {
+    const exportData = this.projects.map((project) => {
+      const exportObj: any = {
+        'Project Code': project.projectCode, // Add Project Code
+        'Project Name': project.projectName, // Add Project Name
+      };
+  
+      // Add selected dynamic columns
+      this.selectedColumns.forEach((col) => {
+        exportObj[col.header] = project[col.field];
+      });
+  
+      return exportObj;
+    });
+  
+    // Call the ExcelService to export the data
+    this.excelService.exportAsExcelFile(exportData, 'ProjectDetails');
+  }
+  
+
 
  
   editableColumns = [
     { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
   ];
-
-  // getEditableProjectField(field: string): any {
-  //   return this.editableProject[field as keyof DashboardTable];
-  // }
-
-  // setEditableProjectField(field: string, value: any): void {
-  //   this.editableProject[field as keyof DashboardTable] = value;
-  // }
-
+  
   openEditModal(project: DashboardTable) {
     // Open the modal and pass the project to the EditModalComponent
     // For simplicity, let's assume you're using a service or a reference to open the modal

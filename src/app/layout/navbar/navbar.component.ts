@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FilterComponent } from '../filter/filter.component';
 import { MenuItem } from 'primeng/api';
 import { RouterLink } from '@angular/router';
+import {  MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -12,8 +13,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  User='User';
+  User='ACE Team';
   items: MenuItem[] | undefined;
+
+  constructor(private authService: MsalService) {}
   ngOnInit() {
     this.items = [
       {
@@ -55,6 +58,11 @@ export class NavbarComponent {
     this.isDashboardSelected = false;
     this.isVocStatusSelected = false;
     this.isVocAnalysisSelected = false;
+  }
+
+  logout() {
+    localStorage.removeItem("loginToken");
+    this.authService.logoutRedirect();
   }
 }
 

@@ -8,7 +8,7 @@
   width: 100%; /* Full width minus the sidebar */
   height: 1.3cm;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index:1;
+  z-index:2;
 }
 
 i{

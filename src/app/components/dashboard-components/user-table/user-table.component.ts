@@ -19,15 +19,14 @@ import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
 
 
-
 @Component({
-  selector: 'app-table',
+  selector: 'app-user-table',
   standalone: true,
   imports: [FormsModule, CommonModule, EditModalComponent,  HttpClientModule],
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  templateUrl: './user-table.component.html',
+  styleUrls: ['./user-table.component.css'],
 })
-export class TableComponent implements OnInit {
+export class UserTableComponent implements OnInit {
 
 
 areAllColumnsSelected() {
@@ -96,9 +95,6 @@ throw new Error('Method not implemented.');
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
       this.projects = projects;
     });
-
-
-    
   }
 
   loadProjects() {
@@ -194,52 +190,6 @@ throw new Error('Method not implemented.');
     );
   }
 
-
-
-  exportToExcel(): void {
-    const exportData = this.projects.map((project) => {
-      const exportObj: any = {
-        'Project Code': project.projectCode, // Add Project Code
-        'Project Name': project.projectName, // Add Project Name
-      };
-  
-      // Add selected dynamic columns
-      this.selectedColumns.forEach((col) => {
-        exportObj[col.header] = project[col.field];
-      });
-  
-      return exportObj;
-    });
-  
-    // Call the ExcelService to export the data
-    this.excelService.exportAsExcelFile(exportData, 'ProjectDetails');
-  }
-  
-
-  openModal(project: DashboardTable) {
-    this.editableProject = { ...project };
-    this.isModalOpen = true;
-  }
-
-  getEditableProjectField(field: string): any {
-    return this.editableProject[field as keyof DashboardTable];
-  }
-
-  setEditableProjectField(field: string, value: any): void {
-    this.editableProject[field as keyof DashboardTable] = value;
-  }
-
-
-  closeModal() {
-    this.isModalOpen = false;
-  }
-
-  saveChanges() {
-    // Update the project with the new values
-    this.loadPagedProjects();  // Reload the paginated project data
-    this.loadProjects();       
-    this.closeModal();
-  }
 
   isAllSelected(): boolean {
     return this.selectedColumns.length === this.allColumns.length;

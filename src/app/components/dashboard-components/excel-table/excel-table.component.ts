@@ -2,12 +2,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { ExcelService } from '../../../service/excel.service';
 import { ExcelRow } from '../../../interface/excel-row';
-import {  CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-excel-table',
   standalone: true,
-  imports: [ CommonModule],
+  imports: [ CommonModule ],
   templateUrl: './excel-table.component.html',
   styleUrls: ['./excel-table.component.css']
 })
@@ -26,8 +26,7 @@ export class ExcelTableComponent {
   constructor(
     private dashboardTableService: DashboardTableService,
     private excelService: ExcelService
-  ) {}
-
+  ) { }
 
   openModal(): void {
     this.showExcelTable = true;
@@ -48,12 +47,13 @@ export class ExcelTableComponent {
     if (input.files && input.files.length) {
       const file = input.files[0];
       this.isLoading = true;
-      this.errorMessage = null; // Clear previous errors
-      this.successMessage = null; // Clear previous success messages
+      this.errorMessage = null;
+      this.successMessage = null;
+
       this.excelService.readExcel(file)
         .then(data => {
           this.excelData = data as ExcelRow[];
-          this.openModal(); // Show the table when data is loaded
+          this.openModal();
           this.isLoading = false;
         })
         .catch(error => {
@@ -67,8 +67,6 @@ export class ExcelTableComponent {
   getColumnHeaders(): string[] {
     return this.excelData.length ? Object.keys(this.excelData[0]) : [];
   }
-
-  // Pagination logic
 
   get paginatedData(): ExcelRow[] {
     const startIndex = (this.currentPage - 1) * this.rowsPerPage;
@@ -99,23 +97,56 @@ export class ExcelTableComponent {
 
   saveData(): void {
     this.isLoading = true;
-    this.errorMessage = null; // Clear previous errors
-    this.successMessage = null; // Clear previous success messages
+    this.errorMessage = null;
+    this.successMessage = null;
 
-    this.dashboardTableService.updateProjects(this.excelData).subscribe(
+    // Transform excelData to match backend model if needed
+    const projectData = this.transformExcelData(this.excelData);
+
+    this.dashboardTableService.updateProjects(projectData).subscribe(
       response => {
         console.log('Data updated successfully:', response);
         this.isLoading = false;
         this.successMessage = 'Data saved successfully!';
-
-        // Clear the success message after 3 seconds
         setTimeout(() => this.successMessage = null, 3000);
       },
       error => {
         console.error('Error updating data:', error);
-        this.errorMessage = 'Failed to save data. Please try again.';
+        this.errorMessage = `Failed to save data`;
         this.isLoading = false;
       }
     );
   }
+
+  private transformExcelData(data: ExcelRow[]): any[] {
+    return data.map(row => {
+      // Handle undefined values and convert to Date if necessary
+      const forecastedEndDate = row.ForecastedEndDate 
+        ? new Date(row.ForecastedEndDate) 
+        : null;
+  
+      const vocEligibilityDate = row.VOCEligibilityDate 
+        ? new Date(row.VOCEligibilityDate) 
+        : null;
+  
+      return {
+        ProjectCode: row.ProjectCode,
+        SQA: row.SQA,
+        ForecastedEndDate: forecastedEndDate && !isNaN(forecastedEndDate.getTime()) 
+          ? forecastedEndDate.toISOString().split('T')[0] 
+          : null,
+        VOCEligibilityDate: vocEligibilityDate && !isNaN(vocEligibilityDate.getTime()) 
+          ? vocEligibilityDate.toISOString().split('T')[0] 
+          : null,
+        ProjectType: row.ProjectType,
+        Domain: row.Domain,
+        DatabaseUsed: row.DatabaseUsed,
+        CloudUsed: row.CloudUsed,
+        FeedbackStatus: row.FeedbackStatus,
+        MailStatus: row.MailStatus,
+        Technology: row.Technology
+      };
+    });
+  }
+  
 }

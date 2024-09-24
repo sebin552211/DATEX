@@ -3,7 +3,9 @@
   <div class="maincard">
     <div
       *ngFor="let card of cards; let i = index"
-      class="maincard{{ cards.indexOf(card) + 1 }}">
+      class="maincard{{ cards.indexOf(card) + 1 }}"
+      (click)="onCardClick(card)"
+      >
       <div class="ca">
         <div>
           <i class="fa-solid fa-note-sticky"></i>

@@ -127,6 +127,7 @@
 
   .export-button:hover {
     background-color: #0056b3;
+    color:white;
   }
 
   /* Table container */
@@ -467,7 +468,115 @@
     gap: 10px;
   }
 }
+@media (max-width: 768px) {
+  .card {
+    padding: 10px;
+  }
 
+  .header h2 {
+    font-size: 18px;
+  }
 
+  .search-container {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .pagination-container {
+    flex-wrap: wrap;
+  }
+
+  .pagination-container button {
+    margin: 3px;
+  }
+
+  .custom-table {
+    font-size: 14px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .multi-select-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .import-button, .export-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input {
+    font-size: 14px;
+  }
+
+  .custom-table {
+    font-size: 12px;
+  }
+
+  .header h2 {
+    font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .card {
+    padding: 10px;
+  }
+
+  .header h2 {
+    font-size: 18px;
+  }
+
+  .search-container {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .pagination-container {
+    flex-wrap: wrap;
+  }
+
+  .pagination-container button {
+    margin: 3px;
+  }
+
+  .custom-table {
+    font-size: 14px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .multi-select-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .import-button, .export-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input {
+    font-size: 14px;
+  }
+
+  .custom-table {
+    font-size: 12px;
+  }
+
+  .header h2 {
+    font-size: 16px;
+  }
+}
 
 

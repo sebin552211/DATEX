@@ -24,63 +24,63 @@ export class GraphComponent2 implements OnInit {
   projects: DashboardTable[] = [];
   private projectsSubscription: Subscription | undefined;
 
-  lineChartData: any = {
-    labels: ['DTS', 'ESS0', 'PES'],
-    datasets: [
-      {
+  // lineChartData: any = {
+  //   labels: ['DTS', 'ESS0', 'PES'],
+  //   datasets: [
+  //     {
 
 
-        data: [0.26, 0.67, 0.67],
-        fill: false,
-        borderColor: '#36A2EB',
-        tension: 0.4,
-      }
-    ]
-  };
+  //       data: [0.26, 0.67, 0.67],
+  //       fill: false,
+  //       borderColor: '#36A2EB',
+  //       tension: 0.4,
+  //     }
+  //   ]
+  // };
 
-  lineChartOptions: any = {
-    plugins: {
-      legend: {
-        display:false,
+  // lineChartOptions: any = {
+  //   plugins: {
+  //     legend: {
+  //       display:false,
 
-      }
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Time Period',
-          color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-        },
-        ticks: {
-          color: getComputedStyle(document.documentElement).getPropertyValue('--text-color-secondary'),
-          font: {
-            size: 10
-          },
-          autoSkip: false,
-          maxRotation: 0
-        },
-        grid: {
-          color: getComputedStyle(document.documentElement).getPropertyValue('--surface-border'),
-          drawBorder: false
-        }
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Coverage',
-          color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-        },
-        ticks: {
-          color: getComputedStyle(document.documentElement).getPropertyValue('--text-color-secondary')
-        },
-        grid: {
-          color: getComputedStyle(document.documentElement).getPropertyValue('--surface-border'),
-          drawBorder: false
-        }
-      }
-    }
-  };
+  //     }
+  //   },
+  //   scales: {
+  //     x: {
+  //       title: {
+  //         display: true,
+  //         text: 'Time Period',
+  //         color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+  //       },
+  //       ticks: {
+  //         color: getComputedStyle(document.documentElement).getPropertyValue('--text-color-secondary'),
+  //         font: {
+  //           size: 10
+  //         },
+  //         autoSkip: false,
+  //         maxRotation: 0
+  //       },
+  //       grid: {
+  //         color: getComputedStyle(document.documentElement).getPropertyValue('--surface-border'),
+  //         drawBorder: false
+  //       }
+  //     },
+  //     y: {
+  //       title: {
+  //         display: true,
+  //         text: 'Coverage',
+  //         color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
+  //       },
+  //       ticks: {
+  //         color: getComputedStyle(document.documentElement).getPropertyValue('--text-color-secondary')
+  //       },
+  //       grid: {
+  //         color: getComputedStyle(document.documentElement).getPropertyValue('--surface-border'),
+  //         drawBorder: false
+  //       }
+  //     }
+  //   }
+  // };
 
   constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef,private sharedDataService: SharedDataService) {}
 
