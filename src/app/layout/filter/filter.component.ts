@@ -90,7 +90,7 @@ onApplyFilters() {
   showDatabaseUsed: boolean = false;
   showCloudUsed: boolean = false;
 
-    private projectData: any[] = [];
+  private projectData: any[] = [];
 
   constructor(private http: HttpClient, private dashboardTableService: DashboardTableService) {}
 
