@@ -10,13 +10,13 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
-import { HttpClient, CommonModule } from '@angular/common';
+import {  CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @Component({
@@ -83,14 +83,12 @@ throw new Error('Method not implemented.');
     { field: 'forecastedEndDate', header: 'Forecasted End Date' },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
   ];
-  selectedFile: File | null = null;
+
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
-    private dashboardTableService: DashboardTableService,,
-    private excelService: ExcelService,
-    private http: HttpClient,
-    private sharedDataService: SharedDataService
+    private dashboardTableService: DashboardTableService,
+    private sharedDataService: SharedDataService,
     private excelService: ExcelService, private http: HttpClient
   ) {}
 
