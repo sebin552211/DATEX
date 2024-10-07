@@ -1,4 +1,6 @@
 export interface DashboardTable {
+  technologies: any;
+  type: any;
   projectId: number;
   projectCode: string;
   projectName: string;
@@ -24,6 +26,7 @@ export interface DashboardTable {
   cloudUsed: string | null;
   feedbackStatus: string | null;
   mailStatus: string | null;
+
 }
 
 

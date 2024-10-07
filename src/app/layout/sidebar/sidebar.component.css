@@ -1,8 +1,8 @@
 .sidenavbar {
-  background-color: #DC123C;
-  width: 6cm;
+ 
+  width: 6.2cm;
   position: fixed;
-  height: 100vh;
+  height: 16cm;
   top: 0;
   left: 0;
   z-index: 2;
@@ -12,75 +12,15 @@
   align-items: center;
   padding: 20px 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
-}
-
-.sideheading {
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 30px; /* Space between heading and first menu item */
-}
-
-.sidetext {
-  text-align: center;
-  width: 100%;
-  display: flex;
-  color: white;
-  flex-direction: column;
-  align-items: center;
-}
-
-.side-link {
-  width: 100%;
-  text-decoration: none;
-  color: white;
-  display: block;
-  margin-bottom: 20px;
-}
-
-.side-link p {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  margin: 0;
-  padding: 10px 20px;
-  transition: background-color 0.3s ease;
-  border-radius: 30px;
-}
-
-.side-link p i {
-  font-size: 20px;
-}
-
-.status i, .analysis i {
-  margin-right: 10px;
-}
-
-.dashboard:hover, .status:hover, .analysis:hover {
-  background-color: white;
-  color: #DC123C;
   border-radius: 10px;
-  transform: translateY(-2px);
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
+  z-index: 5;
 }
 
-.selected {
-  background-color: white;
-  border-radius: 30px;
-  width: 5cm;
-  height: 40px;
-  margin-bottom: 20px; 
+#image{
+  top: 7px;
+  left: 30px;
+  position: fixed;
+  height: 43px;
+  width: 150px;
 }
-
-.selected a {
-  color: #DC123C;
-}
-
-.selected i {
-  color: #DC123C;
-}
-
-
 

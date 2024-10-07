@@ -1,192 +1,203 @@
-.filter-container.scroll {
-    height: 12.5cm;
-    overflow-x: hidden;
-     overflow-y: auto; 
-    text-align: center;
-    padding: 20px;
-    border: 1px solid white;
-    width: 14cm;   
-    box-shadow: 2px 2px 10px;
-    position: fixed;
-    top: 2cm;
-    right: 30px;
-    background-color: #FFFFFF;
-    }
-    
-    .filter-group {
-      margin-bottom: 20px;
-    }
-    
-    .filter-group h4 {
-      margin-bottom: 20px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }  
-  
-    .filter-heading {
-      font-weight: bold;
-      cursor: pointer;
-      margin-bottom: 5px;
-    }
-    
-    .filter-options {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    
-    .filter-option {
-      flex: 0 0 30%; 
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      margin-right: 10px;
-      background-color: #D9D9D9
-    }
-    
-    hr{
-        border: 1.5px solid #D8D8D8;
-    }
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+#image{
+  top: 3px;
+  left: 30px;
+  position: fixed;
+  height: 43px;
+  width: 150px;
+}
 
-    .filter-option:hover{
-      background-color: #DC123C;
-      color: white;
-    }
-     .dates{
-      display: flex;
-      flex-wrap: wrap;
-     }
 
-    button{
-      height: 40px;
-      width: 200px;
-      border-radius: 20px;
-      cursor: pointer;
-    }
+/* Filter sidebar styles */
+.filters {
 
-    .btn1{
-      margin-right: 10px;
-      background-color: #000;
-      color: white;
-    }
+  width: 6cm; /* Adjust as needed */
+  position: fixed;
+  height: 93vh;
+  top: 50px;
+  left: 0;
+  background-color:rgb(203, 203, 203);
+  z-index: 2;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px; /* Adjusted padding */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+}
 
-    .btn2{
-      margin-left: 10px;
-      background-color: #D4D4D4;
-      border-color:#D4D4D4 ;
-    }
+.filter-heading {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333; /* Darker text color */
+  text-align: center; /* Centered heading */
+}
+.filter-container
+{
+  display: flex;
+  gap:60px
+}
 
-    .filter-option {
-      display: flex;
-      align-items: center;
-      padding: 3px;
-      border-radius: 20px;
-      transition: background-color 0.3s ease;
-    }
-    
-    .filter-option input[type="checkbox"] {
-      width: 20px;
-      border: 2px solid #ccc;
-      outline: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    
-    .filter-option input[type="checkbox"]:checked + .filter-option {
-      color: white;
-      background-color: #DC123C;
-    } 
-    .filter-container {
-      padding: 10px;
-    }
-    
-    .filter-group {
-      margin-bottom: 15px;
-    }
-    
-    .filter-heading {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .filter-components {
-      padding-left: 15px;
-      margin-top: 10px;
-    }
-    
-    .filter-option {
-      border-radius: 10px;
-      transition: background-color 0.3s;
-    }
-    
-    /* Selected state style */
-    .selected-item {
-      background-color: #DC123C;
-      color: white;
-    }
-    
-    /* Custom checkbox container */
-    .custom-checkbox-container {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      font-size: 15px;
-      position: relative;
-      padding-left: 30px;
-      user-select: none;
-    }
-    
-    /* Hide default checkbox */
-    .custom-checkbox-container input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
-    
-    /* Custom checkbox appearance */
-    .custom-checkbox {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 15px;
-      width: 15px;
-      background-color: #ccc;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-    
-    /* Checkbox checked state */
-    .custom-checkbox-container input:checked ~ .custom-checkbox {
-      background-color: white;
-      border: 2px solid #DC123C;
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  width: 100%; /* Full width of the sidebar */
+  margin-bottom: 15px; /* Add margin between dropdowns */
+}
 
-    }
-    
-    /* Add checkmark */
-    .custom-checkbox::after {
-      content: "";
-      position: absolute;
-      display: none;
-    }
-    
-    .custom-checkbox-container input:checked ~ .custom-checkbox::after {
-      display: block;
-    }
-    
-    .custom-checkbox::after {
-      left: 3px;
-      width: 3px;
-      height: 8px;
-      border: solid black;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-    }
-    
-  
-     
+/* Button styles */
+.btn-secondary {
+  width: 100%; /* Full width of the parent container */
+  height: 35px; /* Reduced height */
+  padding: 8px; /* Reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s ease all;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem; /* Adjusted font size */
+}
+
+.btn-secondary::after {
+  content: '\25BC';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.55em;
+  color: #86888a;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  border-color: #007bff;
+}
+
+/* Floating label styles */
+.filter-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.75rem;
+
+  color: #495057;
+  background: #fff;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.filter-label.floating {
+  top: -10px;
+  font-size: 12px;
+  color: #DC123C;
+  background-color: white;
+  padding: 0 5px;
+  left: 15px;
+  z-index:1;
+}
+
+.selected-value {
+  margin-left: 1rem;
+  color: #333;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 150px; /* Reduced max height */
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 5px; /* Reduced padding */
+}
+
+/* Checkbox container styles */
+.floating-label-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Margin between checkboxes */
+  font-size: 0.75rem; /* Smaller font size */
+}
+
+/* Checkbox styles */
+.floating-label-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.floating-label-container span {
+  font-size: 0.75rem; /* Adjusted font size */
+}
+
+/* Filter actions styles */
+.filter-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 23px; /* Reduced margin */
+  gap: 10px;
+}
+
+.filter-button:hover {
+  background-color:#ccffd1 ; /* Darker blue on hover */
+  color: #3CD856;
+}
+
+
+
+.filter-button {
+  background-color: #DC123C;
+  color: white;
+  padding: 2px; /* Remove padding */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  min-width: fit-content;
+  height:fit-content; /* Let height adjust to content */
+  line-height: 1.5;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+.custom-icon {
+  cursor: pointer;
+  height: fit-content;
+  margin: 0 0px;
+  color: #020202; /* Customize this color as needed */
+  background-color: #f8f9fa; /* Light background color */
+  padding: 3px; /* Adjust padding to fit around the icon */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-icon:hover {
+  color: #DC123C; /* Darker color on hover */
+  background-color: #e2e6ea; /* Slightly darker background on hover */
+  border-color: #ccc; /* Darker border on hover */
+}
+
+.custom-icon:active {
+  color: #004080; /* Even darker color on click */
+  background-color: #d6d8db; /* Even darker background on click */
+  border-color: #bbb; /* Darker border on click */
+}

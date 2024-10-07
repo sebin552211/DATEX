@@ -1,206 +1,444 @@
 import { Component, OnInit } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Filter } from '../../interface/filter';
+import { DashboardTableService } from '../../service/dashboard-table.service';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavbarComponent } from '../navbar/navbar.component';
-
-interface Filters {
-  projectStatus: { [key: string]: boolean };
-  projectContractType: { [key: string]: boolean };
-  duAndDuHead: { [key: string]: boolean };
-  region: { [key: string]: boolean };
-  date: { [key: string]: boolean };
-  resource: { [key: string]: boolean };
-  projectType: { [key: string]: boolean };
-  domain: { [key: string]: boolean };
-  technology: { [key: string]: boolean };
-  SQA: { [key: string]: boolean };
-  databaseUsed: { [key: string]: boolean };
-  cloudUsed: { [key: string]: boolean };
-  feedbackStatus: { [key: string]: boolean };
-}
 
 @Component({
   selector: 'app-filter',
-  standalone: true,
-  imports: [NgClass, NgFor, NgIf, FormsModule, NavbarComponent],
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css']
-  
+  styleUrls: ['./filter.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
-
 export class FilterComponent implements OnInit {
 
-  isDivVisible: boolean = true;
 
-  // Options for the filters
-  projectStatusOptions = ['Active', 'On Hold', 'Closed'];
-  projectContractTypeOptions = ['FP', 'T&M'];
-  duAndDuHeadOptions = [
-    'DU 1 - Abhilash N Kishore',
-    'DU 2 - Harisankar',
-    'DU 3 - Anish Alias',
-    'DU 4 - Pramodh Pillai',
-    'DU 5 - Abhilash N Kishore',
-    'DU 6 - Jayan M S'
-  ];
-  regionOptions = ['US', 'UK', 'Australia', 'Japan', 'India', 'UNZ'];
-  resourceOptions = ['1-20', '21-40', '41-60', '61-80', '81-100'];
-  projectTypeOptions = ['Project Type'];
-  domainOptions = ['Domain'];
-  technologyOptions = [ 'Technology '];
-  SQAOptions = ['SQA'];
-  databaseUsedOptions = ['Database Used'];
-  cloudUsedOptions = ['Cloud Used'];
-  feedbackStatusOptions = ['Pending', 'Recieved']
 
-  // Dropdown visibility toggles
-  showProjectStatus = false;
-  showProjectContractType = false;
-  showDuAndDuHead = false;
-  showRegion = false;
-  showDate = false;
-  showResource = false;
-  showProjectType =false;
-  showDomain = false;
-  showTechnology = false;
-  showSQA= false;
-  showDatabaseUsed = false;
-  showCloudUsed = false;
-  showFeedbackStatus = false;
+onApplyFilters() {
+  const params: any = {};
 
-  filters: Filters = {
-    projectStatus: {},
-    projectContractType: {},
-    duAndDuHead: {},
-    region: {},
-    date: {},
-    resource:{},
-    projectType:{},
-    domain:{},
-    technology:{},
-    SQA:{},
-    databaseUsed:{},
-    cloudUsed:{},
-    feedbackStatus:{}
-  };
-
-  ngOnInit() {
-    this.initializeFilters();
-  }
-
-  initializeFilters() {
-    this.projectStatusOptions.forEach(option => {
-      this.filters.projectStatus[option] = false;
-    });
-    this.projectContractTypeOptions.forEach(option => {
-      this.filters.projectContractType[option] = false;
-    });
-    this.duAndDuHeadOptions.forEach(option => {
-      this.filters.duAndDuHead[option] = false;
-    });
-    this.regionOptions.forEach(option => {
-      this.filters.region[option] = false;
-    }); 
-    this.resourceOptions.forEach(option => {
-      this.filters.resource[option] = false;
-    });
-    this.projectTypeOptions.forEach(option => {
-      this.filters.projectContractType[option] = false;
-    }); 
-    this.domainOptions.forEach(option => {
-      this.filters.domain[option] = false;
-    }); 
-    this.technologyOptions.forEach(option => {
-      this.filters.technology[option] = false;
-    }); 
-    this.SQAOptions.forEach(option => {
-      this.filters.SQA[option] = false;
-    });  
-    this.databaseUsedOptions.forEach(option => {
-      this.filters.databaseUsed[option] = false;
-    });  
-    this.cloudUsedOptions.forEach(option => {
-      this.filters.cloudUsed[option] = false;
-    });
-    this.feedbackStatusOptions.forEach(option => {
-      this.filters.cloudUsed[option] = false;
-    });
-  }
-
-toggleDropdown(section: string) {
-    if (section === 'projectStatus') {
-      this.showProjectStatus = !this.showProjectStatus;
-    } else if (section === 'projectContractType') {
-      this.showProjectContractType = !this.showProjectContractType;
-    } else if (section === 'duAndDuHead') {
-      this.showDuAndDuHead = !this.showDuAndDuHead;
-    } else if (section === 'region') {
-      this.showRegion = !this.showRegion;
-    } else if (section === 'date') {
-    this.showDate = !this.showDate;
-    }else if (section === 'resource') {
-    this.showResource = !this.showResource;
-    }else if (section === 'projectType') {
-    this.showProjectType = !this.showProjectType;
-    }else if (section === 'domain') {
-    this.showDomain = !this.showDomain;
-    }else if (section === 'technology') {
-    this.showTechnology = !this.showTechnology;
-    }else if (section === 'SQA') {
-    this.showSQA = !this.showSQA;
-    }else if (section === 'databaseUsed') {
-    this.showDatabaseUsed = !this.showDatabaseUsed;
-    }else if (section === 'cloudUsed') {
-    this.showCloudUsed = !this.showCloudUsed;
-    }else if (section === 'feedbackStatus') {
-    this.showFeedbackStatus = !this.showFeedbackStatus;
+  Object.keys(this.selectedFilters).forEach(key => {
+    if (this.selectedFilters[key].length > 0) {
+      if (key === 'dusAndDuHeads') {
+        const duValues = this.selectedFilters[key].map(value => value.split(' - ')[0]);
+        params['du'] = duValues.join(',');
+      } else {
+        params[key] = this.selectedFilters[key].join(',');
+      }
     }
-  } 
+  });
 
-  resetFilters() {
-    Object.keys(this.filters.projectStatus).forEach(key => {
-      this.filters.projectStatus[key] = false;
-    });
-    Object.keys(this.filters.projectContractType).forEach(key => {
-      this.filters.projectContractType[key] = false;
-    });
-    Object.keys(this.filters.duAndDuHead).forEach(key => {
-      this.filters.duAndDuHead[key] = false;
-    });
-    Object.keys(this.filters.region).forEach(key => {
-      this.filters.region[key] = false;
-    });
-    Object.keys(this.filters.date).forEach(key => {
-      this.filters.date[key] = false;
-    });
-    Object.keys(this.filters.resource).forEach(key => {
-      this.filters.resource[key] = false;
-    });
-    Object.keys(this.filters.projectType).forEach(key => {
-      this.filters.projectType[key] = false;
-    });
-    Object.keys(this.filters.domain).forEach(key => {
-      this.filters.domain[key] = false;
-    });
-    Object.keys(this.filters.technology).forEach(key => {
-      this.filters.technology[key] = false;
-    });
-    Object.keys(this.filters.SQA).forEach(key => {
-      this.filters.SQA[key] = false;
-    });
-    Object.keys(this.filters.databaseUsed).forEach(key => {
-      this.filters.databaseUsed[key] = false;
-    });
-    Object.keys(this.filters.cloudUsed).forEach(key => {
-      this.filters.cloudUsed[key] = false;
-    });
-    Object.keys(this.filters.feedbackStatus).forEach(key => {
-      this.filters.feedbackStatus[key] = false;
-    });
-  }
+  this.dashboardTableService.getProjects(params).subscribe(response => {
+    this.projectData = response;
+    console.log('Filtered project data:', this.projectData);
+    this.updateFilterOptions(response);
+  });
 
-  ApplyFilters(){
-    return this.isDivVisible=false;
-  }
 }
 
+
+
+  dropdownVisible: { [key: string]: boolean } = {};
+  selectedFilters: { [key: string]: string[] } = {};
+  filters: Filter = {
+
+
+    du: {},
+    duHead: {},
+    projectStartDate: {},
+    projectEndDate: {},
+    projectManager: {},
+    contractType: {},
+    customerName: {},
+    region: {},
+    technology: {},
+    status: {},
+    sqa: {},
+    vocEligibilityDate: {},
+    projectType: {},
+    domain: {},
+    databaseUsed: {},
+    cloudUsed: {},
+    feedbackStatus: {},
+    mailStatus: {}
+  };
+
+  statuses: string[] = [];
+  contractTypes: string[] = [];
+  dusAndDuHeads: string[] = [];
+  regions: string[] = [];
+  customerNames: string[] = [];
+  technologies: string[] = [];
+  projectStartDates: string[] = [];
+  projectEndDates: string[] = [];
+  projectManagers: string[] = [];
+  sqas: string[] = [];
+  projectTypes: string[] = [];
+  domains: string[] = [];
+  databasesUsed: string[] = [];
+  cloudsUsed: string[] = [];
+
+  showStatus: boolean = false;
+  showContractType: boolean = false;
+  showDuAndDuHead: boolean = false;
+  showRegions: boolean = false;
+  showCustomerName: boolean = false;
+  showTechnologies: boolean = false;
+  showProjectStartDate: boolean = false;
+  showProjectEndDate: boolean = false;
+  showProjectManager: boolean = false;
+  showSqa: boolean = false;
+  showProjectType: boolean = false;
+  showDomain: boolean = false;
+  showDatabaseUsed: boolean = false;
+  showCloudUsed: boolean = false;
+
+    private projectData: any[] = [];
+
+  constructor(private http: HttpClient, private dashboardTableService: DashboardTableService) {}
+
+  ngOnInit() {
+    this.dashboardTableService.getProjects().subscribe((projects) => {
+      this.updateFilterOptions(projects);
+    });
+  }
+
+  getDistinctValues(projects: any[], key: string): string[] {
+    return [...new Set(projects.map(project => project[key]))];
+  }
+
+  getMappedDuAndDuHeads(projects: any[]): string[] {
+    const duMap: { [key: string]: Set<string> } = {};
+
+    projects.forEach(project => {
+      const du = project['du'];
+      const duHead = project['duHead'];
+
+      if (du && duHead) {
+        if (!duMap[du]) {
+          duMap[du] = new Set();
+        }
+        duMap[du].add(duHead);
+      }
+    });
+
+    const mappedValues: string[] = [];
+
+    Object.keys(duMap).forEach(du => {
+      duMap[du].forEach(duHead => {
+        mappedValues.push(`${du} - ${duHead}`);
+      });
+    });
+
+    return mappedValues;
+  }
+
+  toggleDropdown(filterKey: string): void {
+    this.dropdownVisible[filterKey] = !this.dropdownVisible[filterKey];
+  }
+
+hasSelectedStatus(): boolean {
+  return this.getSelectedStatus() !== '';
+}
+
+
+  // Method to get selected status for display
+  getSelectedStatus(): string | null {
+    const selectedStatuses = this.selectedFilters['status'];
+    if (selectedStatuses && selectedStatuses.length > 0) {
+      return selectedStatuses.length > 1
+        ? selectedStatuses.join(', ') // Join multiple selected statuses
+        : selectedStatuses[0]; // Display single selected status
+    }
+    return null; // No selection
+  }
+
+  hasSelectedContractType(): boolean {
+    return this.getSelectedContractType() !== '';
+  }
+// Method to get selected contract types for display
+getSelectedContractType(): string | null {
+  const selectedContractTypes = this.selectedFilters['contractType'];
+  if (selectedContractTypes && selectedContractTypes.length > 0) {
+    return selectedContractTypes.length > 1
+      ? selectedContractTypes.join(', ') // Join multiple selected contract types
+      : selectedContractTypes[0]; // Display single selected contract type
+  }
+  return null; // No selection
+}
+
+hasSelectedDusAndDuHeads(): boolean {
+  return this.getSelectedDusAndDuHeads() !== '';
+}
+// Method to get selected DU & DU Heads for display
+getSelectedDusAndDuHeads(): string | null {
+  const selectedDusAndDuHeads = this.selectedFilters['dusAndDuHeads'];
+  if (selectedDusAndDuHeads && selectedDusAndDuHeads.length > 0) {
+    return selectedDusAndDuHeads.length > 1
+      ? selectedDusAndDuHeads.join(', ') // Join multiple selected DU & DU Heads
+      : selectedDusAndDuHeads[0]; // Display single selected DU & DU Head
+  }
+  return null; // No selection
+}
+
+hasSelectedRegion(): boolean {
+  return this.getSelectedRegion() !== '';
+}
+// Method to get selected regions for display
+getSelectedRegion(): string | null {
+  const selectedRegions = this.selectedFilters['region'];
+  if (selectedRegions && selectedRegions.length > 0) {
+    return selectedRegions.length > 1
+      ? selectedRegions.join(', ') // Join multiple selected regions
+      : selectedRegions[0]; // Display single selected region
+  }
+  return null; // No selection
+}
+
+hasSelectedCustomerName(): boolean {
+  return this.getSelectedCustomerName() !== '';
+}
+
+// Method to get selected customer names for display
+getSelectedCustomerName(): string | null {
+  const selectedCustomerNames = this.selectedFilters['customerName'];
+  if (selectedCustomerNames && selectedCustomerNames.length > 0) {
+    return selectedCustomerNames.length > 1
+      ? selectedCustomerNames.join(', ') // Join multiple selected customer names
+      : selectedCustomerNames[0]; // Display single selected customer name
+  }
+  return null; // No selection
+}
+
+hasSelectedTechnology(): boolean {
+  return this.getSelectedTechnology() !== '';
+}
+
+// Method to get selected technologies for display
+getSelectedTechnology(): string | null {
+  const selectedTechnologies = this.selectedFilters['technology'];
+  if (selectedTechnologies && selectedTechnologies.length > 0) {
+    return selectedTechnologies.length > 1
+      ? selectedTechnologies.join(', ') // Join multiple selected technologies
+      : selectedTechnologies[0]; // Display single selected technology
+  }
+  return null; // No selection
+}
+
+hasSelectedProjectStartDate(): boolean {
+  return this.getSelectedProjectStartDate() !== '';
+}
+
+// Method to get selected project start dates for display
+getSelectedProjectStartDate(): string | null {
+  const selectedStartDates = this.selectedFilters['projectStartDate'];
+  if (selectedStartDates && selectedStartDates.length > 0) {
+    return selectedStartDates.length > 1
+      ? selectedStartDates.join(', ') // Join multiple selected dates
+      : selectedStartDates[0]; // Display single selected date
+  }
+  return null; // No selection
+}
+hasSelectedProjectEndDate(): boolean {
+  return this.getSelectedProjectEndDate() !== '';
+}
+// Method to get selected project end dates for display
+getSelectedProjectEndDate(): string | null {
+  const selectedEndDates = this.selectedFilters['projectEndDate'];
+  if (selectedEndDates && selectedEndDates.length > 0) {
+    return selectedEndDates.length > 1
+      ? selectedEndDates.join(', ') // Join multiple selected dates
+      : selectedEndDates[0]; // Display single selected date
+  }
+  return null; // No selection
+}
+hasSelectedProjectManager(): boolean {
+  return this.getSelectedProjectManager() !== '';
+}
+// Method to get selected project managers for display
+getSelectedProjectManager(): string | null {
+  const selectedManagers = this.selectedFilters['projectManager'];
+  if (selectedManagers && selectedManagers.length > 0) {
+    return selectedManagers.length > 1
+      ? selectedManagers.join(', ') // Join multiple selected managers
+      : selectedManagers[0]; // Display single selected manager
+  }
+  return null; // No selection
+}
+hasSelectedSQA(): boolean {
+  return this.getSelectedSQA() !== '';
+}
+// Method to get selected SQA for display
+getSelectedSQA(): string | null {
+  const selectedSQAs = this.selectedFilters['sqa'];
+  if (selectedSQAs && selectedSQAs.length > 0) {
+    return selectedSQAs.length > 1
+      ? selectedSQAs.join(', ') // Join multiple selected SQAs
+      : selectedSQAs[0]; // Display single selected SQA
+  }
+  return null; // No selection
+}
+
+hasSelectedProjectType(): boolean {
+  return this.getSelectedProjectType() !== '';
+}
+// Method to get selected Project Type for display
+getSelectedProjectType(): string | null {
+  const selectedProjectTypes = this.selectedFilters['projectType'];
+  if (selectedProjectTypes && selectedProjectTypes.length > 0) {
+    return selectedProjectTypes.length > 1
+      ? selectedProjectTypes.join(', ') // Join multiple selected project types
+      : selectedProjectTypes[0]; // Display single selected project type
+  }
+  return null; // No selection
+}
+
+hasSelectedDomain(): boolean {
+  return this.getSelectedDomain() !== '';
+}
+// Method to get selected Domain for display
+getSelectedDomain(): string | null {
+  const selectedDomains = this.selectedFilters['domain'];
+  if (selectedDomains && selectedDomains.length > 0) {
+    return selectedDomains.length > 1
+      ? selectedDomains.join(', ') // Join multiple selected domains
+      : selectedDomains[0]; // Display single selected domain
+  }
+  return null; // No selection
+}
+hasSelectedDatabaseUsed(): boolean {
+  return this.getSelectedDatabaseUsed() !== '';
+}
+// Method to get selected Database Used for display
+getSelectedDatabaseUsed(): string | null {
+  const selectedDatabasesUsed = this.selectedFilters['databaseUsed'];
+  if (selectedDatabasesUsed && selectedDatabasesUsed.length > 0) {
+    return selectedDatabasesUsed.length > 1
+      ? selectedDatabasesUsed.join(', ') // Join multiple selected databases
+      : selectedDatabasesUsed[0]; // Display single selected database
+  }
+  return null; // No selection
+}
+hasSelectedCloudUsed(): boolean {
+  return this.getSelectedCloudUsed() !== '';
+}
+// Method to get selected Cloud Used for display
+getSelectedCloudUsed(): string | null {
+  const selectedCloudsUsed = this.selectedFilters['cloudUsed'];
+  if (selectedCloudsUsed && selectedCloudsUsed.length > 0) {
+    return selectedCloudsUsed.length > 1
+      ? selectedCloudsUsed.join(', ') // Join multiple selected cloud options
+      : selectedCloudsUsed[0]; // Display single selected cloud option
+  }
+  return null; // No selection
+}
+
+
+  onFilterChange(event: Event, filterKey: string): void {
+    const checkbox = event.target as HTMLInputElement;
+    const value = checkbox.value;
+
+    if (checkbox.checked) {
+      if (!this.selectedFilters[filterKey]) {
+        this.selectedFilters[filterKey] = [];
+      }
+      this.selectedFilters[filterKey].push(value);
+    } else {
+      this.selectedFilters[filterKey] = this.selectedFilters[filterKey].filter(
+        (v) => v !== value
+      );
+    }
+
+    // Apply filters based on new selection
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    const params: any = {};
+
+    Object.keys(this.selectedFilters).forEach(key => {
+      if (this.selectedFilters[key].length > 0) {
+        if (key === 'dusAndDuHeads') {
+          const duValues = this.selectedFilters[key].map(value => value.split(' - ')[0]);
+          params['du'] = duValues.join(',');
+        } else {
+          params[key] = this.selectedFilters[key].join(',');
+        }
+      }
+    });
+
+    this.http.get<any[]>('https://localhost:7259/api/Project/filter', { params })
+      .subscribe(response => {
+        this.projectData = response;
+        // Log the data to the console
+        console.log('Filtered project data:', this.projectData);
+        this.updateFilterOptions(response);
+      });
+  }
+
+  updateFilterOptions(projects: any[]): void {
+    // Helper function to get distinct values, excluding null or empty strings
+    const getNonNullDistinctValues = (projects: any[], key: string): string[] => {
+      return [...new Set(projects.map(project => project[key]).filter(value => value !== null && value !== ''))];
+    };
+
+    // Helper function to map DU and DU Heads, excluding null values
+    const getMappedDuAndDuHeads = (projects: any[]): string[] => {
+      const duMap: { [key: string]: Set<string> } = {};
+
+      projects.forEach(project => {
+        const du = project['du'];
+        const duHead = project['duHead'];
+
+        if (du && duHead) {
+          if (!duMap[du]) {
+            duMap[du] = new Set();
+          }
+          duMap[du].add(duHead);
+        }
+      });
+
+      const mappedValues: string[] = [];
+
+      Object.keys(duMap).forEach(du => {
+        duMap[du].forEach(duHead => {
+          mappedValues.push(`${du} - ${duHead}`);
+        });
+      });
+
+      return mappedValues;
+    };
+
+    this.statuses = getNonNullDistinctValues(projects, 'status');
+    this.contractTypes = getNonNullDistinctValues(projects, 'contractType');
+    this.dusAndDuHeads = getMappedDuAndDuHeads(projects);
+    this.regions = getNonNullDistinctValues(projects, 'region');
+    this.customerNames = getNonNullDistinctValues(projects, 'customerName');
+    this.technologies = getNonNullDistinctValues(projects, 'technology');
+    this.projectStartDates = getNonNullDistinctValues(projects, 'projectStartDate');
+    this.projectEndDates = getNonNullDistinctValues(projects, 'projectEndDate');
+    this.projectManagers = getNonNullDistinctValues(projects, 'projectManager');
+    this.sqas = getNonNullDistinctValues(projects, 'sqa');
+    this.projectTypes = getNonNullDistinctValues(projects, 'projectType');
+    this.domains = getNonNullDistinctValues(projects, 'domain');
+    this.databasesUsed = getNonNullDistinctValues(projects, 'databaseUsed');
+    this.cloudsUsed = getNonNullDistinctValues(projects, 'cloudUsed');
+
+    this.dropdownVisible = {};
+  }
+
+
+// Method to check if a specific status is selected
+
+isSelectedFilter(filterKey: string, value: string): boolean {
+  return this.selectedFilters[filterKey] && this.selectedFilters[filterKey].includes(value);
+}
+  resetFilters(): void {
+    this.selectedFilters = {}; // Reset selected filters
+    this.dashboardTableService.getProjects().subscribe((projects) => {
+      this.updateFilterOptions(projects);
+    });
+  }
+}
