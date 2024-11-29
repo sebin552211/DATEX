@@ -10,13 +10,13 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
-import { CommonModule } from '@angular/common';
+import {  CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -68,31 +68,41 @@ throw new Error('Method not implemented.');
     { field: 'domain', header: 'Domain' },
     { field: 'databaseUsed', header: 'Database Used' },
     { field: 'cloudUsed', header: 'Cloud Used' },
-   
+
   ];
   private projectsSubscription: Subscription | undefined;
 
   // Updated `editableColumns` array to match the `DashboardTable` interface
 
+  editableColumns = [
+    { field: 'sqa', header: 'SQA' },
+    { field: 'projectType', header: 'Project Type' },
+    { field: 'domain', header: 'Domain' },
+    { field: 'databaseUsed', header: 'Database Used' },
+    { field: 'cloudUsed', header: 'Cloud Used' },
+    { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
+    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
+    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+  ];
+
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
     private dashboardTableService: DashboardTableService,
-    private excelService: ExcelService,
-    private http: HttpClient,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private excelService: ExcelService, private http: HttpClient
   ) {}
 
 
   ngOnInit(): void {
 
-    
+
     this.selectedColumns = this.allColumns.filter(col =>
       ['du', 'duHead', 'status','customerName'].includes(col.field)
     );
     this.loadProjects(); // Load projects on component initialization
     this.loadPagedProjects();
-       
+
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
       this.projects = projects;
     });
@@ -145,7 +155,7 @@ throw new Error('Method not implemented.');
         .getProjectsName(trimmedQuery)
         .subscribe((data: DashboardTable[]) => {
           this.projects = data;
-         
+
         });
     } else {
       // If the search box is empty, fetch all projects
@@ -237,14 +247,14 @@ throw new Error('Method not implemented.');
   saveChanges() {
     // Update the project with the new values
     this.loadPagedProjects();  // Reload the paginated project data
-    this.loadProjects();       
+    this.loadProjects();
     this.closeModal();
   }
 
   isAllSelected(): boolean {
     return this.selectedColumns.length === this.allColumns.length;
   }
-  
+
   onSelectAllChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -253,5 +263,5 @@ throw new Error('Method not implemented.');
       this.selectedColumns = [];
     }
   }
-  
+
 }
