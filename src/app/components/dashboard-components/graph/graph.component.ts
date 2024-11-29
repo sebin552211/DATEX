@@ -161,12 +161,12 @@ const predefinedColors = [
       // Update PieChart1 data dynamically
       this.pieData1 = this.getPieChartData(labels, counts, backgroundColors);
 
-      this.basicOptions1 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Technology', 'Count');
+      this.basicOptions1 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Technology', 'Project Count');
       this.pieOptions = this.getPieChartOptions(this.textColor);
 
       this.pieData2 = this.getPieChartData(projectTypeLabels, projectTypeCountsValues, projectTypeBackgroundColors);
 
-      this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Type', 'Count');
+      this.basicOptions2 = this.getBarChartOptions(this.textColor, this.textColorSecondary, this.surfaceBorder, 'Project Type', 'Project Count');
 
       this.pieData3 = this.getPieChartData(customerLabels, customerCountsValues, projectTypeBackgroundColors);
 

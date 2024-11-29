@@ -1,0 +1,184 @@
+/* Main container with gradient background */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #DC123C 70%, white 30%);
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+    overflow: hidden; /* Prevent any overflow that causes scrolling */
+    position: relative;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+  }
+  
+
+  
+  /* Header section styling */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    animation: slideInFromTop 1s ease-out; /* Slide-in animation from the top */
+  }
+  
+  /* Keyframes for sliding in the header */
+  @keyframes slideInFromTop {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Center footer content */
+  .footer {
+    display: flex;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    position: absolute;
+    bottom: 20px;
+    width: 100%; /* Full width */
+    animation: slideInFromBottom 1s ease-out; /* Slide-in animation from the bottom */
+  }
+  
+  /* Keyframes for sliding in the footer */
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Header image styling */
+  .header img {
+    height: 150px;
+    margin: 0; /* Remove margin for centering */
+  }
+  
+  /* Subtitle styling */
+  .subtitle {
+    font-size: 25px;
+    color: #ffffff;
+    margin: 10px 0; /* Adjust margins for spacing */
+    font-weight: 500;
+    opacity: 0; /* Start invisible */
+    transform: translateY(20px); /* Start slightly lower */
+    animation: fadeInSlideUp 1.5s ease-out forwards; /* Fade-in with slide-up animation */
+  }
+  
+  /* Keyframes for fade-in and slide-up effect */
+  @keyframes fadeInSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Content section */
+  .content {
+    text-align: center; /* Center-align text */
+    margin-top: 20px; /* Adjust margin for spacing */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center button horizontally */
+  }
+  
+  /* Microsoft sign-in button styling */
+  .microsoft-signin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 14px 30px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px auto; /* Center button */
+    animation: pulse 2s infinite; /* Add pulse animation */
+  }
+  
+  /* Keyframes for pulsing button */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Button icon styling */
+  .microsoft-signin-btn i {
+    font-size: 22px;
+    margin-right: 10px;
+  }
+  
+  /* Button hover effect */
+  .microsoft-signin-btn:hover {
+    border-color: #DC123C;
+    background-color: #f8f8f8;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px) scale(1.1); /* Scale up slightly on hover */
+  }
+  
+  /* Footer logo styling */
+  .logo {
+    width: 200px;
+    height: 60px;
+  }
+  
+  /* Keyframes for bouncing logo */
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-20px);
+    }
+    60% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header img {
+      height: 100px; /* Resize image for smaller screens */
+    }
+  
+    .subtitle {
+      font-size: 20px; /* Adjust font size for smaller screens */
+    }
+  
+    .microsoft-signin-btn {
+      font-size: 16px;
+      padding: 12px 25px;
+    }
+  
+    .logo {
+      width: 150px; /* Adjust logo size for smaller screens */
+    }
+  }
+  

@@ -1,0 +1,30 @@
+@if(!loginDisplay){
+    <div class="container">
+      <div>
+        <!-- Header with Title and Subtitle -->
+        <div class="header">
+          <img src="img/DATEX-removebg-preview 1.png" alt="Experion Logo">
+          <p class="subtitle">" Transforming Data into Experience "</p>
+        </div>
+    
+        <!-- Content Section with Transparent Box -->
+        <div class="content">
+          <button class="microsoft-signin-btn" (click)="loginRedirect()">
+            <i class="fa-brands fa-windows" style="color: #e13737;"></i>
+            Sign In with Microsoft
+          </button>
+        </div>
+      </div>
+    
+      <!-- Footer with Experion Technologies Logo -->
+      <div class="footer">
+        <img src="img/exp.png" alt="Experion Technologies Logo" class="logo" />
+      </div>
+    </div>
+  }
+
+  @else {
+    <app-auth></app-auth>
+  }
+
+  
