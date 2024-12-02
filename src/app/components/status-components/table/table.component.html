@@ -12,13 +12,18 @@
       <i class="fa fa-search search-icon" (click)="onSearch()"></i>
     </div>
     <div class="pagination-container">
-      <button (click)="changePage(pageNumber - 1)" [disabled]="pageNumber === 1">
+      <button
+        (click)="changePage(pageNumber - 1)"
+        [disabled]="pageNumber === 1"
+      >
         &lt;
       </button>
 
-      <button *ngFor="let page of paginationArray"
-              [ngClass]="{'active': page === pageNumber}"
-              (click)="changePage(page)">
+      <button
+        *ngFor="let page of paginationArray"
+        [ngClass]="{ active: page === pageNumber }"
+        (click)="changePage(page)"
+      >
         {{ page }}
       </button>
 
@@ -26,53 +31,97 @@
         ...
       </span>
 
-      <button (click)="changePage(totalPages)"
-              *ngIf="paginationArray[paginationArray.length - 1] < totalPages">
+      <button
+        (click)="changePage(totalPages)"
+        *ngIf="paginationArray[paginationArray.length - 1] < totalPages"
+      >
         {{ totalPages }}
       </button>
 
-      <button (click)="changePage(pageNumber + 1)" [disabled]="pageNumber === totalPages">
+      <button
+        (click)="changePage(pageNumber + 1)"
+        [disabled]="pageNumber === totalPages"
+      >
         &gt;
       </button>
     </div>
   </div>
 
+  <div class="filer" style="margin-bottom: -15px; margin-top: 0px;">
+    Criteria for eligibility date: &nbsp; &nbsp; &nbsp;
+    <app-vocfilter></app-vocfilter>
+  </div>
+
+  <br />
   <div class="table-wrapper">
     <table class="custom-table">
       <thead>
         <tr class="custom-header">
           <th class="fixed-column project-code">Project Code</th>
-          <th class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">Project Name</th>
+          <th
+            class="fixed-column project-name"
+            style="border-right: 2px solid #edf2f6"
+          >
+            Project Name
+          </th>
           <th *ngFor="let col of selectedColumns">{{ col.header }}</th>
         </tr>
       </thead>
       <tbody>
         <tr class="custom-row" *ngFor="let project of projects">
           <td class="fixed-column project-code">
-            <i class="fa-solid fa-pen custom-icon" (click)="openEditModal(project)"></i>
+            <i
+              class="fa-solid fa-pen custom-icon"
+              (click)="openEditModal(project)"
+            ></i>
             {{ project.projectCode }}
           </td>
-          <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">
+          <td
+            class="fixed-column project-name"
+            style="border-right: 2px solid #edf2f6"
+          >
             {{ project.projectName }}
           </td>
           <td *ngFor="let col of selectedColumns">
             <!-- Check if the column is a date field and format it -->
-            <span *ngIf="col.field === 'projectStartDate' || col.field === 'projectEndDate' || col.field === 'forecastedEndDate' || col.field === 'vocEligibilityDate'">
-              {{ project[col.field] | date: 'yyyy-MM-dd' }}
-            </span>
+            <span *ngIf="
+                col.field === 'projectStartDate' ||
+                col.field === 'projectEndDate' ||
+                col.field === 'forecastedEndDate' ||
+                col.field === 'vocEligibilityDate' ||
+                col.field === 'vocFeedbackReceivedDate' ||
+                col.field === 'pmInitiateDate' ">
 
+              {{ project[col.field] | date : "dd-MM-yyyy" }}
+            </span>
             <!-- Handle specific statuses -->
-            <span *ngIf="col.field === 'mailStatus' || col.field === 'feedbackStatus'"
+            <span
+              *ngIf="
+                col.field === 'mailStatus' || col.field === 'feedbackStatus'
+              "
               [ngClass]="{
-                'status-badge1': project[col.field] === 'Sent' || project[col.field] === 'Received',
-                'status-badge': project[col.field] !== 'Sent' && project[col.field] !== 'Received'
-              }">
+                'status-badge1':
+                  project[col.field] === 'Sent' ||
+                  project[col.field] === 'Received',
+                'status-badge':
+                  project[col.field] !== 'Sent' &&
+                  project[col.field] !== 'Received'
+              }"
+            >
               {{ project[col.field] }}
             </span>
 
             <!-- Display other fields without changes -->
-            <span *ngIf="col.field !== 'mailStatus' && col.field !== 'feedbackStatus' && 
-            col.field !== 'projectStartDate' && col.field !== 'projectEndDate' && col.field !== 'forecastedEndDate' && col.field !== 'vocEligibilityDate'">
+            <span
+              *ngIf="
+                col.field !== 'mailStatus' &&
+                col.field !== 'feedbackStatus' &&
+                col.field !== 'projectStartDate' &&
+                col.field !== 'projectEndDate' &&
+                col.field !== 'forecastedEndDate' &&
+                col.field !== 'vocEligibilityDate' &&
+                col.field !== 'pmInitiateDate' &&
+                col.field !== 'vocFeedbackReceivedDate'" >
               {{ project[col.field] }}
             </span>
           </td>
@@ -112,7 +161,9 @@
         </div>
       </div>
     </div>
-    <button class="import-button" (click)="openExcelModal(excelData)">Import Excel</button>
+    <button class="import-button" (click)="openExcelModal(excelData)">
+      Import Excel
+    </button>
     <button class="export-button" (click)="exportToExcel()">
       <i class="fa fa-download"></i> Export
     </button>

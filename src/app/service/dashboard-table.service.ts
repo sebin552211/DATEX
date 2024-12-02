@@ -5,6 +5,7 @@ import { DashboardTable } from '../interface/dashboard-table';
 import { ExcelRow } from '../interface/excel-row';
 import { SharedDataService } from './shared-data.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +13,8 @@ export class DashboardTableService {
  
   private apiUrl = 'https://localhost:7259/api/Project';
   private projectsData: BehaviorSubject<DashboardTable[]> = new BehaviorSubject<DashboardTable[]>([]);
+  private projectSubject = new BehaviorSubject<any>(null);
+  public project$ = this.projectSubject.asObservable();
 
 
   constructor(private http: HttpClient, private sharedDataService: SharedDataService) {}
@@ -28,6 +31,9 @@ export class DashboardTableService {
   //   );
   // }
 
+  updateProject(project: any) {
+    this.projectSubject.next(project);
+  }
   getProjects(filters: any = {}): Observable<DashboardTable[]> {
     console.log('Filters:', filters);
     let params = new HttpParams(); // Use HttpParams for query parameters
@@ -74,23 +80,67 @@ export class DashboardTableService {
         catchError(this.handleError)
     );
 }
-
-
-
-
-  
-  
-
-
-
   getLocalProjects(): Observable<DashboardTable[]> {
     return this.projectsData.asObservable(); // Return locally stored data as observable
   }
   updateProjects(data: ExcelRow[]): Observable<any> {
     return this.http.post(this.apiUrl + '/update', data);
   }
+ 
+  getProjectsByQuarter(quarter: number): Observable<any> {
+    return this.http.get(`api/projects/quarter/${quarter}`);
+  }
+
+  addVOCFeedbackReceivedDate(projectId: number, VOCFeedbackReceivedDates: Date): Observable<DashboardTable> {
+    const payload = { VOCFeedbackReceivedDate: VOCFeedbackReceivedDates };
+    console.log("Formatted Date: " + JSON.stringify(payload));
+
+    return this.http.post<DashboardTable>(
+        `${this.apiUrl}/${projectId}/VOCFeedbackReceivedDate`, payload); 
+  }
+
+  deleteVOCFeedbackReceivedDate(projectId : number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/${projectId}/VOCFeedbackReceivedDate`);
+  }
+
+  addPMInitiateDate(projectId: number, PMInitiateDates:Date):Observable<DashboardTable>{
+  const payload = { PMInitiateDate: PMInitiateDates };
+  return this.http.post<DashboardTable>(`${this.apiUrl}/${projectId}/PMIntiateDate`,payload);
+  }
   
+  deletePMInitiateDate(projectId:number): Observable<void>{
+    return this.http.delete<void>(`${this.apiUrl}/${projectId}/PMIntiateDate`);
+  }
+
+  getVOCFeedbackReceivedDate(projectId:number): Observable<DashboardTable> {
+
+    return this.http.get<DashboardTable>(`${this.apiUrl}/${projectId}/VOCFeedbackReceivedDate`);
+  }
+
+  AddProjectRemarks(projectId: number, remarks: string | null): Observable<DashboardTable> {
+    const updatePayload = { vocRemarks: remarks }; 
+    return this.http.post<DashboardTable>(`${this.apiUrl}/${projectId}/remarks`, updatePayload);
+  }
+
+  updateProjectRemarks(projectId: number, remarks: string | null): Observable<DashboardTable> {
+    const updatePayload = { vocRemarks: remarks }; // The payload to send to the backend
+
+    // Make an HTTP PUT request to update the remarks
+    return this.http.put<DashboardTable>(`${this.apiUrl}/${projectId}/remarks`, updatePayload);
+  }  
   
+  deleteProjectRemark(projectId: number): Observable<void> {
+    // Make an HTTP DELETE request to delete the remark
+    return this.http.delete<void>(`${this.apiUrl}/${projectId}/remarks`);
+  }
+
+  addPMmail(projectManager:string, pmMails: string): Observable<DashboardTable> {
+    return this.http.post<DashboardTable>(`${this.apiUrl}/${projectManager}?PMEmail=${encodeURIComponent(pmMails)}`,
+        null);
+  }
+  deletePMmail(projectManager:string){
+  return this.http.delete<DashboardTable>( `${this.apiUrl}/${projectManager}/PMMails`);
+  }
 
   // Error handling
   private handleError(error: HttpErrorResponse): Observable<never> {
@@ -116,7 +166,7 @@ export class DashboardTableService {
   }
 
   getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
-    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);    
   }
   private selectedFiltersSubject = new BehaviorSubject<{ [key: string]: string[] }>({});
   selectedFilters$ = this.selectedFiltersSubject.asObservable();

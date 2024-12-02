@@ -4,13 +4,14 @@ import { RouterOutlet } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { VocAnalysisService } from '../../../service/voc-analysis.service';
 import { VocAnalysis } from '../../../interface/voc-analysis';
+import { SharedDataService } from '../../../service/shared-data.service';
 
 @Component({
   selector: 'app-graph2',
   standalone: true,
   imports: [RouterOutlet, CommonModule, ChartModule],
   templateUrl: './graph.component.html',
-  styleUrls: ['./graph.component.css']
+  styleUrls: ['./graph.component.css'],
 })
 export class GraphComponent1 implements OnInit {
 
@@ -40,9 +41,11 @@ export class GraphComponent1 implements OnInit {
   textColorSecondary: string = '#6c757d';
   surfaceBorder: string = '#dee2e6';
 
+  savedDate: string | null = null;
+
   // Satisfactory Score
   satisfactory_score: number = 0;
-  constructor(private vocAnalysisService: VocAnalysisService) {}
+  constructor(private vocAnalysisService: VocAnalysisService, private sharedDateService: SharedDataService) {}
 
   ngOnInit() {
     // Fetch the VOC analysis data
@@ -60,7 +63,9 @@ export class GraphComponent1 implements OnInit {
       }
     );
 
-
+    this.sharedDateService.currentDate$.subscribe(date => {
+      this.savedDate = date;
+    });
 
 
 
@@ -255,9 +260,9 @@ export class GraphComponent1 implements OnInit {
 
     // Aggregate counts from the vocAnalyses data
     vocAnalyses.forEach(voc => {
-      if (voc.engageService === 'Likely') {
+      if (voc['engageService'] === 'Likely') {
         likelyCount++;
-      } else if (voc.engageService === 'Very Likely') {
+      } else if (voc['engageService'] === 'Very Likely') {
         veryLikelyCount++;
       }
     });
@@ -282,8 +287,8 @@ export class GraphComponent1 implements OnInit {
     let count = 0;
 
     vocAnalyses.forEach(voc => {
-      if (voc.score !== 0) {
-        totalScore += voc.score;
+      if (voc['score'] !== 0) {
+        totalScore += voc['score'];
         count++;
       }
     });
@@ -339,5 +344,27 @@ export class GraphComponent1 implements OnInit {
         }
       }
     };
+  }
+  
+  today(): string {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    const year = currentDate.getFullYear();
+    const ordinal = this.getOrdinalSuffix(day);
+
+    return `${day}${ordinal} ${month} ${year}`;
+  }
+
+  getOrdinalSuffix(day: number): string {
+    if (day >= 11 && day <= 13) {
+      return 'th';
+    }
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
   }
 }

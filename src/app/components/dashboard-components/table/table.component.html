@@ -5,7 +5,7 @@
     <!-- search -->
     <div class="search-container">
       <input
-        type="text"
+        type="text" 
         placeholder="Search Project Name"
         class="search-input"
         (input)="onSearch()"
@@ -62,7 +62,7 @@
           <td *ngFor="let col of selectedColumns">
             <!-- Check if the column is a date field and format it -->
             <span *ngIf="col.field === 'projectStartDate' || col.field === 'projectEndDate' || col.field === 'forecastedEndDate' || col.field === 'vocEligibilityDate'">
-              {{ project[col.field] | date: 'yyyy-MM-dd' }}
+              {{ project[col.field] | date: 'dd-MM-yyyy' }}
             </span>
 
             <!-- Handle specific statuses -->
@@ -79,7 +79,7 @@
             col.field !== 'projectStartDate' && col.field !== 'projectEndDate' && col.field !== 'forecastedEndDate' && col.field !== 'vocEligibilityDate'">
               {{ project[col.field] }}
             </span>
-          </td>
+          </td> 
         </tr>
       </tbody>
     </table>

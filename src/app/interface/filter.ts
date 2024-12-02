@@ -1,10 +1,12 @@
 export interface Filter {
 
 
-  du: { [key: string]: boolean };
-  duHead: { [key: string]: boolean };
+  DU: { [key: string]: boolean };
+  DUHead: { [key: string]: boolean };
   projectStartDate: { [key: string]: boolean };
   projectEndDate: { [key: string]: boolean };
+  financialyear: { [key: string]: boolean };
+  financialQuarter: {[key: string]: boolean},
   projectManager: { [key: string]: boolean };
   contractType: { [key: string]: boolean };
   customerName: { [key: string]: boolean };

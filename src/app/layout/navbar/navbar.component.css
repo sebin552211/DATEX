@@ -8,7 +8,7 @@
   width: 100%; /* Full width minus the sidebar */
   height: 1.3cm;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  z-index:2;
+  z-index:5;
 }
 
 i{
@@ -60,12 +60,29 @@ background-color: black;
   transition: opacity 0.3s;
 }
 
+.import-button {
+  padding: 8px 15px;
+  border-radius: 30px;
+  background-color: #DC123C;
+  color: white;
+  font-size: 16px;
+  margin-left: 50px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}
+
+.import-button:hover {
+  background-color: white; /* Slightly darker red on hover */
+  color: #DC123C;
+}
+
 .user:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
 }
 
-button{
+.logout{
   background-color: #ff4b5c; /* Red background color */
   color: white; /* White text */
   border: none; 
@@ -82,13 +99,12 @@ button{
 }
 
 
-button:hover{
+.logout:hover{
   background-color: #e84150; /* Slightly darker red on hover */
-  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
   transform: translateY(-2px); 
 }
 
-button:active {
+.logout:active {
   transform: translateY(1px); /* Slight press effect on click */
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Reduce shadow on click */
 }

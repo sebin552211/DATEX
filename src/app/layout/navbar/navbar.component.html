@@ -40,8 +40,19 @@
     <i class="fa-solid fa-user" style="margin-left: 7px; margin-top: 5px; height: 25px; width: 25px;"></i>
     <span class="tooltip-text">{{User}}</span>
   </div>
-  <button (click)="logout()">
+  @if(isVocAnalysisSelected == true){
+  <button class="import-button" (click)="openExcelModal(excelData)">
+    Import Excel
+  </button>
+  }
+  <button class="logout" (click)="logout()">
     Logout
   </button>
   </div>
+
+  <app-upload-excel
+  *ngIf="showExcelTable"
+  [excelData]="excelData"
+  (close)="showExcelTable = false"></app-upload-excel>
+
   

@@ -85,9 +85,9 @@
     padding: 20px;
     border-radius: 5px;
     width: 400px;
-    max-width: 90%;
+    max-width: 95%;
     overflow: auto;
-    height: 43%;
+    height: 65%;
   }
   .modal-overlay {
     position: fixed;

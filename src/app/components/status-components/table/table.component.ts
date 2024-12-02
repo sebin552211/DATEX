@@ -11,15 +11,12 @@ import { ExcelTableComponent } from '../../dashboard-components/excel-table/exce
 import { interval, Subscription } from 'rxjs';
 import { SignalRService } from '../../../service/signal-r.service';
 import { SharedDataService } from '../../../service/shared-data.service';
-
-
-
-
+import { VOCFilterComponent } from "../../../layout/vocfilter/vocfilter.component";
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule, EditModalComponent,ExcelTableComponent,HttpClientModule],
+  imports: [FormsModule, CommonModule, EditModalComponent, ExcelTableComponent, HttpClientModule, VOCFilterComponent],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
@@ -32,7 +29,12 @@ export class TableComponent implements OnInit ,OnDestroy{
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
   searchQuery: string = '';
+  isEditingRemark = false;
+  isEditing: boolean = false;  // Tracks if we are in edit mode
+  editableRemark: string = '';  // Holds the remark text for editing
+  currentProject: DashboardTable | null = null;  // The project currently being edited
   totalPages: number = 0;
+  flag: number = 0;
   currentPage: number = 1;
   dropdownVisible: boolean = false;
   selectedColumns: { field: keyof DashboardTable; header: string }[] = [];
@@ -43,6 +45,8 @@ export class TableComponent implements OnInit ,OnDestroy{
   pageSize: number = 7;
   totalProjects: number = 0;
   excelData: any[] = [];
+  yearly: string[] = [];
+  quaterly: string[] = [];
 
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
@@ -64,10 +68,14 @@ export class TableComponent implements OnInit ,OnDestroy{
     { field: 'cloudUsed', header: 'Cloud Used' },
     { field: 'mailStatus', header: 'Mail Status' },
     { field: 'feedbackStatus', header: 'Feedback Status' },
+    { field: 'vocFeedbackReceivedDate', header: 'VOC Feedback Received date'},
+    { field: 'vocRemarks', header: 'VOC Remarks'},
+    { field: 'pmInitiateDate', header: 'PM Initiate date'},
+    { field: 'pmMails', header: 'PM Email' },
   ];
  
   private projectsSubscription: Subscription | undefined;
-  constructor(private eRef: ElementRef, private renderer: Renderer2,    private dashboardTableService: DashboardTableService,   
+  constructor(private eRef: ElementRef, private renderer: Renderer2,  private dashboardTableService: DashboardTableService,   
     private cd: ChangeDetectorRef,
     private excelService: ExcelService,
     private http: HttpClient, private signalRService: SignalRService,
@@ -228,13 +236,12 @@ export class TableComponent implements OnInit ,OnDestroy{
     // Call the ExcelService to export the data
     this.excelService.exportAsExcelFile(exportData, 'ProjectDetails');
   }
-  
-
-
- 
+   
   editableColumns = [
     { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+    { field: 'vocRemarks', header: 'VOC Remarks' },
+    { field: 'pmMails', header: 'PM Mail'}
   ];
   
   openEditModal(project: DashboardTable) {
@@ -242,10 +249,18 @@ export class TableComponent implements OnInit ,OnDestroy{
     // For simplicity, let's assume you're using a service or a reference to open the modal
     this.isModalOpen = true;
     this.editableProject = { ...project }; // Copy project data to editableProject
-
-
-
   }
+
+  editRemark(project: DashboardTable): void {
+    this.isEditing = true;  // Set editing mode to true
+    this.currentProject = project;  // Set the project being edited
+    this.editableRemark = project.vocRemarks || '';  // Load the current remark into the textarea
+  }
+
+  startEditing(project: DashboardTable) {
+    this.editableProject = { ...project };
+  }
+
   closeModal() {
     this.isModalOpen = false;
     this.close.emit();
@@ -253,10 +268,17 @@ export class TableComponent implements OnInit ,OnDestroy{
 
   
   saveChanges() {
-    // Update the project with the new values
-    this.loadPagedProjects();  // Reload the paginated project data
-    this.loadProjects();       
-    this.closeModal();
+    const projectIndex = this.projects.findIndex(
+      (proj) => proj.projectCode === this.editableProject.projectCode
+    );
+  
+    if (projectIndex > -1) {
+      this.projects[projectIndex] = { ...this.editableProject } as DashboardTable;
+    }
+  
+    this.isModalOpen = false; // Close modal
+    this.loadPagedProjects(); // Reload projects to reflect updates
+    this.loadProjects();
   }
   isAllSelected(): boolean {
     return this.selectedColumns.length === this.allColumns.length;

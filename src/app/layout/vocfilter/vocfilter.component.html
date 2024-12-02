@@ -1,0 +1,55 @@
+<div class="filters">
+  <div class="dropdown" style="margin-right: 100px;">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      (click)="toggleDropdown('financialYear')">
+      <ng-container *ngIf="!getSelectedYear(); else yearSelected">
+        <span class="filter-label">Financial Year</span>
+      </ng-container>
+      <ng-template #yearSelected>
+        <span class="filter-label floating">Financial Year</span>
+        <span class="selected-value">{{ getSelectedYear() }}</span>
+      </ng-template>
+    </button>
+    <div class="dropdown-menu" *ngIf="dropdownVisible['financialYear']">
+      <label
+        *ngFor="let year of financialYears"
+        class="floating-label-container">
+        <input
+          type="checkbox"
+          [value]="year"
+          (change)="onFilterChange($event, 'financialYear')"
+          [checked]="isSelectedFilter('financialYear', year)"/>
+        <span>{{ year }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="dropdown" style="margin-right: -500px;">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      (click)="toggleDropdown('financialQuarter')">
+      <ng-container *ngIf="!getSelectedQuarter(); else quarterSelected">
+        <span class="filter-label">Financial Quarter</span>
+      </ng-container>
+      <ng-template #quarterSelected>
+        <span class="filter-label floating">Financial Quarter</span>
+        <span class="selected-value">{{ getSelectedQuarter() }}</span>
+      </ng-template>
+    </button>
+    <div class="dropdown-menu" *ngIf="dropdownVisible['financialQuarter']">
+      <label
+        *ngFor="let quarter of financialQuarters"
+        class="floating-label-container">
+        <input
+          type="checkbox"
+          [value]="quarter"
+          (change)="onFilterChange($event, 'financialQuarter')"
+          [checked]="isSelectedFilter('financialQuarter', quarter)"/>
+        <span>{{ quarter }}</span>
+      </label>
+    </div>
+  </div>
+</div>

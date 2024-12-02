@@ -8,8 +8,7 @@
             <ng-container *ngIf="col.type === 'select'; else defaultInput">
               <select
                 [ngModel]="getEditableProjectField(col.field)"
-                (ngModelChange)="setEditableProjectField(col.field, $event)"
-              >
+                (ngModelChange)="setEditableProjectField(col.field, $event)">
                 <option *ngFor="let option of col.options" [value]="option">{{ option }}</option>
               </select>
             </ng-container>
@@ -19,7 +18,7 @@
                 [ngModel]="getEditableProjectField(col.field)"
                 (ngModelChange)="setEditableProjectField(col.field, $event)"
               />
-            </ng-template>
+            </ng-template>           
           </label>
         </div>
       </div>
@@ -35,7 +34,6 @@
   <div *ngIf="errorMessage" class="alert alert-danger">
     {{ errorMessage }}
   </div>
-  
-  <!-- Your existing template code -->
+
   
 

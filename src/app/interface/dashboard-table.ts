@@ -26,7 +26,10 @@ export interface DashboardTable {
   cloudUsed: string | null;
   feedbackStatus: string | null;
   mailStatus: string | null;
-
+  vocFeedbackReceivedDate: Date | null;
+  vocRemarks: string | null;
+  pmInitiateDate: Date | null;
+  pmMails: string | null;
 }
 
 

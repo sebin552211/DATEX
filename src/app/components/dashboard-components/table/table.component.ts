@@ -17,13 +17,14 @@ import { DashboardTable } from '../../../interface/dashboard-table';
 import { CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
+import { VOCFilterComponent } from "../../../layout/vocfilter/vocfilter.component";
 
 
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule, EditModalComponent,  HttpClientModule],
+  imports: [FormsModule, CommonModule, EditModalComponent, HttpClientModule, VOCFilterComponent],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
@@ -96,9 +97,6 @@ throw new Error('Method not implemented.');
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
       this.projects = projects;
     });
-
-
-    
   }
 
   loadProjects() {

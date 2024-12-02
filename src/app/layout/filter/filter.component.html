@@ -65,31 +65,55 @@
 </div>
  
  
-<!-- DU & DU Head Filter -->
+<!-- DUFilter -->
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('dusAndDuHeads')">
+  <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('DU')"> 
     <!-- Conditionally render the label based on the selection -->
-    <ng-container *ngIf="!getSelectedDusAndDuHeads(); else dusAndDuHeadsSelected">
-      <span class="filter-label">DU & DU Head</span>
-    </ng-container>
+     <ng-container *ngIf="!getSelectedDU(); else DusSelected">
+      <span class="filter-label">DU</span>
+    </ng-container> 
     <!-- Content to show when a value is selected -->
-    <ng-template #dusAndDuHeadsSelected>
-      <span class="filter-label floating">DU & DU Head</span>
-      <span class="selected-value">{{ getSelectedDusAndDuHeads() }}</span>
+     <ng-template #DusSelected>
+      <span class="filter-label floating">DU</span>
+      <span class="selected-value">{{ getSelectedDU() }}</span>
     </ng-template>
   </button>
-  <div class="dropdown-menu" *ngIf="dropdownVisible['dusAndDuHeads']">
-    <label *ngFor="let dusAndDuHead of dusAndDuHeads" class="floating-label-container">
+  <div class="dropdown-menu" *ngIf="dropdownVisible['DU']">
+    <label *ngFor="let DU of DUs" class="floating-label-container">
       <input
         type="checkbox"
-        [value]="dusAndDuHead"
-        (change)="onFilterChange($event, 'dusAndDuHeads')"
-        [checked]="isSelectedFilter('dusAndDuHeads', dusAndDuHead)">
-      <span>{{ dusAndDuHead }}</span>
+        [value]="DU"
+        (change)="onFilterChange($event, 'DU')"
+        [checked]="isSelectedFilter('DU', DU)">
+      <span>{{ DU }}</span>
     </label>
   </div>
 </div>
- 
+
+<!-- DU Head Filter -->
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('DUHead')">
+    <!-- Conditionally render the label based on the selection -->
+    <ng-container *ngIf="!getSelectedDUHead(); else DUHeadsSelected">
+      <span class="filter-label">DU Head</span>
+    </ng-container>
+    <!-- Content to show when a value is selected -->
+    <ng-template #DUHeadsSelected>
+      <span class="filter-label floating">DU Head</span>
+      <span class="selected-value">{{ getSelectedDUHead() }}</span>
+    </ng-template>
+  </button>
+  <div class="dropdown-menu" *ngIf="dropdownVisible['DUHead']">
+    <label *ngFor="let DUHead of DuHeads" class="floating-label-container">
+      <input
+        type="checkbox"
+        [value]="DUHead"
+        (change)="onFilterChange($event, 'DUHead')"
+        [checked]="isSelectedFilter('DUHead', DUHead)">
+      <span>{{ DUHead }}</span>
+    </label>
+  </div>
+</div> 
  
 <!-- Region Filter -->
 <div class="dropdown">
@@ -375,7 +399,6 @@
       <span>{{ cloudUsed }}</span>
     </label>
   </div>
-</div>
- 
+</div> 
  
 </div>

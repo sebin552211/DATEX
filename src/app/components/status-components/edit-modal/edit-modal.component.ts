@@ -4,20 +4,23 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
+import { switchMap } from 'rxjs';
 
 
 interface EditableProject {
   [key: string]: string | number | Date | undefined;
   feedbackStatus?: string;
   vocEligibilityDate?: Date;
+  vocRemarks? : string;
+  mailStatus? : string;
+  pmMails?: string;
 }
-
-
 
 @Component({
   selector: 'app-edit-modal',
   standalone: true,
   imports: [FormsModule, CommonModule],
+  // providers: [DatePipe],
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.css'
 })
@@ -39,9 +42,12 @@ export class EditModalComponent {
 
   editableColumns = [
     { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
-    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date'}, 
+    { field: 'vocRemarks', header: 'VOC Remarks' },
+    { field: 'pmMails', header: 'PM Email' },
   ];
-  constructor(private dashboardService: DashboardTableService,private http: HttpClient, private cdr: ChangeDetectorRef) {}
+
+  constructor(private dashboardService: DashboardTableService, private http: HttpClient, private cdr: ChangeDetectorRef) {}
   getEditableProjectField(field: string): any {
     return this.editableProject[field as keyof DashboardTable];
   }
@@ -49,16 +55,96 @@ export class EditModalComponent {
   setEditableProjectField(field: string, value: any): void {
     this.editableProject[field as keyof DashboardTable] = value;
   }
-
   closeModal() {
     this.isModalOpen = false;
     this.close.emit();
   }
-
   saveChanges() {
-    // Reset messages
-    this.successMessage = null;
-    this.errorMessage = null;
+    if (this.editableProject.feedbackStatus === 'Received') {
+      const currentDate = new Date();
+  
+      this.dashboardService.addVOCFeedbackReceivedDate(this.editableProject.projectId!, currentDate)
+      .subscribe(
+        (updatedProject) => {
+          // Find the project in the list and update its remarks
+          const index = this.projects.findIndex(p => p.projectId === updatedProject.projectId);
+          if (index !== -1) {
+            this.projects[index] = updatedProject;
+          }
+          this.dashboardService.updateProject(updatedProject);
+          this.cdr.detectChanges();  // Trigger change detection
+        },
+        (error) => {
+          console.error('Error saving remarks:', error);
+        }
+      );
+    } else {
+      this.dashboardService.deleteVOCFeedbackReceivedDate(this.editableProject.projectId!)
+        .subscribe({
+          next: () => {
+            console.log('Feedback received date deleted successfully.');
+  
+            // Optionally reset the project data
+            this.dashboardService.updateProject(null);
+          },
+          error: (error) => {
+            console.error('Error deleting feedback received date:', error);
+          }
+        });
+    }  
+    
+    if (this.editableProject.mailStatus === 'Sent') {
+      const currentDate = new Date(); 
+      this.dashboardService.addPMInitiateDate(this.editableProject.projectId!, currentDate)
+      .subscribe({
+        next: (response) => {
+            console.log('PMInitiate received date added successfully:', response);
+        },
+        error: (error) => {
+            console.error('Error adding PMInitiate received date:', error);
+        }
+    });      
+    }
+    else{
+      this.dashboardService.deletePMInitiateDate(this.editableProject.projectId!);
+    }
+    if(this.editableProject.vocRemarks){
+    this.dashboardService.updateProjectRemarks(this.editableProject.projectId!, this.editableProject.vocRemarks!)
+      .subscribe(
+        (updatedProject) => {
+          this.dashboardService.updateProject(updatedProject);
+          this.cdr.detectChanges();  // Trigger change detection
+        },
+        (error) => {
+          console.error('Error saving remarks:', error);
+        }
+      );
+    }
+    else{
+      this.dashboardService.deleteProjectRemark(this.editableProject.projectId!)
+      .subscribe((response) => {
+        this.dashboardService.updateProject(response);
+        this.cdr.detectChanges();
+      });
+    }
+    if(this.editableProject.pmMails!){
+    this.dashboardService.addPMmail(this.editableProject.projectManager!,this.editableProject.pmMails!).subscribe({
+      next: (response) => {
+          console.log('PM Mail added successfully:', response);
+          this.dashboardService.updateProject(response);
+          this.cdr.detectChanges();
+      },
+      error: (error) => {
+          console.error(' Error adding PM Mail:', error);
+      }
+  }); 
+}
+else{
+  this.dashboardService.deletePMmail(this.editableProject.projectManager!).subscribe((response) => {
+    this.dashboardService.updateProject(response);
+    this.cdr.detectChanges();
+  });
+}     
   
     // Make an HTTP PUT request to update the project in the backend
     this.http.put(`https://localhost:7259/api/Project/editable/${this.editableProject.projectId}`, this.editableProject)
@@ -97,10 +183,6 @@ export class EditModalComponent {
           setTimeout(() => this.errorMessage = null, 5000);
         }
       );
-  }
-  
-  
-  
-  
+  }  
 }
 
