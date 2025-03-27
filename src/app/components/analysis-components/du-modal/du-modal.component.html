@@ -1,0 +1,17 @@
+<div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>Edit Modal</h3>
+      <label for="surveyIdDropdown">Survey Id:</label>
+    <select id="surveyIdDropdown" [(ngModel)]="selectedSurveyId">
+      <option *ngFor="let surveyId of SurveyIds" [value]="surveyId">
+        {{ surveyId }}
+      </option>
+    </select>
+
+    <label for="du">Enter DU:</label>
+    <input id="du" type="text" [(ngModel)]="selectedDu" placeholder="Enter DU value" />
+      <button id="save" (click)="saveChanges()">Save</button>
+      <button id="delete" (click)="Delete()">Delete</button>
+      <button id="close" (click)="closeModal()">Close</button>
+    </div>
+</div>

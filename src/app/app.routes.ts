@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './pages/login/login.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { AuthComponent } from './auth/auth.component';
+import { DatePipe } from '@angular/common';
 
 
 export const routes: Routes = [
@@ -40,6 +41,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [DatePipe]
 })
 export class AppRoutingModule { }

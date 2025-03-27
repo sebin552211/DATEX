@@ -5,7 +5,7 @@
     <!-- search -->
     <div class="search-container">
       <input
-        type="text"
+        type="text" 
         placeholder="Search Project Name"
         class="search-input"
         (input)="onSearch()"
@@ -43,7 +43,7 @@
   <!-- table -->
   <div class="table-wrapper">
     <table class="custom-table">
-      <thead>
+      <thead> 
         <tr class="custom-header">
           <th class="fixed-column project-code">Project Code</th>
           <th class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">Project Name</th>
@@ -54,6 +54,13 @@
         <tr class="custom-row" *ngFor="let project of projects">
           <td class="fixed-column project-code">
             <i class="fa-solid fa-pen custom-icon" (click)="openModal(project)"></i>
+            <input 
+              type="checkbox" 
+              id="plusimg"
+              [checked]="isProjectInCpro(project)" 
+              (change)="toggleProject(project, $event)"
+              [ngClass]="{ 'green': isProjectInCpro(project) }"
+              (click)="addProject(project)"/>
             {{ project.projectCode }}
           </td>
           <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">
@@ -62,7 +69,7 @@
           <td *ngFor="let col of selectedColumns">
             <!-- Check if the column is a date field and format it -->
             <span *ngIf="col.field === 'projectStartDate' || col.field === 'projectEndDate' || col.field === 'forecastedEndDate' || col.field === 'vocEligibilityDate'">
-              {{ project[col.field] | date: 'yyyy-MM-dd' }}
+              {{ project[col.field] | date: 'dd-MM-yyyy' }}
             </span>
 
             <!-- Handle specific statuses -->
@@ -79,7 +86,7 @@
             col.field !== 'projectStartDate' && col.field !== 'projectEndDate' && col.field !== 'forecastedEndDate' && col.field !== 'vocEligibilityDate'">
               {{ project[col.field] }}
             </span>
-          </td>
+          </td> 
         </tr>
       </tbody>
     </table>
@@ -120,9 +127,6 @@
         </div>
       </div>
     </div>
-    
-
-
     <button class="export-button" (click)="exportToExcel()">
       <i class="fa fa-download"></i> Export
     </button>

@@ -135,11 +135,11 @@
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0.1, 0.1, 0.1);
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     border-radius: 30px;
     margin-bottom: 20px;
-    max-height: 400px; /* Set a fixed maximum height */
-    height: 400px;
+    max-height: 450px; /* Set a fixed maximum height */
+    height: 450px;
 
   }
   .status-badge1 {
@@ -149,8 +149,8 @@
     text-align: center;
      /* Fixed width */
     border-radius: 4px; /* Rounded corners */
-    background-color: #d4edda;
-    color: #155724;
+    /* background-color: #d4edda; */
+    color: #00da33;
     width: 80px;
 }
 .status-badge {
@@ -160,14 +160,15 @@
   text-align: center;
    /* Fixed width */
   border-radius: 4px; /* Rounded corners */
-  background-color: #f8d7da;
-  color: #721c24;
+  /* background-color: #f8d7da; */
+  color: #ff0c25;
   width: 80px;
 }
 
 
 
   .custom-table {
+    
      background-color: #FFFFFF;
     border-collapse: separate;
     border-spacing: 0;
@@ -196,8 +197,7 @@
   }
 
   .custom-row td {
-
-    border-bottom:2px solid #EDF2F6;
+    border-bottom:2px solid #EDF2F6;    
   }
 
   /* .custom-row td.fixed-column {
@@ -209,7 +209,7 @@
     position: sticky;
     left: 0;
     background-color: rgba(255, 255, 255, 1);
-    z-index: 1;
+    z-index: 5;
 
   }
 
@@ -229,8 +229,11 @@
   }
 
   .custom-table thead {
+    position: sticky;
+  top: 0;
     background-color: #f7f7f7;
     color: #ff4c60;
+    z-index: 100;
   }
 
   .custom-table th {
@@ -248,6 +251,7 @@
   .custom-table tbody tr {
     border-bottom: 1px solid #e8e8e8;
     transition: background-color 0.3s ease;
+    z-index: 1;
   }
 
   .custom-table tbody tr:hover {
@@ -261,6 +265,7 @@
   .custom-table [pFrozenColumn] {
     position: sticky;
     left: 0;
+    top:0;
     background-color: #ffffff;
     z-index: 2;
     border-right: 1px solid #e8e8e8;
@@ -270,11 +275,13 @@
     height: 50px; /* Adjust the height value to increase column height */
   }
   .custom-icon {
-    color: #96A5B8; /* Change the color */
-    font-size: 12px; /* Adjust the size */
-    margin-right: 12px; /* Add some space after the icon */
-    vertical-align: middle; /* Align icon with text */
-  }
+    color: #96A5B8; /* Icon color */
+    font-size: 12px; /* Icon size */
+    position: absolute; /* Position the icon absolutely */
+    left: 10px; /* Adjust the horizontal alignment (distance from the left edge) */
+    top: 50%; /* Center the icon vertically */
+    transform: translateY(-50%); /* Correct vertical centering */
+  }  
 
   .custom-icon:hover
   {
@@ -358,6 +365,10 @@
     font-weight: normal;
   }
 
+  .filer{
+    display: flex;
+    flex-wrap: wrap;
+  }
   .placeholder:hover {
     background-color: #ff1744;
     color: #ffffff;
@@ -410,6 +421,7 @@
   .dropdown-item input[type="checkbox"]:disabled + span {
     background-color: #e0e0e0;
     color: #9e9e9e;
+    z-index: 1;
   }
 
   .dropdown-item:hover {
@@ -459,6 +471,15 @@
 .import-button:hover {
   background-color: #ff1744;
   color: #ffffff;
+}
+
+button {
+  margin-left: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 25px;
 }
 
 /* Responsive adjustments for controls */

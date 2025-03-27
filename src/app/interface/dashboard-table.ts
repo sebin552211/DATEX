@@ -1,4 +1,5 @@
 export interface DashboardTable {
+  filter(arg0: (project: any) => boolean): any;
   technologies: any;
   type: any;
   projectId: number;
@@ -6,8 +7,8 @@ export interface DashboardTable {
   projectName: string;
   du: string;
   duHead: string;
-  projectStartDate: Date;
-  projectEndDate: Date;
+  projectStartDate: Date | null;
+  projectEndDate: Date | null;
   projectManager: string;
   contractType: string;
   numberOfResources: number;
@@ -16,8 +17,8 @@ export interface DashboardTable {
   technology: string;
   status: string;
   sqa: string | null;
-  forecastedEndDate: Date| null;
-  vocEligibilityDate: Date | null;
+  forecastedEndDate: string | null;
+  vocEligibilityDate: string | null;
   projectDurationInDays: number;
   projectDurationInMonths: number;
   projectType: string | null;
@@ -26,7 +27,10 @@ export interface DashboardTable {
   cloudUsed: string | null;
   feedbackStatus: string | null;
   mailStatus: string | null;
-
+  vocFeedbackReceivedDate: Date | null;
+  vocRemarks: string | null;
+  pmInitiateDate: Date | null;
+  pmMails: string | null;
 }
 
 

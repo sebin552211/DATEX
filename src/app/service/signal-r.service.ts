@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class SignalRService {
+  
   private hubConnection!: signalR.HubConnection;  
   private mailStatusUpdatedSource = new BehaviorSubject<void>(undefined);  // Use undefined instead of null
   mailStatusUpdated$ = this.mailStatusUpdatedSource.asObservable();
@@ -14,7 +15,9 @@ export class SignalRService {
     this.startConnection();
     this.addMailStatusListener();
   }
-
+  notifyProjectUpdated() {
+    this.hubConnection.invoke('NotifyProjectsUpdated').catch((err: any) => console.error(err));
+  }
   private startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:7259/mailStatusHub')

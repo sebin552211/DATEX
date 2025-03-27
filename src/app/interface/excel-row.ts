@@ -3,7 +3,7 @@ export interface ExcelRow {
   ProjectCode: string;
   SQA: string;
   ForecastedEndDate?: Date;
-  VOCEligibilityDate?: Date;
+  VOCEligibilityDate?: string;
   ProjectType: string;
   Domain: string;
   DatabaseUsed: string;
