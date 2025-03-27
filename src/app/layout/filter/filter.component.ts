@@ -46,8 +46,6 @@ onApplyFilters() {
   filters: Filter = {
     DU: {},
     DUHead: {},
-    financialyear:{},
-    financialQuarter: {},
     projectStartDate: {},
     projectEndDate: {},
     projectManager: {},
@@ -63,15 +61,14 @@ onApplyFilters() {
     databaseUsed: {},
     cloudUsed: {},
     feedbackStatus: {},
-    mailStatus: {}
+    mailStatus: {},
+    projectCode: {}
   };
 
   statuses: string[] = [];
   contractTypes: string[] = [];
   DUs: string[] = [];
   DuHeads: string[] = [];
-  yearly: string[] = [];
-  quaterly: string[] = [];
   regions: string[] = [];
   customerNames: string[] = [];
   technologies: string[] = [];
@@ -79,12 +76,11 @@ onApplyFilters() {
   projectEndDates: string[] = [];
   projectManagers: string[] = [];
   sqas: string[] = [];
+  projectCodes: string[]=[];
   projectTypes: string[] = [];
   domains: string[] = [];
   databasesUsed: string[] = [];
   cloudsUsed: string[] = [];
-  financialQuarters: string[] = ['Q1 (April - June)', 'Q2 (July-September)', 'Q3 (October-December) ', 'Q4 (January - March)'];
-  selectedQuarter: string | null = null;
   showStatus: boolean = false;
   showContractType: boolean = false;
   showDu: boolean = false;
@@ -124,11 +120,18 @@ onApplyFilters() {
     if (!this.selectedFilters[filterKey].includes(value)) {
       this.selectedFilters[filterKey].push(value);
     }
+    // if (filterKey === 'projectCode') {
+    //   this.updateSurveyId();
+    // }
   }
   getDistinctValues(projects: any[], key: string): string[] {
     return [...new Set(projects.map(project => project[key]))];
   }
 
+  // updateSurveyId(): void {
+  //   const surveyId = this.getSelectedProjectCode();
+  //   this.dashboardFilterService.updateSurveyId(surveyId);
+  // }
   toggleDropdown(filterKey: string): void {
     this.dropdownVisible[filterKey] = !this.dropdownVisible[filterKey];
   }
@@ -155,7 +158,6 @@ getSelectedContractType(): string | null {
   return null; 
 }
 
-// Method to get selected DU & DU Heads for display
 getSelectedDU(): string | null {
   const selectedDus = this.selectedFilters['DU'];
   if (selectedDus && selectedDus.length > 0) {
@@ -288,6 +290,18 @@ getSelectedDatabaseUsed(): string | null {
   return null;
 }
 
+
+getSelectedProjectCode(): string | null {
+  const selectedProjectCode = this.selectedFilters['projectCode']
+  if (selectedProjectCode && selectedProjectCode.length > 0) {
+
+    return selectedProjectCode.length > 1
+      ? selectedProjectCode.join(', ') 
+      : selectedProjectCode[0]; 
+  }
+  return null; 
+}
+
 // Method to get selected Cloud Used for display
 getSelectedCloudUsed(): string | null {
   const selectedCloudsUsed = this.selectedFilters['cloudUsed'];
@@ -315,6 +329,11 @@ getSelectedCloudUsed(): string | null {
     }
     // Apply filters based on new selection
     this.applyFilters();
+
+    // if (filterKey === 'projectCode') {
+    //   const surveyId = this.getSelectedProjectCode();
+    //   this.dashboardFilterService.updateSurveyId(surveyId);
+    // }
   }
 
   applyFilters(): void {
@@ -348,6 +367,7 @@ getSelectedCloudUsed(): string | null {
     this.domains = getNonNullDistinctValues(projects, 'domain');
     this.databasesUsed = getNonNullDistinctValues(projects, 'databaseUsed');
     this.cloudsUsed = getNonNullDistinctValues(projects, 'cloudUsed');
+    this.projectCodes = getNonNullDistinctValues(projects, 'projectCode');
     this.dropdownVisible = {};    
   }
 

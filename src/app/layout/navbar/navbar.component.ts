@@ -13,18 +13,20 @@ import { UploadExcelComponent } from "../../components/upload-excel/upload-excel
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, FilterComponent, RouterLink, ExcelTableComponent, UploadExcelComponent],
+  imports: [CommonModule, RouterLink, UploadExcelComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  User='ACE Team';
+  User = 'ACE Team';
   items: MenuItem[] | undefined;
   fullUrl: string = '';
+  hoverText: string = 'Import Excel';
   isDashboardSelected = true;
   isVocStatusSelected = false;
   isVocAnalysisSelected = false;
   excelData: any[] = [];
+  showTooltip = false;
 
   constructor(private authService: MsalService, private router: Router, private vocAnalysisService: VocAnalysisService) {}
 
@@ -61,25 +63,21 @@ export class NavbarComponent {
     }
   }
 
-  // Function to handle dashboard selection
   selectDashboard() {
     this.resetSelections();
     this.isDashboardSelected = true;
   }
 
-  // Function to handle VOC status selection
   selectVocStatus() {
     this.resetSelections();
     this.isVocStatusSelected = true;
   }
 
-  // Function to handle VOC analysis selection
   selectVocAnalysis() {
     this.resetSelections();
     this.isVocAnalysisSelected = true;
   }
 
-  // Reset all selections
   resetSelections() {
     this.isDashboardSelected = false;
     this.isVocStatusSelected = false;

@@ -14,7 +14,7 @@ body {
  
 /* Filter sidebar styles */
 .filters {
-  width: 6cm; /* Adjust as needed */
+  width: 6cm; 
   position: fixed;
   height: 93vh;
   top: 50px;
@@ -25,46 +25,39 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px; /* Adjusted padding */
+  padding: 10px; 
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* Add a slight shadow */
+  flex-direction: column; 
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* Add a slight shadow */
+  flex-direction: column; 
 }
  
 .filter-heading {
-  
- display: flex;
+  display: flex;
   font-size: 1rem;
-  /* margin-bottom: 20px; */
-  color: #333; /* Darker text color */
-  text-align: center; /* Centered heading */
+  color: #333; 
+  text-align: center; 
 }
-.filter-container
-{
- 
- 
+.filter-container{
   margin-bottom: 10px;
   display: flex;
-  
-
   gap:60px
 }
  
 /* Dropdown styles */
 .dropdown {
   position: relative;
-  width: 100%; /* Full width of the sidebar */
-  margin-bottom: 15px; /* Add margin between dropdowns */
+  width: 50%; 
+  margin-bottom: 15px; 
 }
  
 /* Button styles */
 .btn-secondary {
-  width: 100%; /* Full width of the parent container */
-  height: 35px; /* Reduced height */
-  padding: 8px; /* Reduced padding */
+  width: 70%; 
+  height: 35px; 
+  padding: 8px; 
   border: 1.8px solid #ccc;
   border-radius: 4px;
   background-color: white;
@@ -133,18 +126,18 @@ body {
   border: 1px solid #ccc;
   border-top: none;
   border-radius: 0 0 4px 4px;
-  max-height: 150px; /* Reduced max height */
+  max-height: 150px; 
   overflow-y: auto;
   z-index: 1000;
-  padding: 5px; /* Reduced padding */
+  padding: 5px; 
 }
  
 /* Checkbox container styles */
 .floating-label-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; /* Margin between checkboxes */
-  font-size: 0.75rem; /* Smaller font size */
+  margin-bottom: 10px;
+  font-size: 0.75rem; 
 }
  
 /* Checkbox styles */
@@ -158,7 +151,7 @@ body {
  
 /* Filter actions styles */
 .filter-actions {
-  width: 100%;
+  width: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -169,9 +162,7 @@ body {
 .filter-button:hover {
   background-color:#ccffd1 ; /* Darker blue on hover */
   color: #3CD856;
-}
- 
- 
+} 
  
 .filter-button {
   background-color: #DC123C;
@@ -182,7 +173,7 @@ body {
   cursor: pointer;
   font-size: 0.75rem;
   min-width: fit-content;
-  height:fit-content; /* Let height adjust to content */
+  height:fit-content; 
   line-height: 1.5;
 }
  
@@ -197,26 +188,22 @@ body {
   font-size: 13px;
  margin-right: 10px;
  height: 1.3rem;
-  color: #575252; /* Customize this color as needed */
- /* Light background color */
- /* Adjust padding to fit around the icon */
-   /* Light border */
-  border-radius: 4px; /* Rounded corners */
+  color: #575252;
+  border-radius: 4px; 
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
  
 .custom-icon:hover {
-  color: #DC123C; /* Darker color on hover */
-  background-color: #e2e6ea; /* Slightly darker background on hover */
-  border-color: #ccc; /* Darker border on hover */
+  color: #DC123C;
+  background-color: #EFF1F3; 
+  border-color: #ccc; 
 }
  
 .custom-icon:active {
-  color: #004080; /* Even darker color on click */
-  background-color: #d6d8db; /* Even darker background on click */
-  border-color: #bbb; /* Darker border on click */
+  color: #004080;
+  background-color: #d6d8db; 
+  border-color: #bbb; 
 }
-
  
 .dropdown-menu.custom-scrollbar {
   max-height: 200px;
@@ -236,7 +223,6 @@ body {
   background: #f1f1f1;
 }
 
-
 /* Main filter sidebar styles */
 .filters {
   width: 6cm;
@@ -254,29 +240,11 @@ body {
   align-items: center;
 }
 
-/* Adjustments for filter heading and icons */
-/* .filter-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
-} */
-
-/* .filter-heading {
-  display: flex;
-  align-items: center;
-  font-size: 1.3rem;
-  color: #333;
-  margin: 0;
-} */
-
 .custom-icon {
   font-size: 18px;
   cursor: pointer;
-  margin-top: -22px;
+  /* margin-top: -22px; */
   color: #575252;
-  margin-left: 45px;
 }
 
 .filter-actions {
@@ -317,13 +285,6 @@ body {
   color: #86888a;
 }
 
-/* Styling for reset icon hover state */
-.custom-icon:hover {
-  color: #DC123C;
-  background-color: #e2e6ea;
-  border-color: #ccc;
-}
-
 /* Scrollbar customization */
 .filters::-webkit-scrollbar {
   width: 4px;
@@ -337,3 +298,18 @@ body {
 .filters::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
+
+.custom-icon {  
+  color: #96A5B8; 
+  font-size: 20px; 
+  background-color: #f1f1f1;
+  position: relative; 
+}
+
+.delete{
+  position: relative;
+  left: 30px;
+  color: #96A5B8;
+}
+

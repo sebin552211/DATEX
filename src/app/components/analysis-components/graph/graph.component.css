@@ -1,8 +1,8 @@
 .graph_dashboard {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Two columns layout */
-  grid-template-rows: auto; /* Adjust rows based on content */
-  gap: 20px; /* Space between cards */
+  grid-template-columns: 2fr 1fr; 
+  grid-template-rows: auto; 
+  gap: 20px; 
   margin-left: 6.5cm;
   margin-top: 0.5cm;
 }
@@ -16,14 +16,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 7.5cm; /* Minimum height to ensure uniformity */
-  height: auto; /* Allow height to adjust based on content */
+  max-height: 7.5cm; 
+  height: auto; 
 }
 
 ::ng-deep canvas {
   width: 8cm;
   height: auto;
-  max-height: 4.5cm; /* Adjust height to fit content */
+  max-height: 4.5cm; 
 }
 
 .card-header {
@@ -51,40 +51,73 @@ p-chart {
 }
 
 .card p-chart[type="pie"] {
-  width: 80%;
+  width: 60%;
   max-width: 450px;
-  height: auto; /* Adjust height to fit the chart content */
+  height: auto; 
 }
 
 .cardnumber {
-  font-size:95px;
+  font-size:70px;
   font-weight: bold;
-  margin-right: 30px;
-  margin-left: 20px;
-  margin-top: 20px;
 }
 
-.satisfactorycard {
-  background-color: #FFE2E5;
-}
+/* .satisfactorycard{
+color: red;
+} */
 
 .cardtext {
-  font-size: 30px;
+  font-size: 40px;
   color: #4079ED;
-  margin-top: 30px;
+  font-weight: bold;
 }
+
 .score_icon{
   display: flex;
  gap:1px;
 
 }
+
 i {
   font-size: 75px;
   color: #ffffff;
   background-color: #ff6f6f;
   border-radius: 50%;
   padding: 25px;
-  margin-left: 30px;
   margin-top: 10px;
 
 }
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.score_icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.score_icon i {
+  font-size: 28px;
+  
+}
+
+
+
+

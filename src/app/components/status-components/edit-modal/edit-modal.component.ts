@@ -1,16 +1,17 @@
 import { DashboardTable } from './../../../interface/dashboard-table';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
-import { switchMap } from 'rxjs';
+import { concatMap, finalize, from } from 'rxjs';
 
 
 interface EditableProject {
   [key: string]: string | number | Date | undefined;
   feedbackStatus?: string;
-  vocEligibilityDate?: Date;
+  vocEligibilityDate?: string;
+  vocFeedbackReceivedDate?: Date;
   vocRemarks? : string;
   mailStatus? : string;
   pmMails?: string;
@@ -20,7 +21,6 @@ interface EditableProject {
   selector: 'app-edit-modal',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  // providers: [DatePipe],
   templateUrl: './edit-modal.component.html',
   styleUrl: './edit-modal.component.css'
 })
@@ -43,7 +43,9 @@ export class EditModalComponent {
   editableColumns = [
     { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
     { field: 'vocEligibilityDate', header: 'VOC Eligibility Date'}, 
+    { field: 'vocFeedbackReceivedDate', header: 'VOC Feedback Received Date'}, 
     { field: 'vocRemarks', header: 'VOC Remarks' },
+    { field: 'mailStatus', header: 'Mail Status', type: 'select', options: ['Sent', 'Not Sent'] },
     { field: 'pmMails', header: 'PM Email' },
   ];
 
@@ -60,129 +62,123 @@ export class EditModalComponent {
     this.close.emit();
   }
   saveChanges() {
-    if (this.editableProject.feedbackStatus === 'Received') {
-      const currentDate = new Date();
+    const updateTasks = [];
   
-      this.dashboardService.addVOCFeedbackReceivedDate(this.editableProject.projectId!, currentDate)
-      .subscribe(
-        (updatedProject) => {
-          // Find the project in the list and update its remarks
-          const index = this.projects.findIndex(p => p.projectId === updatedProject.projectId);
-          if (index !== -1) {
-            this.projects[index] = updatedProject;
-          }
-          this.dashboardService.updateProject(updatedProject);
-          this.cdr.detectChanges();  // Trigger change detection
-        },
-        (error) => {
-          console.error('Error saving remarks:', error);
-        }
+if (this.editableProject.feedbackStatus === 'Received') {
+  if (!this.editableProject.vocFeedbackReceivedDate) {
+    const currentDate = new Date();
+    this.editableProject.vocFeedbackReceivedDate = currentDate; 
+  }
+  updateTasks.push(
+    this.dashboardService.addVOCFeedbackReceivedDate(
+      this.editableProject.projectId!,
+      this.editableProject.vocFeedbackReceivedDate
+    )
+  );
+} else if (this.editableProject.feedbackStatus === 'Pending') {
+  updateTasks.push(
+    this.dashboardService.deleteVOCFeedbackReceivedDate(this.editableProject.projectId!)
+  );
+}
+
+// Handle manual changes to vocFeedbackReceivedDate regardless of feedbackStatus
+if (
+  this.editableProject.vocFeedbackReceivedDate &&
+  this.editableProject.feedbackStatus !== 'Pending'
+) {
+  updateTasks.push(
+    this.dashboardService.addVOCFeedbackReceivedDate(
+      this.editableProject.projectId!,
+      this.editableProject.vocFeedbackReceivedDate
+    )
+  );
+}
+  
+if (this.editableProject.mailStatus === 'Sent') {
+  if (!this.editableProject.pmInitiateDate) {
+    const currentDate = new Date();
+    this.editableProject.pmInitiateDate = currentDate;
+  }
+  updateTasks.push(
+    this.dashboardService.addPMInitiateDate(
+      this.editableProject.projectId!,
+      this.editableProject.pmInitiateDate
+    )
+  );
+} else {
+  updateTasks.push(
+    this.dashboardService.deletePMInitiateDate(this.editableProject.projectId!)
+  );
+}
+ 
+  
+    // Handle remarks
+    if (this.editableProject.vocRemarks) {
+      updateTasks.push(
+        this.dashboardService.updateProjectRemarks(this.editableProject.projectId!, this.editableProject.vocRemarks!)
       );
     } else {
-      this.dashboardService.deleteVOCFeedbackReceivedDate(this.editableProject.projectId!)
-        .subscribe({
-          next: () => {
-            console.log('Feedback received date deleted successfully.');
-  
-            // Optionally reset the project data
-            this.dashboardService.updateProject(null);
-          },
-          error: (error) => {
-            console.error('Error deleting feedback received date:', error);
-          }
-        });
-    }  
-    
-    if (this.editableProject.mailStatus === 'Sent') {
-      const currentDate = new Date(); 
-      this.dashboardService.addPMInitiateDate(this.editableProject.projectId!, currentDate)
-      .subscribe({
-        next: (response) => {
-            console.log('PMInitiate received date added successfully:', response);
-        },
-        error: (error) => {
-            console.error('Error adding PMInitiate received date:', error);
-        }
-    });      
-    }
-    else{
-      this.dashboardService.deletePMInitiateDate(this.editableProject.projectId!);
-    }
-    if(this.editableProject.vocRemarks){
-    this.dashboardService.updateProjectRemarks(this.editableProject.projectId!, this.editableProject.vocRemarks!)
-      .subscribe(
-        (updatedProject) => {
-          this.dashboardService.updateProject(updatedProject);
-          this.cdr.detectChanges();  // Trigger change detection
-        },
-        (error) => {
-          console.error('Error saving remarks:', error);
-        }
+      updateTasks.push(
+        this.dashboardService.deleteProjectRemark(this.editableProject.projectId!)
       );
     }
-    else{
-      this.dashboardService.deleteProjectRemark(this.editableProject.projectId!)
-      .subscribe((response) => {
-        this.dashboardService.updateProject(response);
-        this.cdr.detectChanges();
-      });
+  
+    // Handle PM mails
+    if (this.editableProject.pmMails!) {
+      updateTasks.push(
+        this.dashboardService.addPMmail(this.editableProject.projectManager!, this.editableProject.pmMails!)
+      );
+    } else {
+      updateTasks.push(
+        this.dashboardService.deletePMmail(this.editableProject.projectManager!)
+      );
     }
-    if(this.editableProject.pmMails!){
-    this.dashboardService.addPMmail(this.editableProject.projectManager!,this.editableProject.pmMails!).subscribe({
-      next: (response) => {
-          console.log('PM Mail added successfully:', response);
-          this.dashboardService.updateProject(response);
-          this.cdr.detectChanges();
-      },
-      error: (error) => {
-          console.error(' Error adding PM Mail:', error);
-      }
-  }); 
-}
-else{
-  this.dashboardService.deletePMmail(this.editableProject.projectManager!).subscribe((response) => {
-    this.dashboardService.updateProject(response);
-    this.cdr.detectChanges();
-  });
-}     
   
-    // Make an HTTP PUT request to update the project in the backend
-    this.http.put(`https://localhost:7259/api/Project/editable/${this.editableProject.projectId}`, this.editableProject)
-      .subscribe(
-        (updatedProject: any) => {
-          // Handle success
-          this.isModalOpen = false;
-          this.save.emit();
-          this.closeModal();
+    // Execute all update tasks sequentially
+    from(updateTasks)
+      .pipe(
+        concatMap((task: any) => task), // Ensure sequential execution
+        finalize(() => {
+          // Update the editable project in the backend after all tasks are complete
+          this.http.put(`https://localhost:7259/api/Project/editable/${this.editableProject.projectId}`, this.editableProject)
+            .subscribe(
+              (updatedProject: any) => {
+                this.isModalOpen = false;
+                this.save.emit();
+                this.closeModal();
   
-          // Update the local data model
-          const index = this.projects.findIndex(p => p.projectId === updatedProject.projectId);
+                // Update the local project data
+                const index = this.projects.findIndex(p => p.projectId === updatedProject.projectId);
+                this.dashboardService.updateProject(updatedProject);
 
-          console.log(index)
-          if (index !== -1) {
-            this.projects[index] = { ...this.projects[index], ...updatedProject };
-          }
+                if (index !== -1) {
+                  this.projects[index] = { ...this.projects[index], ...updatedProject };
+                }
   
-          // Force Angular to detect changes
-          this.cdr.detectChanges();
+                // Display success message
+                this.successMessage = 'Updated successfully';
+                setTimeout(() => this.successMessage = null, 5000);
+              },
+              (error) => {
+                console.error('Failed to save changes:', error);
   
-          // Set success message
-          this.successMessage = 'Updated successfully';
-  
-          // Clear message after 5 seconds
-          setTimeout(() => this.successMessage = null, 5000);
+                // Display error message
+                this.errorMessage = 'Unable to update';
+                setTimeout(() => this.errorMessage = null, 5000);
+              }
+            );
+        })
+      )
+      .subscribe({
+        next: () => {
+          console.log('Operation successful');
         },
-        error => {
-          // Handle error
-          console.error('Failed to save changes:', error);
+        error: (error: any) => {
+          console.error('Error during operation:', error);
+        },
+      });
   
-          // Set error message
-          this.errorMessage = 'Unable to update';
-  
-          // Clear message after 5 seconds
-          setTimeout(() => this.errorMessage = null, 5000);
-        }
-      );
+    // Notify Angular of changes
+    this.cdr.detectChanges();
   }  
 }
-

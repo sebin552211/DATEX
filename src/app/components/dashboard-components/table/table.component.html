@@ -43,7 +43,7 @@
   <!-- table -->
   <div class="table-wrapper">
     <table class="custom-table">
-      <thead>
+      <thead> 
         <tr class="custom-header">
           <th class="fixed-column project-code">Project Code</th>
           <th class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">Project Name</th>
@@ -54,6 +54,13 @@
         <tr class="custom-row" *ngFor="let project of projects">
           <td class="fixed-column project-code">
             <i class="fa-solid fa-pen custom-icon" (click)="openModal(project)"></i>
+            <input 
+              type="checkbox" 
+              id="plusimg"
+              [checked]="isProjectInCpro(project)" 
+              (change)="toggleProject(project, $event)"
+              [ngClass]="{ 'green': isProjectInCpro(project) }"
+              (click)="addProject(project)"/>
             {{ project.projectCode }}
           </td>
           <td class="fixed-column project-name" style="border-right:2px solid #EDF2F6;">
@@ -120,9 +127,6 @@
         </div>
       </div>
     </div>
-    
-
-
     <button class="export-button" (click)="exportToExcel()">
       <i class="fa fa-download"></i> Export
     </button>

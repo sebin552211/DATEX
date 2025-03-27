@@ -87,7 +87,7 @@
     width: 400px;
     max-width: 95%;
     overflow: auto;
-    height: 65%;
+    height: 75%;
   }
   .modal-overlay {
     position: fixed;

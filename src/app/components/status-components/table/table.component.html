@@ -12,14 +12,14 @@
       <i class="fa fa-search search-icon" (click)="onSearch()"></i>
     </div>
     <div class="pagination-container">
-      <button
+      <!-- <button
         (click)="changePage(pageNumber - 1)"
         [disabled]="pageNumber === 1"
       >
         &lt;
-      </button>
+      </button> -->
 
-      <button
+      <!-- <button
         *ngFor="let page of paginationArray"
         [ngClass]="{ active: page === pageNumber }"
         (click)="changePage(page)"
@@ -36,23 +36,22 @@
         *ngIf="paginationArray[paginationArray.length - 1] < totalPages"
       >
         {{ totalPages }}
-      </button>
+      </button> -->
 
-      <button
+      <!-- <button
         (click)="changePage(pageNumber + 1)"
         [disabled]="pageNumber === totalPages"
       >
         &gt;
-      </button>
+      </button> -->
     </div>
   </div>
 
-  <div class="filer" style="margin-bottom: -15px; margin-top: 0px;">
+  <!-- <div class="filer" style="margin-bottom: -15px; margin-top: 0px;">
     Criteria for eligibility date: &nbsp; &nbsp; &nbsp;
     <app-vocfilter></app-vocfilter>
   </div>
-
-  <br />
+  <br/> -->
   <div class="table-wrapper">
     <table class="custom-table">
       <thead>
@@ -68,7 +67,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="custom-row" *ngFor="let project of projects">
+        <tr class="custom-row" *ngFor="let project of cpro">
           <td class="fixed-column project-code">
             <i
               class="fa-solid fa-pen custom-icon"
@@ -88,7 +87,7 @@
                 col.field === 'projectStartDate' ||
                 col.field === 'projectEndDate' ||
                 col.field === 'forecastedEndDate' ||
-                col.field === 'vocEligibilityDate' ||
+                 col.field === 'vocEligibilityDate' ||
                 col.field === 'vocFeedbackReceivedDate' ||
                 col.field === 'pmInitiateDate' ">
 
@@ -111,7 +110,7 @@
               {{ project[col.field] }}
             </span>
 
-            <!-- Display other fields without changes -->
+             <!-- Display other fields without changes  -->
             <span
               *ngIf="
                 col.field !== 'mailStatus' &&
@@ -128,7 +127,8 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> 
+
 
   <div class="controls">
     <div class="multi-select-container">

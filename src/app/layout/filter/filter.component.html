@@ -1,11 +1,9 @@
 <div class="filters">
  
   <div class="filter-container">
-    <!-- Funnel icon next to the Filter heading -->
     <h2 class="filter-heading">
       <i class="fa fa-filter filter-icon"></i> <span style="font-size:1rem;">Filters</span>
     </h2>
-    <!-- Reset button aligned to the filter option box -->
     <div class="filter-actions">
       <i class="fa-solid fa-undo custom-icon" (click)="resetFilters()"></i>
     </div>
@@ -35,10 +33,6 @@
     </div>
   </div>
  
- 
- 
- 
- 
 <!-- Contract Type Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('contractType')">
@@ -65,7 +59,7 @@
 </div>
  
  
-<!-- DUFilter -->
+<!-- DU Filter -->
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown('DU')"> 
     <!-- Conditionally render the label based on the selection -->
@@ -204,9 +198,9 @@
     <!-- Content to show when a value is selected -->
     <ng-template #dateSelected>
       <span class="filter-label floating">Project Start Date</span>
-      <span class="selected-value">{{ getSelectedProjectStartDate() }}</span>
+      <span class="selected-value">{{ getSelectedProjectStartDate() | date : "dd-MM-yyyy" }} </span>
     </ng-template>
-  </button>
+  </button> 
   <div class="dropdown-menu" *ngIf="dropdownVisible['projectStartDate']">
     <label *ngFor="let projectStartDate of projectStartDates" class="floating-label-container">
       <input
@@ -230,7 +224,7 @@
     <!-- Content to show when a value is selected -->
     <ng-template #endDateSelected>
       <span class="filter-label floating">Project End Date</span>
-      <span class="selected-value">{{ getSelectedProjectEndDate() }}</span>
+      <span class="selected-value">{{ getSelectedProjectEndDate()| date : "dd-MM-yyyy"  }}</span>
     </ng-template>
   </button>
   <div class="dropdown-menu" *ngIf="dropdownVisible['projectEndDate']">

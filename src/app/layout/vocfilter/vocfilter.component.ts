@@ -24,8 +24,13 @@ export class VOCFilterComponent implements OnInit{
   private filterSelectionSubscription: Subscription | undefined;
   private filterSelectionSubject = new Subject<{ filterKey: string; value: string }>();
   
-  financialQuarters: string[] = ['Q1', 'Q2', 'Q3', 'Q4'];
+  financialQuarters: string[] = ['Q1 (2021-2022)', 'Q2 (2021-2022)', 'Q3 (2021-2022)', 'Q4 (2021-2022)', 
+                                 'Q1 (2022-2023)', 'Q2 (2022-2023)', 'Q3 (2022-2023)', 'Q4 (2022-2023)',
+                                 'Q1 (2023-2024)', 'Q2 (2023-2024)', 'Q3 (2023-2024)', 'Q4 (2023-2024)',
+                                 'Q1 (2024-2025)', 'Q2 (2024-2025)', 'Q3 (2024-2025)', 'Q4 (2024-2025)'];
+  // financialQuarters: string[] = ['Q1', 'Q2', 'Q3', 'Q4'];
   financialYears: string[] = ['2021-2022', '2022-2023', '2023-2024', '2024-2025', '2025-2026', '2026-2027', '2027-2028']
+  // financialYears: string[] = ['2021-2022', '2022-2023', '2023-2024', '2024-2025', '2025-2026', '2026-2027', '2027-2028']
   constructor(private http: HttpClient, private dashboardTableService: DashboardTableService ,private dashboardFilterService: DashboardFilterService, private sharedataservice : SharedDataService) {}
   ngOnInit() {
     this.dashboardTableService.getProjects().subscribe((projects) => {

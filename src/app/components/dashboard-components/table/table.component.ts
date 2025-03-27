@@ -1,35 +1,27 @@
 
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-  Renderer2,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DashboardTableService } from '../../../service/dashboard-table.service';
 import { ExcelService } from '../../../service/excel.service';
 import { DashboardTable } from '../../../interface/dashboard-table';
-import { CommonModule } from '@angular/common';
+import {  CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../service/shared-data.service';
 import { Subscription } from 'rxjs';
 import { VOCFilterComponent } from "../../../layout/vocfilter/vocfilter.component";
+import { HttpClient } from '@angular/common/http';
 
 
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [FormsModule, CommonModule, EditModalComponent, HttpClientModule, VOCFilterComponent],
+  imports: [FormsModule, CommonModule, EditModalComponent], //, HttpClientModule, VOCFilterComponent
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-
+  @Output() projectAdded = new EventEmitter<DashboardTable>();
 
 areAllColumnsSelected() {
 throw new Error('Method not implemented.');
@@ -41,16 +33,20 @@ throw new Error('Method not implemented.');
   searchQuery: string = '';
   totalPages: number = 0;
   currentPage: number = 1;
+  isGreen = false;
   dropdownVisible: boolean = false;
   selectedColumns: { field: keyof DashboardTable; header: string }[] = [];
   isModalOpen: boolean = false;
   editableProject: Partial<DashboardTable> = {};
   projects: DashboardTable[] = [];
+  projects2: DashboardTable[] = [];
   selectedFile: File | null = null;
-
+  clickedProjectId: number | null = null;
   pageNumber: number = 1;
   pageSize: number = 7;
   totalProjects: number = 0;
+  toggledProjects: { [projectId: number]: boolean } = {};
+  cpro: DashboardTable[] = [];
 
   allColumns: { field: keyof DashboardTable; header: string }[] = [
     { field: 'du', header: 'DU' },
@@ -69,44 +65,83 @@ throw new Error('Method not implemented.');
     { field: 'domain', header: 'Domain' },
     { field: 'databaseUsed', header: 'Database Used' },
     { field: 'cloudUsed', header: 'Cloud Used' },
-   
+
   ];
   private projectsSubscription: Subscription | undefined;
 
   // Updated `editableColumns` array to match the `DashboardTable` interface
 
+  editableColumns = [
+    { field: 'sqa', header: 'SQA' },
+    { field: 'projectType', header: 'Project Type' },
+    { field: 'domain', header: 'Domain' },
+    { field: 'databaseUsed', header: 'Database Used' },
+    { field: 'cloudUsed', header: 'Cloud Used' },
+    { field: 'feedbackStatus', header: 'Feedback Status', type: 'select', options: ['Received', 'Pending'] },
+    { field: 'forecastedEndDate', header: 'Forecasted End Date' },
+    { field: 'vocEligibilityDate', header: 'VOC Eligibility Date' },
+  ];
+
   constructor(
     private eRef: ElementRef,
     private renderer: Renderer2,
     private dashboardTableService: DashboardTableService,
-    private excelService: ExcelService,
-    private http: HttpClient,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private excelService: ExcelService, private http: HttpClient,
+    private cdr: ChangeDetectorRef
   ) {}
 
 
   ngOnInit(): void {
 
-    
+    // this.sharedDataService.loadCproFromStorage();
+
     this.selectedColumns = this.allColumns.filter(col =>
-      ['du', 'duHead', 'status','customerName'].includes(col.field)
+      ['status','customerName'].includes(col.field)
     );
     this.loadProjects(); // Load projects on component initialization
     this.loadPagedProjects();
-       
+
     this.projectsSubscription = this.sharedDataService.projects$.subscribe(projects => {
       this.projects = projects;
+    });
+
+    this.sharedDataService.cpro$.subscribe((projects) => {
+      this.cpro = projects;
     });
   }
 
   loadProjects() {
+    // const filters = this.dashboardTableService.getProjects();
+    const filters = this.dashboardTableService.selectedFilters$;
     this.dashboardTableService
       .getProjects()
       .subscribe((data: DashboardTable[]) => {
         this.projects = data;
       });
+    // this.dashboardTableService.getProjectsPagedAndFiltered(this.pageNumber, this.pageSize)
+    //   .subscribe((response:any) => {
+    //     this.projects = response.projects;
+    // this.totalProjects = response.totalProjects;
+    // this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
+    //   });
+
+  //   this.dashboardTableService
+  //   .getProjectsPagedAndFiltered(1, this.totalProjects, filters) 
+  //   .subscribe(
+  //     (data: { projects: DashboardTable[]; totalProjects: number }) => {
+  //       this.projects = data.projects;
+  //       this.totalProjects = data.totalProjects;
+  //       this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
+  //     },
+  //     (error) => {
+  //       console.error('Error loading projects:', error);
+  //     }
+  //   );
   }
+
   loadPagedProjects() {
+    const filters = this.dashboardTableService.selectedFilters$;
     this.dashboardTableService
       .getProjectsPaged(this.pageNumber, this.pageSize)
       .subscribe((data: any) => {
@@ -114,7 +149,29 @@ throw new Error('Method not implemented.');
         this.totalProjects = data.totalProjects;
         this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
       });
+
+      // this.dashboardTableService.getProjectsPagedAndFiltered(this.pageNumber, this.pageSize)
+      // .subscribe((response:any) => {
+      //   this.projects = response.projects;
+      //   this.totalProjects = response.totalProjects;
+      //   this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
+      // });
+      // this.dashboardTableService
+      // .getProjectsPagedAndFiltered(this.pageNumber, this.pageSize, filters)
+      // .subscribe(
+      //   (data: { projects: DashboardTable[]; totalProjects: number }) => {
+      //     this.projects = data.projects;
+      //     this.totalProjects = data.totalProjects;
+      //     this.totalPages = Math.ceil(this.totalProjects / this.pageSize);
+      //     // console.log("ertghgde: "+JSON.stringify(filters));
+      //   },
+      //   (error) => {
+      //     console.error('Error loading paged projects:', error);
+      //   }
+      // );
+
   }
+
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.pageNumber = page;
@@ -143,7 +200,7 @@ throw new Error('Method not implemented.');
         .getProjectsName(trimmedQuery)
         .subscribe((data: DashboardTable[]) => {
           this.projects = data;
-         
+
         });
     } else {
       // If the search box is empty, fetch all projects
@@ -235,14 +292,14 @@ throw new Error('Method not implemented.');
   saveChanges() {
     // Update the project with the new values
     this.loadPagedProjects();  // Reload the paginated project data
-    this.loadProjects();       
+    this.loadProjects();
     this.closeModal();
   }
 
   isAllSelected(): boolean {
     return this.selectedColumns.length === this.allColumns.length;
   }
-  
+
   onSelectAllChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -250,6 +307,40 @@ throw new Error('Method not implemented.');
     } else {
       this.selectedColumns = [];
     }
+  }  
+
+  isProjectInTable(project: DashboardTable): boolean {
+    return (
+      this.projects2.some((p) => p.projectId === project.projectId) ||
+      this.cpro.some((p) => p.projectId === project.projectId)
+    );
+  }
+    
+  addProject(project: DashboardTable) {
+    if (!this.isProjectInTable(project)) {
+      this.projects2.push(project);
+      this.sharedDataService.addProjectToCpro(project); // Notify shared service
+    }
   }
   
+  removeProject(project: DashboardTable) {
+    if (this.isProjectInTable(project)) {
+      this.projects2 = this.projects2.filter((p) => p.projectId !== project.projectId);
+      this.sharedDataService.removeProjectFromCpro(project); // Notify shared service
+    }
+  }  
+  
+  isProjectInCpro(project: DashboardTable): boolean {
+    return this.cpro.some((p) => p.projectId === project.projectId);
+  }
+
+  toggleProject(project: DashboardTable, event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+  
+    if (isChecked) {
+      this.sharedDataService.addProjectToCpro(project);
+    } else {
+      this.sharedDataService.removeProjectFromCpro(project);
+    }
+  }  
 }

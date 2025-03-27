@@ -1,17 +1,22 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, map, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, map, Observable, of, tap, throwError } from 'rxjs';
 import { DashboardTable } from '../interface/dashboard-table';
 import { ExcelRow } from '../interface/excel-row';
 import { SharedDataService } from './shared-data.service';
+import { VocAnalysis } from '../interface/voc-analysis';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardTableService {
+  projects: DashboardTable[] = []; // To store the list of projects
+  totalProjects: number = 0;       // To store the total number of projects
+  currentPage: number = 1;         // To track the current page number
  
   private apiUrl = 'https://localhost:7259/api/Project';
+  private url = 'https://localhost:7259/api/VocAnalysis/surveyId';
   private projectsData: BehaviorSubject<DashboardTable[]> = new BehaviorSubject<DashboardTable[]>([]);
   private projectSubject = new BehaviorSubject<any>(null);
   public project$ = this.projectSubject.asObservable();
@@ -31,8 +36,9 @@ export class DashboardTableService {
   //   );
   // }
 
-  updateProject(project: any) {
+  updateProject(project: Partial<DashboardTable>): Observable<DashboardTable[]> {
     this.projectSubject.next(project);
+    return this.projectSubject.asObservable(); // Return an observable for the updated state
   }
   getProjects(filters: any = {}): Observable<DashboardTable[]> {
     console.log('Filters:', filters);
@@ -72,14 +78,21 @@ export class DashboardTableService {
             }
             this.sharedDataService.updateProjects(projects); // Notify other components
         return projects;
-            console.log('Fetched projects:', projects);
-            // this.projectsData.next(projects); // Store data locally
-            // console.log(this.projectsData,"projectsdata")
-            return projects;
         }),
         catchError(this.handleError)
     );
 }
+
+  getProject2(): Observable<any[]>{
+    return this.http.get<string[]>(this.url).pipe();
+  }
+
+  getallDUs():Observable<any[]>{
+    const Api = `https://localhost:7259/api/VocAnalysis/DU`;
+    return this.http.get<VocAnalysis[]>(`${Api}`).pipe();
+     //https://localhost:7259/api/VocAnalysis/DU
+  } 
+
   getLocalProjects(): Observable<DashboardTable[]> {
     return this.projectsData.asObservable(); // Return locally stored data as observable
   }
@@ -90,10 +103,8 @@ export class DashboardTableService {
   getProjectsByQuarter(quarter: number): Observable<any> {
     return this.http.get(`api/projects/quarter/${quarter}`);
   }
-
   addVOCFeedbackReceivedDate(projectId: number, VOCFeedbackReceivedDates: Date): Observable<DashboardTable> {
     const payload = { VOCFeedbackReceivedDate: VOCFeedbackReceivedDates };
-    console.log("Formatted Date: " + JSON.stringify(payload));
 
     return this.http.post<DashboardTable>(
         `${this.apiUrl}/${projectId}/VOCFeedbackReceivedDate`, payload); 
@@ -105,6 +116,7 @@ export class DashboardTableService {
 
   addPMInitiateDate(projectId: number, PMInitiateDates:Date):Observable<DashboardTable>{
   const payload = { PMInitiateDate: PMInitiateDates };
+  console.log("PM Initiate date: ", PMInitiateDates)
   return this.http.post<DashboardTable>(`${this.apiUrl}/${projectId}/PMIntiateDate`,payload);
   }
   
@@ -141,6 +153,12 @@ export class DashboardTableService {
   deletePMmail(projectManager:string){
   return this.http.delete<DashboardTable>( `${this.apiUrl}/${projectManager}/PMMails`);
   }
+      
+  getProjectByProjectName(query: string){
+    return this.http.get<DashboardTable>(`${this.apiUrl}/search?query=${query}`).pipe(
+      map((projects) => projects.filter((project) => project != null))
+    );
+  }
 
   // Error handling
   private handleError(error: HttpErrorResponse): Observable<never> {
@@ -162,19 +180,55 @@ export class DashboardTableService {
       debounceTime(300), // Add debounce
       distinctUntilChanged(), // Avoid duplicate requests
       catchError(this.handleError)
-    );
+    );  
   }
 
   getProjectsPaged(pageNumber: number, pageSize: number): Observable<DashboardTable[]> {
     return this.http.get<DashboardTable[]>(`https://localhost:7259/api/Project/paged?pageNumber=${pageNumber}&pageSize=${pageSize}`);    
   }
-  private selectedFiltersSubject = new BehaviorSubject<{ [key: string]: string[] }>({});
+  public selectedFiltersSubject = new BehaviorSubject<{ [key: string]: string[] }>({});
   selectedFilters$ = this.selectedFiltersSubject.asObservable();
 
   // Method to update the selected filters
   updateSelectedFilters(filters: { [key: string]: string[] }) {
     this.selectedFiltersSubject.next(filters);
   }
-
   
+  getProjectsPagedAndFiltered(pageNumber: number, pageSize: number, filters: any = {}
+  ): Observable<{ projects: DashboardTable[]; totalProjects: number }> {
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+  
+    // Append filters to the request
+    Object.keys(filters).forEach((key) => {
+      const value = filters[key];
+      if (value) {
+        params = params.append(key, value);
+      }
+    });
+  
+    const url = `${this.apiUrl}/paged-filtered`;
+    return this.http.get<{ projects: DashboardTable[]; totalProjects: number }>(url, { params });
+  }
+  
+  
+applyFilters(filters: any): void {
+  this.updateSelectedFilters(filters); // Update selected filters
+  this.fetchProjects(1); // Reset to the first page when filters are applied
+}
+
+fetchProjects(pageNumber: number): void {
+  const pageSize = 10; // Define your page size
+  const filters = this.selectedFiltersSubject.getValue(); // Get current filters
+
+  this.getProjectsPagedAndFiltered(pageNumber, pageSize, filters).subscribe(response => {
+      this.projects = response.projects;
+      this.totalProjects = response.totalProjects;
+      this.currentPage = pageNumber;
+  });
+}
+onPageChange(newPage: number): void {
+  this.fetchProjects(newPage);
+}
 }

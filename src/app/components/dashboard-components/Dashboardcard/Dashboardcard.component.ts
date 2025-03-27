@@ -44,12 +44,12 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
 
         const activeFPProjects = projects.filter(
           project =>
-             project.contractType === 'FP'
+             project.contractType === 'FixedFee'
         ).length;
 
         const activeTMProjects = projects.filter(
           project =>
-             project.contractType === 'T&M'
+             project.contractType === 'TM'
         ).length;
 
         this.cards = [
@@ -66,14 +66,14 @@ export class DashboardcardComponent implements OnInit, OnDestroy {
             cardText: 'Fixed Price Projects',
             checkboxes: Array(7).fill(false),
             filterKey: 'contractType',
-            filterValue: 'FP'
+            filterValue: 'FixedFee'
           },
           {
             numberText: activeTMProjects.toString(),
             cardText: 'Time & Material Projects',
             checkboxes: Array(7).fill(false),
              filterKey: 'contractType',
-            filterValue: 'T&M'
+            filterValue: 'TM'
           }
         ];
       },

@@ -41,14 +41,17 @@
     <span class="tooltip-text">{{User}}</span>
   </div>
   @if(isVocAnalysisSelected == true){
-  <button class="import-button" (click)="openExcelModal(excelData)">
+    <div class="tooltip-container">
+    <button class="import-button" (click)="openExcelModal(excelData)" (mouseover)="showTooltip = true" (mouseleave)="showTooltip = false">
     Import Excel
   </button>
+    </div>
   }
   <button class="logout" (click)="logout()">
     Logout
   </button>
   </div>
+  <span class="tooltip-text2">{{ hoverText }}</span>
 
   <app-upload-excel
   *ngIf="showExcelTable"
