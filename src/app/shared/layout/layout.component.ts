@@ -10,7 +10,7 @@ import { CommonModule, NgClass } from '@angular/common';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [SidebarComponent, NavbarComponent, RouterOutlet, FilterComponent, NgClass,CommonModule],
+  imports: [ NavbarComponent, RouterOutlet, FilterComponent, NgClass,CommonModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })

@@ -1,7 +1,6 @@
 //app config.ts
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { msalConfig } from './auth/auth-config'; 
@@ -16,9 +15,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import {
   IPublicClientApplication,
   PublicClientApplication,
-  InteractionType,
-  BrowserCacheLocation,
-  LogLevel,
+  InteractionType
 } from '@azure/msal-browser';
 import {
   MsalInterceptor,

@@ -73,8 +73,8 @@ export class ExcelService {
     return [
       'ProjectCode',
       'SQA',
-      'ForecastedEndDate[yyyy-mm-dd]',
-      'VOCEligibilityDate[yyyy-mm-dd]',
+      'ForecastedEndDate[dd-mm-yyyy]',
+      'VOCEligibilityDate[dd-mm-yyyy]',
       'ProjectType',
       'Domain',
       'DatabaseUsed',
@@ -82,6 +82,10 @@ export class ExcelService {
       'FeedbackStatus',
       'MailStatus',
       'Technology'
+      // 'vocFeedbackReceivedDate[dd-mm-yyyy]',
+      // 'vocRemarks',
+      // 'pmInitiateDate[dd-mm-yyyy]',
+      // 'pmMails'
     ];
   }
 

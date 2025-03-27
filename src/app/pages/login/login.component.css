@@ -128,13 +128,73 @@
       transform: scale(1);
     }
   }
-  
+    
   /* Button icon styling */
   .microsoft-signin-btn i {
     font-size: 22px;
     margin-right: 10px;
   }
-  
+
+  /* Updated Content Section */
+.content {
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  padding: 20px 40px; /* Add padding for spacing */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  max-width: 400px; /* Limit width for better structure */
+  width: 90%; /* Responsive width for smaller screens */
+  margin: 20px auto; /* Center horizontally and add spacing */
+  animation: fadeInSlideUp 1.5s ease-out; /* Fade-in and slide-up effect */
+}
+
+/* Content Inputs Styling */
+.content input {
+  width: calc(100% - 20px); /* Full width with some padding adjustment */
+  padding: 10px; /* Add padding inside inputs */
+  margin: 10px 0; /* Space between inputs */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 16px; /* Comfortable font size */
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+  transition: all 0.3s ease; /* Smooth focus animation */
+}
+
+/* On Input Focus */
+.content input:focus {
+  outline: none; /* Remove default outline */
+  border-color: #DC123C; /* Highlight with brand color */
+  box-shadow: 0 0 8px rgba(220, 18, 60, 0.5); /* Glow effect */
+}
+
+/* Content Labels Styling */
+.content label {
+  display: block; /* Ensure labels are above inputs */
+  margin-bottom: 5px; /* Space between label and input */
+  font-size: 14px; /* Smaller font size for clarity */
+  color: #333; /* Neutral dark color for labels */
+  font-weight: 500; /* Slightly bold for emphasis */
+}
+
+/* Button Placement and Design */
+.content button {
+  width: 100%; /* Full width button */
+  padding: 12px 0; /* Spacing inside button */
+  border-radius: 25px; /* Rounded pill-like button */
+  background: #DC123C; /* Brand color */
+  color: #fff; /* White text */
+  font-weight: bold; /* Emphasized text */
+  font-size: 18px; /* Large readable text */
+  margin-top: 20px; /* Space above button */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth hover animation */
+}
+
+/* Button Hover Effect */
+.content button:hover {
+  background: #b31230; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 5px 15px rgba(220, 18, 60, 0.4); /* Glow effect */
+}
   /* Button hover effect */
   .microsoft-signin-btn:hover {
     border-color: #DC123C;

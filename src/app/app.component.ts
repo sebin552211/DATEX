@@ -1,23 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { NavbarComponent } from './layout/navbar/navbar.component';
 import { CommonModule} from '@angular/common';
 import { DashboardTableService } from './service/dashboard-table.service';
-import { FilterComponent } from "./layout/filter/filter.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    SidebarComponent,
-    NavbarComponent,
-    RouterOutlet,
-    FilterComponent
-],
+  imports: [ CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'], // Corrected 'styleUrl' to 'styleUrls'
+  styleUrls: ['./app.component.css'], 
 })
 export class AppComponent {
   title = 'ProjectDatabase';

@@ -45,9 +45,9 @@ export class CardComponent implements OnInit, OnDestroy {
         }
 
         const vocEligibleCount = projects.filter(project =>
-          project.vocEligibilityDate &&
-          new Date(project.vocEligibilityDate) >= startOfMonthDate &&
-          new Date(project.vocEligibilityDate) <= endOfMonthDate
+          project.vocEligibilityDate
+          // new Date(project.vocEligibilityDate) >= startOfMonthDate &&
+          // new Date(project.vocEligibilityDate) <= endOfMonthDate
         ).length;
 
         const vocReceivedCount = projects.filter(

@@ -1,0 +1,109 @@
+<div class="filters">
+  <div class="filter-container">
+    <!-- Funnel icon next to the Filter heading -->
+    <h2 class="filter-heading">
+      <i class="fa fa-filter filter-icon"></i>
+      <span style="font-size: 1rem">Filters</span>
+    </h2>
+    <!-- Reset button aligned to the filter option box -->
+    <div class="filter-actions">
+      <i class="fa-solid fa-undo custom-icon" (click)="resetFilters()"></i>
+    </div>
+  </div>
+
+  <!-- Project Code Filter -->
+  <div class="dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      (click)="toggleDropdown('SurveyIds')"
+    >
+      <!-- Conditionally render the label based on the selection -->
+      <ng-container *ngIf="!getSelectedSurveyId(); else selectedSurveyId">
+        <span class="filter-label"> Project Code</span>
+      </ng-container>
+      <!-- Content to show when a value is selected -->
+      <ng-template #selectedSurveyId>
+        <span class="filter-label floating">Project Code</span>
+        <span class="selected-value">{{ getSelectedSurveyId() }}</span>
+      </ng-template>
+    </button>
+    <div class="dropdown-menu" *ngIf="dropdownVisible['SurveyIds']">
+      <label
+        *ngFor="let surveyId of SurveyIds"
+        class="floating-label-container"
+      >
+        <input
+          type="checkbox"
+          [value]="surveyId"
+          (change)="onFilterChange($event, 'SurveyIds')"
+          [checked]="isSelectedFilter('SurveyIds', surveyId)"
+        />
+        <span>{{ surveyId }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="dropdown" >
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      (click)="toggleDropdown('Quarters')">
+      <ng-container *ngIf="!getSelectedQuarter(); else quarterSelected">
+        <span class="filter-label">Financial Quarter</span>
+      </ng-container>
+      <ng-template #quarterSelected>
+        <span class="filter-label floating">Financial Quarter</span>
+        <span class="selected-value">{{ getSelectedQuarter() }}</span>
+      </ng-template>
+    </button>
+    <div class="dropdown-menu" *ngIf="dropdownVisible['Quarters']">
+      <label
+        *ngFor="let quarter of financialQuarters"
+        class="floating-label-container">
+        <input
+          type="checkbox"
+          [value]="quarter"
+          (change)="onFilterChange($event, 'Quarters')"
+          [checked]="isSelectedFilter('Quarters', quarter)"/>
+        <span>{{ quarter }}</span>
+      </label>
+    </div>
+  </div>
+
+   <!-- DUFilter -->
+   <div class="dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      (click)="toggleDropdown('DUs')"
+    >
+      <!-- Conditionally render the label based on the selection  -->
+      <ng-container *ngIf="!getSelectedDU(); else DusSelected">
+        <span class="filter-label"> DU </span>
+      </ng-container>
+      <!-- Content to show when a value is selected  -->
+      <ng-template #DusSelected>
+        <span class="filter-label floating">DU</span>
+        <span class="selected-value">{{ getSelectedDU() }}</span>
+      </ng-template>
+    </button>
+    <div class="dropdown-menu" *ngIf="dropdownVisible['DUs']">
+      <label *ngFor="let DU of DUs" class="floating-label-container">
+        <input
+          type="checkbox"
+          [value]="DU"
+          (change)="onFilterChange($event, 'DUs')"
+          [checked]="isSelectedFilter('DUs', DU)"
+        />
+        <span>{{ DU }}</span>
+      </label>
+    </div>
+  </div>
+
+  <i class="fa-solid fa-pen custom-icon add" style="top: 0.45cm;" (click)="openEditModal()"></i>
+
+
+<app-du-modal [isModalOpen]="isModalOpen" (close)="closeModal()">
+</app-du-modal>
+

@@ -1,0 +1,65 @@
+<div class="modal">
+    <div class="modal-content">
+      <div class="tooltip-box" >
+        <strong>Excel Format: Response Id should start from column B2 and Respondent Score should be at the end column AB2</strong>
+        <table class="tooltip-table">
+          <thead>
+            <tr>
+              <th>Response Id (B2)</th>
+              <th>Response Start Time (C2)</th>
+              <th>Response Completion Time (D2)</th>
+              <th>IP Address (E2)</th>
+              <th>Collector Name (F2)</th>
+              <th>Survey ID (G2)</th>
+              <th>1. How Would.... (H2)</th>
+              <th>2. How Would.... (J2)</th>
+              <th>.........</th>
+              <th>10. How likely.... (Z2)</th>
+              <th>Respondent Score (out of 48).... (AB2)</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <h2>Excel Data</h2>
+      <div *ngIf="isLoading" class="loading">Saving data...</div>
+      <div *ngIf="!isLoading && excelData.length === 0" class="no-data">No data available</div>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+  
+      <div class="pagination-top">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">&lt;</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+      </div>
+  
+      <div class="table-container" *ngIf="!isLoading && excelData.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let column of getColumnHeaders()">
+                {{ column }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of paginatedData">
+              <td *ngFor="let column of getColumnHeaders()">
+                {{ row[column] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="file-input" /> -->
+      <!-- <button class="download-template" (click)="downloadTemplate()">Download Template</button> -->
+      <!-- <button class="save" (click)="saveData()" [disabled]="isLoading">Save Data</button> -->
+      <input type="file" #fileInput accept=".xlsx, .xls" class="file-input" />
+      <button class="save" (click)="saveData(fileInput)" [disabled]="isLoading">Save Data</button>
+      <button class="close" (click)="closeModal()">Close</button>
+    </div>
+    
+  </div>
+
+  
+  

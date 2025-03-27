@@ -1,0 +1,315 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+#image{
+  top: 3px;
+  left: 30px;
+  position: fixed;
+  height: 43px;
+  width: 150px;
+}
+ 
+ 
+/* Filter sidebar styles */
+.filters {
+  width: 6cm; 
+  position: fixed;
+  height: 93vh;
+  top: 50px;
+  left: 0;
+  background-color:#EFF1F3;
+  z-index: 2;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; 
+}
+ 
+.filter-heading {
+  display: flex;
+  font-size: 1rem;
+  color: #333; 
+  text-align: center; 
+}
+.filter-container{
+  margin-bottom: 10px;
+  display: flex;
+  gap:60px
+}
+ 
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  width: 50%; 
+  margin-bottom: 15px; 
+}
+ 
+/* Button styles */
+.btn-secondary {
+  width: 70%; 
+  height: 35px; 
+  padding: 8px; 
+  border: 1.8px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s ease all;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem; /* Adjusted font size */
+}
+ 
+.btn-secondary::after {
+  content: '\25BC';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.55em;
+  color: #86888a;
+}
+ 
+.btn-secondary:hover,
+.btn-secondary:focus {
+  border-color: #DC123C;
+}
+ 
+/* Floating label styles */
+.filter-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.75rem;
+ 
+  color: #495057;
+  background: #fff;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+ 
+.filter-label.floating {
+  top: -10px;
+  font-size: 12px;
+  color: #DC123C;
+  background-color: white;
+  padding: 0 5px;
+  left: 15px;
+  z-index:1;
+}
+ 
+.selected-value {
+  margin-left: 1rem;
+  color: #333;
+}
+ 
+/* Dropdown menu styles */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 150px; 
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 5px; 
+}
+ 
+/* Checkbox container styles */
+.floating-label-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.75rem; 
+}
+ 
+/* Checkbox styles */
+.floating-label-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+ 
+.floating-label-container span {
+  font-size: 0.75rem; /* Adjusted font size */
+}
+ 
+/* Filter actions styles */
+.filter-actions {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 23px; /* Reduced margin */
+  gap: 10px;
+}
+ 
+.filter-button:hover {
+  background-color:#ccffd1 ; /* Darker blue on hover */
+  color: #3CD856;
+} 
+ 
+.filter-button {
+  background-color: #DC123C;
+  color: white;
+  padding: 2px; /* Remove padding */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  min-width: fit-content;
+  height:fit-content; 
+  line-height: 1.5;
+}
+ 
+.btn-primary:hover {
+  opacity: 0.8; 
+}
+
+.filter-icon {
+  cursor: pointer;
+  margin-top: 3px;
+  height: fit-content;
+  font-size: 13px;
+ margin-right: 10px;
+ height: 1.3rem;
+  color: #575252;
+  border-radius: 4px; 
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+ 
+.custom-icon:hover {
+  color: #DC123C;
+  background-color: #EFF1F3; 
+  border-color: #ccc; 
+}
+ 
+.custom-icon:active {
+  color: #004080;
+  background-color: #d6d8db; 
+  border-color: #bbb; 
+}
+ 
+.dropdown-menu.custom-scrollbar {
+  max-height: 200px;
+  overflow-y: auto;
+}
+ 
+.dropdown-menu.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+ 
+.dropdown-menu.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 3px;
+}
+ 
+.dropdown-menu.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Main filter sidebar styles */
+.filters {
+  width: 6cm;
+  position: fixed;
+  height: 93vh;
+  top: 50px;
+  left: 0;
+  background-color: #EFF1F3;
+  z-index: 2;
+  overflow-y: auto;
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-icon {
+  font-size: 18px;
+  cursor: pointer;
+  /* margin-top: -22px; */
+  color: #575252;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.btn-secondary {
+  width: 100%;
+  height: 35px;
+  padding: 8px;
+  border: 1.8px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.btn-secondary::after {
+  content: '\25BC';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.55em;
+  color: #86888a;
+}
+
+/* Scrollbar customization */
+.filters::-webkit-scrollbar {
+  width: 4px;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background-color: #DC123C;
+  border-radius: 3px;
+}
+
+.filters::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+.custom-icon {  
+  color: #96A5B8; 
+  font-size: 20px; 
+  background-color: #f1f1f1;
+  position: relative; 
+}
+
+.delete{
+  position: relative;
+  left: 30px;
+  color: #96A5B8;
+}
+
