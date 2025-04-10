@@ -23,10 +23,6 @@ export class DashboardFilterService{
     this.filterSelectionSubject.next({ filterKey, value });
   }
 
-// updateVOCAnalysis(Du: string | null, surveyId: string | null): void {
-//   this.surveyIdSource.next(surveyId);
-//   this.DUSource.next(Du);
-// }
 updateVOCAnalysis(DU: string | null, surveyId: string | null, Quarter:string | null): void {
   const currentFilters = this.filterSource.value;
   this.filterSource.next({

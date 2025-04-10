@@ -109,7 +109,6 @@ export class AnalysisFilterComponent implements OnInit {
     const surveyId = this.getSelectedSurveyId();
     const DU = this.getSelectedDU();
     const Quater = this.getSelectedQuarter();
-    console.log("Quarter: ", Quater);
     this.dashboardFilterService.updateVOCAnalysis(DU, surveyId, Quater);
   }
   

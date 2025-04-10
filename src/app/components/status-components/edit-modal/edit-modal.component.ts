@@ -30,9 +30,7 @@ export class EditModalComponent {
   @Input() editableProject: Partial<DashboardTable> = {};
 
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<void>();
-
-  
+  @Output() save = new EventEmitter<void>();  
  
   projects: DashboardTable[] = [
     // Your existing project data
